@@ -7,12 +7,12 @@ package blokus.model;
  */
 public class Position {
 
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
 
     /**
      * Initializes this position to the given coordinates.
-     * 
+     *
      * @param x is the x coordinate of this position.
      * @param y is the y coordinate of this position.
      */
@@ -37,6 +37,11 @@ public class Position {
      */
     public int getY() {
         return y;
+    }
+
+    public void move(int dx, int dy) {
+        x += dx;
+        y += dy;
     }
 
 }

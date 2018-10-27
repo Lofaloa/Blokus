@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Piece {
 
-    List<Position> shape;
+    private final List<Position> positions;
 
     /**
      * Initializes this piece with the given positions.
@@ -24,7 +24,11 @@ public class Piece {
             throw new IllegalArgumentException(positions.length + " positions"
                     + " but 1 to 7 positions are required.");
         }
-        this.shape = new ArrayList<>(Arrays.asList(positions));
+        this.positions = new ArrayList<>(Arrays.asList(positions));
+    }
+
+    List<Position> getPositions() {
+        return new ArrayList<>(positions);
     }
 
     /**
@@ -32,8 +36,8 @@ public class Piece {
      *
      * @return this shape size.
      */
-    public int getSize() {
-        return shape.size();
+    int getSize() {
+        return positions.size();
     }
 
 }
