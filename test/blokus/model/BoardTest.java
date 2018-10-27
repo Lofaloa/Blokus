@@ -13,7 +13,7 @@ public class BoardTest {
     @Test
     public void testIsFreeFullCell() {
         Board board = new Board();
-        Piece p = new Piece(new Position(0, 0));
+        Piece p = new Piece(Shape.SHAPE_1, Color.BLUE);
         board.add(p, new Position(0, 0));
         assertFalse(board.isFree(new Position(0, 0)));
     }
