@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author g47923
  */
-public class Stock {
+class Stock {
 
     private final List<Piece> pieces;
 
@@ -22,14 +22,29 @@ public class Stock {
     }
 
     /**
-     * Gets a piece of this stock by its id. A piece id is defined in the
-     * instructions of the game.
+     * Gets this stock pieces.
      *
-     * @param id
-     * @return
+     * @return this stock pieces.
      */
-    public Piece getPieceBy(int id) {
-        return pieces.get(id);
+    List<Piece> getPieces() {
+        return pieces;
+    }
+
+    /**
+     * Gets a piece of this stock by its shape.
+     *
+     * @param shape is the shape of the wanted piece.
+     * @return the wanted piece if it is in this stock, if not null is returned.
+     */
+    Piece getPieceBy(Shape shape) {
+        Piece wantedPiece = null;
+        for (Piece piece : pieces) {
+            if (shape == piece.getShape()) {
+                wantedPiece = piece;
+            }
+        }
+        pieces.remove(wantedPiece);
+        return wantedPiece;
     }
 
     /**

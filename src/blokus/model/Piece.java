@@ -1,5 +1,7 @@
 package blokus.model;
 
+import java.util.Objects;
+
 /**
  * Represents a piece.
  *
@@ -37,6 +39,39 @@ public class Piece {
      */
     Color getColor() {
         return color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shape, color);
+    }
+
+    /**
+     * Indicates whether some other object is "equal to" this piece.
+     *
+     * @param obj the reference object with which to compare.
+     * @return true if this piece is the same as the obj argument; false
+     * otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Piece other = (Piece) obj;
+        if (this.shape != other.shape) {
+            return false;
+        }
+        if (this.color != other.color) {
+            return false;
+        }
+        return true;
     }
 
 }

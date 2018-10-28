@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author g47923
  */
-public class Stock {
+class Stock {
 
     private final List&lt;Piece&gt; pieces;
 
@@ -17,19 +17,34 @@ public class Stock {
      *
      * @param color is the color of this stock.
      */
-<span class="nc" id="L20">    public Stock(Color color) {</span>
-<span class="nc" id="L21">        this.pieces = buildPiecesOf(color);</span>
-<span class="nc" id="L22">    }</span>
+<span class="fc" id="L20">    public Stock(Color color) {</span>
+<span class="fc" id="L21">        this.pieces = buildPiecesOf(color);</span>
+<span class="fc" id="L22">    }</span>
 
     /**
-     * Gets a piece of this stock by its id. A piece id is defined in the
-     * instructions of the game.
+     * Gets this stock pieces.
      *
-     * @param id
-     * @return
+     * @return this stock pieces.
      */
-    public Piece getPieceBy(int id) {
-<span class="nc" id="L32">        return pieces.get(id);</span>
+    List&lt;Piece&gt; getPieces() {
+<span class="fc" id="L30">        return pieces;</span>
+    }
+
+    /**
+     * Gets a piece of this stock by its shape.
+     *
+     * @param shape is the shape of the wanted piece.
+     * @return the wanted piece if it is in this stock, if not null is returned.
+     */
+    Piece getPieceBy(Shape shape) {
+<span class="fc" id="L40">        Piece wantedPiece = null;</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (Piece piece : pieces) {</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if (shape == piece.getShape()) {</span>
+<span class="fc" id="L43">                wantedPiece = piece;</span>
+            }
+<span class="fc" id="L45">        }</span>
+<span class="fc" id="L46">        pieces.remove(wantedPiece);</span>
+<span class="fc" id="L47">        return wantedPiece;</span>
     }
 
     /**
@@ -39,11 +54,11 @@ public class Stock {
      * @return the newly built pieces.
      */
     final List&lt;Piece&gt; buildPiecesOf(Color color) {
-<span class="nc" id="L42">        List&lt;Piece&gt; builtPieces = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L43" title="All 2 branches missed.">        for (Shape shape : Shape.values()) {</span>
-<span class="nc" id="L44">            builtPieces.add(new Piece(shape, color));</span>
+<span class="fc" id="L57">        List&lt;Piece&gt; builtPieces = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (Shape shape : Shape.values()) {</span>
+<span class="fc" id="L59">            builtPieces.add(new Piece(shape, color));</span>
         }
-<span class="nc" id="L46">        return builtPieces;</span>
+<span class="fc" id="L61">        return builtPieces;</span>
     }
 
 }
