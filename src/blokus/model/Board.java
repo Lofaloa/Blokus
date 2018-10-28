@@ -8,7 +8,7 @@ import blokus.exception.IllegalActionException;
  *
  * @author g47923
  */
-public class Board {
+class Board {
 
     private final static int BOARD_SIZE = 20;
     private final Piece[][] cells;
@@ -16,7 +16,7 @@ public class Board {
     /**
      * Initializes this board with a 20 by 20 empty grid.
      */
-    public Board() {
+    Board() {
         this.cells = new Piece[BOARD_SIZE][BOARD_SIZE];
     }
 
@@ -95,5 +95,5 @@ public class Board {
             cells[cellPosition.getX()][cellPosition.getY()] = piece;
         }
     }
-    
+
 }

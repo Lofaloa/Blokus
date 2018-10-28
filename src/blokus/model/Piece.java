@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * @author g47923
  */
-public class Piece {
+class Piece {
 
     private final Shape shape;
     private final Color color;
@@ -18,7 +18,7 @@ public class Piece {
      * @param shape is the shape of this piece.
      * @param color is the color of this piece.
      */
-    public Piece(Shape shape, Color color) {
+    Piece(Shape shape, Color color) {
         this.shape = shape;
         this.color = color;
     }
