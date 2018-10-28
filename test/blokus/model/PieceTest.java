@@ -11,9 +11,10 @@ import org.junit.Test;
 public class PieceTest {
 
     @Test
-    public void initAPieceOf5Positions() {
-        Piece pieceOf5 = new Piece(Shape.SHAPE_21, Color.BLUE);
-        assertTrue(5 == pieceOf5.getSize() && Color.BLUE == pieceOf5.getColor());
+    public void pieceShouldHaveExpectedColorAndShapeAfterInitialization() {
+        Piece piece = new Piece(Shape.SHAPE_21, Color.BLUE);
+        assertTrue(piece.getShape() == Shape.SHAPE_21
+                && Color.BLUE == piece.getColor());
     }
 
 }

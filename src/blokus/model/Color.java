@@ -2,11 +2,29 @@ package blokus.model;
 
 /**
  * Represents one of the color of Blokus.
- * 
+ *
  * @author g47923
  */
 public enum Color {
-    
-    BLUE, YELLOW, RED, GREEN;
-    
+
+    /**
+     * Represents the blue color.
+     */
+    BLUE,
+
+    /**
+     * Represents the yellow color.
+     */
+    YELLOW,
+
+    /**
+     * Represents the red color.
+     */
+    RED,
+
+    /**
+     * Represents the green color.
+     */
+    GREEN;
+
 }

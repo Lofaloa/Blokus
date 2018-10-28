@@ -19,8 +19,8 @@ public class PositionTest {
     @Test
     public void moveAPosition() {
         Position pos = new Position(2, 3);
-        pos.move(2, 3);
-        assertTrue(pos.getX() == 4 && pos.getY() == 6);
+        Position movedPos = pos.move(2, 3);
+        assertTrue(movedPos.getX() == 4 && movedPos.getY() == 6);
     }
 
 }

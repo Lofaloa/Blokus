@@ -1,45 +1,120 @@
 package blokus.model;
 
+import blokus.exception.BoardPositionOutOfBounds;
+import blokus.exception.IllegalActionException;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- *
+ * Tests the board.
  *
  * @author g47923
  */
 public class BoardTest {
 
     @Test
-    public void testIsFreeFullCell() {
-        Board board = new Board();
-        Piece p = new Piece(Shape.SHAPE_1, Color.BLUE);
-        board.add(p, new Position(0, 0));
-        assertFalse(board.isFree(new Position(0, 0)));
+    public void boardShouldBeEmptyAfterInitialization() {
+        Board b = new Board();
+        for (Piece[] pieces : b.getCells()) {
+            for (Piece piece : pieces) {
+                assertNull(piece);
+            }
+        }
     }
 
     @Test
-    public void testIsFreeCell() {
+    public void cellShouldNotBeFreeAfterBeingFilledWithPiece() {
         Board board = new Board();
-        assertTrue(board.isFree(new Position(0, 0)));
+        Piece fillingPiece = new Piece(Shape.SHAPE_01, Color.BLUE);
+        board.add(fillingPiece, 0, 0);
+        assertFalse(board.isFree(0, 0));
     }
 
     @Test
-    public void isValidCellOutOfBounds() {
+    public void cellShouldBeFreeWhenNotFilledWithPiece() {
         Board board = new Board();
-        assertFalse(board.isValid(new Position(0, 20)));
-        assertFalse(board.isValid(new Position(-1, 0)));
-        assertFalse(board.isValid(new Position(20, 0)));
-        assertFalse(board.isValid(new Position(0, -1)));
+        assertTrue(board.isFree(0, 0));
     }
 
     @Test
-    public void isValidCellInBounds() {
+    public void freeCellShouldNotCauseAnException() {
         Board board = new Board();
-        assertTrue(board.isValid(new Position(0, 0)));
-        assertTrue(board.isValid(new Position(0, 19)));
-        assertTrue(board.isValid(new Position(19, 19)));
-        assertTrue(board.isValid(new Position(19, 0)));
+        board.requireFreePosition(new Position(1, 1));
+    }
+
+    @Test(expected = IllegalActionException.class)
+    public void filledCellShouldCauseAnException() {
+        Board board = new Board();
+        Piece fillingPiece = new Piece(Shape.SHAPE_01, Color.BLUE);
+        board.add(fillingPiece, 1, 1);
+        board.requireFreePosition(new Position(1, 1));
+    }
+
+    @Test
+    public void outOfBoundsPositionShouldNotBeValidCells() {
+        Board board = new Board();
+        assertFalse(board.isValid(10, 20));
+        assertFalse(board.isValid(0, 20));
+        assertFalse(board.isValid(10, -1));
+        assertFalse(board.isValid(0, -1));
+    }
+
+    @Test
+    public void boardCornersShouldBeValidCells() {
+        Board board = new Board();
+        assertTrue(board.isValid(0, 0));
+        assertTrue(board.isValid(0, 19));
+        assertTrue(board.isValid(19, 19));
+        assertTrue(board.isValid(19, 0));
+    }
+
+    @Test
+    public void boardCornersShouldNotCauseAnException() {
+        Board board = new Board();
+        board.requireValidPosition(new Position(0, 0));
+        board.requireValidPosition(new Position(0, 19));
+        board.requireValidPosition(new Position(19, 19));
+        board.requireValidPosition(new Position(19, 0));
+    }
+
+    @Test(expected = BoardPositionOutOfBounds.class)
+    public void outOfBoundsPositionShouldCauseAnException() {
+        Board board = new Board();
+        board.requireValidPosition(new Position(10, 20));
+        board.requireValidPosition(new Position(0, 20));
+        board.requireValidPosition(new Position(10, -1));
+        board.requireValidPosition(new Position(0, -1));
+    }
+
+    @Test(expected = BoardPositionOutOfBounds.class)
+    public void outOfBoundsPartOfPieceShouldCauseExceptionWhenAdding() {
+        Board b = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
+        b.add(p, 0, 19);
+    }
+
+    @Test(expected = IllegalActionException.class)
+    public void addingAnOverlappingPieceShouldCauseException() {
+        Board b = new Board();
+        Piece piece = new Piece(Shape.SHAPE_04, Color.BLUE);
+        Piece overlappingPiece = new Piece(Shape.SHAPE_04, Color.RED);
+        b.add(piece, 0, 0);
+        b.add(overlappingPiece, 0, 1);
+    }
+
+    @Test
+    public void addedPieceInBoardShouldBeFoundAtGivenPosition() {
+        Board b = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
+        b.add(p, 0, 0);
+        assertFalse(b.isFree(0, 0) && b.isFree(1, 0) && b.isFree(1, 1));
+    }
+
+    @Test(expected = BoardPositionOutOfBounds.class)
+    public void addingPieceOutOfBoardBoundsShouldCauseException() {
+       Board b = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
+        b.add(p, -1, 0);
     }
 
 }

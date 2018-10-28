@@ -21,6 +21,13 @@ public class Stock {
         this.pieces = buildPiecesOf(color);
     }
 
+    /**
+     * Gets a piece of this stock by its id. A piece id is defined in the
+     * instructions of the game.
+     *
+     * @param id
+     * @return
+     */
     public Piece getPieceBy(int id) {
         return pieces.get(id);
     }

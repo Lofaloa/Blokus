@@ -7,8 +7,8 @@ package blokus.model;
  */
 public class Position {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     /**
      * Initializes this position to the given coordinates.
@@ -39,9 +39,15 @@ public class Position {
         return y;
     }
 
-    public void move(int dx, int dy) {
-        x += dx;
-        y += dy;
+    /**
+     * Makes a new position based on this position and the given offsets.
+     *
+     * @param offsetX is the offset to apply to this x position.
+     * @param offsetY is the offset to apply to this y position.
+     * @return a new position based on this position and the given offsets.
+     */
+    public Position move(int offsetX, int offsetY) {
+        return new Position(x + offsetX, y + offsetY);
     }
 
 }

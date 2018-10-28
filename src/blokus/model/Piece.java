@@ -1,7 +1,5 @@
 package blokus.model;
 
-import java.util.List;
-
 /**
  * Represents a piece.
  *
@@ -23,17 +21,13 @@ public class Piece {
         this.color = color;
     }
 
-    List<Position> getPositions() {
-        return shape.getPositions();
-    }
-
     /**
      * Gets this shape size.
      *
      * @return this shape size.
      */
-    int getSize() {
-        return shape.getSize();
+    Shape getShape() {
+        return shape;
     }
 
     /**
