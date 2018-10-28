@@ -41,6 +41,11 @@ public class Piece {
         return color;
     }
 
+    /**
+     * Gets a hash code based on this piece color and shape.
+     *
+     * @return a hash code based on this piece color and shape.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(shape, color);
