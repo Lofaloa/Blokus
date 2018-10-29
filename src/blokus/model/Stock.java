@@ -1,6 +1,7 @@
 package blokus.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -11,6 +12,8 @@ import java.util.List;
 class Stock {
 
     private final List<Piece> pieces;
+    private Piece lastTakenPiece;
+    private Color color;
 
     /**
      * Initializes this stock with 21 distinct pieces of the given color.
@@ -22,12 +25,66 @@ class Stock {
     }
 
     /**
+     * Indicates that this stock is empty.
+     *
+     * @return true if this stock is empty.
+     */
+    boolean isEmpty() {
+        return pieces.isEmpty();
+    }
+
+    /**
+     * Gets the last taken piece.
+     *
+     * @return the last taken piece.
+     */
+    Piece getLastTakenPiece() {
+        return new Piece(lastTakenPiece.getShape(), lastTakenPiece.getColor());
+    }
+
+    /**
      * Gets this stock pieces.
      *
      * @return this stock pieces.
      */
     List<Piece> getPieces() {
-        return pieces;
+        return Collections.unmodifiableList(pieces);
+    }
+
+    /**
+     * Gets the number of unit squares contained in this stock.
+     *
+     * @return the number of unit squares contained in this stock.
+     */
+    int getNumberOfSquares() {
+        if (isEmpty()) {
+            return 0;
+        } else {
+            int nbOfSquare = 0;
+            for (Piece piece : pieces) {
+                nbOfSquare += piece.getShape().getSize();
+            }
+            return nbOfSquare;
+        }
+    }
+
+    /**
+     * Gets the score of this stock.
+     *
+     * @return the score of this stock.
+     */
+    int getScore() {
+        int score = 0;
+        if (isEmpty()) {
+            score += 15;
+            if (lastTakenPiece.getShape() == Shape.SHAPE_01) {
+                System.out.println("test");
+                score += 5;
+            }
+        } else {
+            score -= getNumberOfSquares();
+        }
+        return score;
     }
 
     /**
@@ -44,6 +101,7 @@ class Stock {
             }
         }
         pieces.remove(wantedPiece);
+        lastTakenPiece = wantedPiece;
         return wantedPiece;
     }
 

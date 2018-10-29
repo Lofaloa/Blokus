@@ -32,6 +32,7 @@ public class Game implements Blokus {
 
     @Override
     public boolean isOver() {
+        //is over when all players are stuck OR one player stock is empty
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -42,7 +43,7 @@ public class Game implements Blokus {
 
     @Override
     public Player getCurrentPlayer() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return currentPlayer;
     }
 
     @Override

@@ -24,7 +24,7 @@ class Player {
      * @return the score of this player.
      */
     int getScore() {
-        return score;
+        return stock.getScore();
     }
 
     /**
