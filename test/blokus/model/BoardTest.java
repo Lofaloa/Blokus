@@ -15,7 +15,7 @@ public class BoardTest {
     @Test
     public void boardShouldBeEmptyAfterInitialization() {
         Board b = new Board();
-        for (Piece[] pieces : b.getCells()) {
+        for (Piece[] pieces : b.getSquares()) {
             for (Piece piece : pieces) {
                 assertNull(piece);
             }
@@ -39,7 +39,7 @@ public class BoardTest {
     @Test
     public void freeCellShouldNotCauseAnException() {
         Board board = new Board();
-        board.requireFreePosition(new Position(1, 1));
+        board.requireFreeSquare(new Square(1, 1));
     }
 
     @Test(expected = IllegalActionException.class)
@@ -47,7 +47,7 @@ public class BoardTest {
         Board board = new Board();
         Piece fillingPiece = new Piece(Shape.SHAPE_01, Color.BLUE);
         board.add(fillingPiece, 1, 1);
-        board.requireFreePosition(new Position(1, 1));
+        board.requireFreeSquare(new Square(1, 1));
     }
 
     @Test
@@ -71,19 +71,19 @@ public class BoardTest {
     @Test
     public void boardCornersShouldNotCauseAnException() {
         Board board = new Board();
-        board.requireValidPosition(new Position(0, 0));
-        board.requireValidPosition(new Position(0, 19));
-        board.requireValidPosition(new Position(19, 19));
-        board.requireValidPosition(new Position(19, 0));
+        board.requireValidPosition(new Square(0, 0));
+        board.requireValidPosition(new Square(0, 19));
+        board.requireValidPosition(new Square(19, 19));
+        board.requireValidPosition(new Square(19, 0));
     }
 
     @Test(expected = BoardPositionOutOfBounds.class)
     public void outOfBoundsPositionShouldCauseAnException() {
         Board board = new Board();
-        board.requireValidPosition(new Position(10, 20));
-        board.requireValidPosition(new Position(0, 20));
-        board.requireValidPosition(new Position(10, -1));
-        board.requireValidPosition(new Position(0, -1));
+        board.requireValidPosition(new Square(10, 20));
+        board.requireValidPosition(new Square(0, 20));
+        board.requireValidPosition(new Square(10, -1));
+        board.requireValidPosition(new Square(0, -1));
     }
 
     @Test(expected = BoardPositionOutOfBounds.class)
