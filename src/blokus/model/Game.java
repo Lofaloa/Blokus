@@ -50,8 +50,8 @@ public class Game implements Blokus {
         return currentPlayerPiece;
     }
 
-    public Stock getCurrentPlayerStock() {
-        return currentPlayer.getStock();
+    public List<Piece> getCurrentPlayerStock() {
+        return currentPlayer.getStock().getPieces();
     }
 
     @Override

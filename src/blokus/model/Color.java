@@ -5,7 +5,7 @@ package blokus.model;
  *
  * @author g47923
  */
-enum Color {
+public enum Color {
 
     /**
      * Represents the blue color.

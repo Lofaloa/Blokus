@@ -42,6 +42,22 @@ public class Piece {
     }
 
     /**
+     * Indicates if the given position is contained in this piece.
+     *
+     * @param i is the vertical position.
+     * @param j is the horizontal position.
+     * @return true if the given position in contained on this piece.
+     */
+    public boolean contains(int i, int j) {
+        for (Square square : shape.getSquares()) {
+            if (square.getRow() == i && square.getColumn() == j) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Gets a hash code based on this piece color and shape.
      *
      * @return a hash code based on this piece color and shape.
