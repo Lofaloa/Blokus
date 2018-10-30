@@ -8,74 +8,74 @@ import blokus.exception.IllegalActionException;
  *
  * @author g47923
  */
-public class Board {
+class Board {
 
     private final static int BOARD_SIZE = 20;
-    private final Piece[][] cells;
+    private final Piece[][] squares;
 
     /**
      * Initializes this board with a 20 by 20 empty grid.
      */
-<span class="fc" id="L19">    public Board() {</span>
-<span class="fc" id="L20">        this.cells = new Piece[BOARD_SIZE][BOARD_SIZE];</span>
+<span class="fc" id="L19">    Board() {</span>
+<span class="fc" id="L20">        this.squares = new Piece[BOARD_SIZE][BOARD_SIZE];</span>
 <span class="fc" id="L21">    }</span>
 
     /**
-     * Gets the cells of this board.
+     * Gets the squares of this board.
      *
-     * @return the cells of this board.
+     * @return the squares of this board.
      */
-    Piece[][] getCells() {
-<span class="fc" id="L29">        return cells;</span>
+    Piece[][] getSquares() {
+<span class="fc" id="L29">        return squares;</span>
     }
 
     /**
-     * Tells if the given cell position is free. A free cell does not contains a
+     * Tells if the given square is free. A free square does not contains a
      * piece.
      *
-     * @param row is the row of the cell to test.
-     * @param column is the column of the cell to test.
+     * @param row is the row of the square to test.
+     * @param column is the column of the square to test.
      * @return true if the given position is an empty cell.
      */
     boolean isFree(int row, int column) {
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        return cells[row][column] == null;</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        return squares[row][column] == null;</span>
     }
 
     /**
-     * Makes sure the given position is free.
+     * Makes sure the given square is free.
      *
-     * @param pos is the position to test.
-     * @throws IllegalActionException if the given position points to a filled
+     * @param square is the square to test.
+     * @throws IllegalActionException if the given square points to a filled
      * cell.
      */
-    void requireFreePosition(Position pos) {
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (!isFree(pos.getX(), pos.getY())) {</span>
-<span class="fc" id="L53">            throw new IllegalActionException(&quot;Position (row: &quot; + pos.getX()</span>
-<span class="fc" id="L54">                    + &quot;, column: &quot; + pos.getY() + &quot;) is not free.&quot;);</span>
+    void requireFreeSquare(Square square) {
+<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (!isFree(square.getRow(), square.getColumn())) {</span>
+<span class="fc" id="L53">            throw new IllegalActionException(&quot;Square (row: &quot; + square.getRow()</span>
+<span class="fc" id="L54">                    + &quot;, column: &quot; + square.getColumn() + &quot;) is not free.&quot;);</span>
         }
 <span class="fc" id="L56">    }</span>
 
     /**
-     * Tells if the given position is valid. A valid position is in the board
+     * Tells if the given square is valid. A valid square is in the board
      * bounds.
      *
-     * @param row is the row of the cell to test.
-     * @param column is the column of the cell to test.
-     * @return true if the given position in the board bounds.
+     * @param row is the row of the square to test.
+     * @param column is the column of the square to test.
+     * @return true if the given square in the board bounds.
      */
     boolean isValid(int row, int column) {
 <span class="pc bpc" id="L67" title="1 of 8 branches missed.">        return 0 &lt;= row &amp;&amp; row &lt; BOARD_SIZE &amp;&amp; 0 &lt;= column &amp;&amp; column &lt; BOARD_SIZE;</span>
     }
 
     /**
-     * Makes sure the given position is valid.
+     * Makes sure the given square is valid.
      *
-     * @param pos is the position to test.
-     * @throws BoardPositionOutOfBounds if the position is not valid.
+     * @param square is the square to test.
+     * @throws BoardPositionOutOfBounds if the square is not valid.
      */
-    void requireValidPosition(Position pos) {
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (!isValid(pos.getX(), pos.getY())) {</span>
-<span class="fc" id="L78">            throw new BoardPositionOutOfBounds(pos.getX(), pos.getY());</span>
+    void requireValidPosition(Square square) {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (!isValid(square.getRow(), square.getColumn())) {</span>
+<span class="fc" id="L78">            throw new BoardPositionOutOfBounds(square.getRow(), square.getColumn());</span>
         }
 <span class="fc" id="L80">    }</span>
 
@@ -83,18 +83,18 @@ public class Board {
      * Adds the given piece at the given row and column.
      *
      * @param piece is the piece to add to this board.
-     * @param row is the row of the destination in this board.
-     * @param column is the column of the destination in this board.
+     * @param row is the row of the square of destination in this board.
+     * @param column is the column of the square of destination in this board.
      */
     void add(Piece piece, int row, int column) {
-<span class="fc" id="L90">        requireValidPosition(new Position(row, column));</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (Position pos : piece.getShape().getPositions()) {</span>
-<span class="fc" id="L92">            Position cellPosition = pos.move(row, column);</span>
-<span class="fc" id="L93">            requireValidPosition(cellPosition);</span>
-<span class="fc" id="L94">            requireFreePosition(cellPosition);</span>
-<span class="fc" id="L95">            cells[cellPosition.getX()][cellPosition.getY()] = piece;</span>
+<span class="fc" id="L90">        requireValidPosition(new Square(row, column));</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (Square pieceSquare : piece.getShape().getSquares()) {</span>
+<span class="fc" id="L92">            Square square = pieceSquare.move(row, column);</span>
+<span class="fc" id="L93">            requireValidPosition(square);</span>
+<span class="fc" id="L94">            requireFreeSquare(square);</span>
+<span class="fc" id="L95">            squares[square.getRow()][square.getColumn()] = piece;</span>
 <span class="fc" id="L96">        }</span>
 <span class="fc" id="L97">    }</span>
-    
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

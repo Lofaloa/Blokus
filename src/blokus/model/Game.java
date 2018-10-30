@@ -1,5 +1,6 @@
 package blokus.model;
 
+import blokus.exception.IllegalActionException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -14,12 +15,11 @@ import java.util.stream.Collectors;
  */
 public class Game implements Blokus {
 
-
-
     private final LinkedList<Player> players;
     private ListIterator<Player> playerIterator;
     private final Board board;
     private Player currentPlayer;
+    private Piece currentPlayerPiece;
 
     public Game() {
         this.players = new LinkedList<>(Arrays.asList(
@@ -44,6 +44,10 @@ public class Game implements Blokus {
     @Override
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public Piece getCurrentPlayerPiece() {
+        return currentPlayerPiece;
     }
 
     @Override
@@ -94,7 +98,16 @@ public class Game implements Blokus {
 
     @Override
     public void placePiece(int row, int column) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {
+            throw new IllegalActionException("The current player has not selected "
+                    + "a piece.");
+        }
+        board.add(currentPlayerPiece, row, column);
+    }
+
+    @Override
+    public void selectCurrentPlayerPiece(int id) {
+        currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);
     }
 
     @Override

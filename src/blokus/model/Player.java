@@ -29,7 +29,7 @@ class Player {
 
     /**
      * Gets this player color.
-     * 
+     *
      * @return this player color.
      */
     public Color getColor() {

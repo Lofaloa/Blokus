@@ -10,16 +10,18 @@ import java.util.List;
 public interface Blokus {
 
     /**
-     * Starts a game of <i>Blokus</i>.
+     * Gets the current player of the game.
+     *
+     * @return the current player of the game.
      */
-    public void start();
+    public Player getCurrentPlayer();
 
     /**
-     * Indicates the end of the game.
+     * Gets the board game.
      *
-     * @return true if the game is over.
+     * @return the board game.
      */
-    public boolean isOver();
+    public Piece[][] getBoard();
 
     /**
      * Gets the winner of the game. The winner has the highest score. If two
@@ -30,16 +32,23 @@ public interface Blokus {
     public List<Player> getWinner();
 
     /**
-     * Gets the current player of the game.
+     * Indicates the end of the game.
      *
-     * @return the current player of the game.
+     * @return true if the game is over.
      */
-    public Player getCurrentPlayer();
+    public boolean isOver();
 
     /**
-     * Passes to the next player.
+     * Starts a game of <i>Blokus</i>.
      */
-    public void nextPlayer();
+    public void start();
+
+    /**
+     * Selects the piece of the current player.
+     *
+     * @param id is the piece id;
+     */
+    public void selectCurrentPlayerPiece(int id);
 
     /**
      * Places the current player piece on the board at the given position.
@@ -50,15 +59,13 @@ public interface Blokus {
     public void placePiece(int row, int column);
 
     /**
+     * Passes to the next player.
+     */
+    public void nextPlayer();
+
+    /**
      * Clears the board game.
      */
     public void clear();
-
-    /**
-     * Gets the board game.
-     *
-     * @return the board game.
-     */
-    public Piece[][] getBoard();
 
 }

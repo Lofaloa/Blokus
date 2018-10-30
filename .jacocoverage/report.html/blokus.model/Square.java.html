@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Square.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.model</a> &gt; <span class="el_source">Square.java</span></div><h1>Square.java</h1><pre class="source lang-java linenums">package blokus.model;
+
+/**
+ * Represents a unit square.
+ *
+ * @author g47923
+ */
+public class Square {
+
+    private final int row;
+    private final int column;
+
+    /**
+     * Initializes this square to the given coordinates.
+     *
+     * @param row is the row of this square.
+     * @param column is the column of this square.
+     */
+<span class="fc" id="L19">    public Square(int row, int column) {</span>
+<span class="fc" id="L20">        this.row = row;</span>
+<span class="fc" id="L21">        this.column = column;</span>
+<span class="fc" id="L22">    }</span>
+
+    /**
+     * Gets the row of this square.
+     *
+     * @return the row of this square.
+     */
+    public int getRow() {
+<span class="fc" id="L30">        return row;</span>
+    }
+
+    /**
+     * Gets the column of this square.
+     *
+     * @return the column of this square.
+     */
+    public int getColumn() {
+<span class="fc" id="L39">        return column;</span>
+    }
+
+    /**
+     * Creates a new square based on this square and the given offsets.
+     *
+     * @param rowOffset is the offset to apply to this square row.
+     * @param columnOffset is the offset to apply to this square column.
+     * @return a new position based on this position and the given offsets.
+     */
+    public Square move(int rowOffset, int columnOffset) {
+<span class="fc" id="L50">        return new Square(row + rowOffset, column + columnOffset);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
