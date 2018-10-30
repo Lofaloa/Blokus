@@ -28,6 +28,15 @@ class Player {
     }
 
     /**
+     * Gets this player color.
+     * 
+     * @return this player color.
+     */
+    public Color getColor() {
+        return color;
+    }
+
+    /**
      * Gets a piece in this player stock.
      *
      * @param shape is the shape of the wanted piece.

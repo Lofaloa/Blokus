@@ -54,6 +54,6 @@ public interface Blokus {
      *
      * @return the board game.
      */
-    Piece[][] getBoard();
+    public Piece[][] getBoard();
 
 }

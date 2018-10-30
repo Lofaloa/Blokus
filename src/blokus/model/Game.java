@@ -2,7 +2,9 @@ package blokus.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents the game.
@@ -25,9 +27,53 @@ public class Game implements Blokus {
         this.board = new Board();
     }
 
+    /**
+     * Gets this game players
+     *
+     * @return this game players.
+     */
+    List<Player> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
     @Override
-    public void start() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+    
+    @Override
+    public Piece[][] getBoard() {
+        return board.getSquares();
+    }
+
+    /**
+     * Gets the highest score of this game players.
+     *
+     * @return the highest score of this game players.
+     */
+    int getHighestScore() {
+        int highestScore = players.get(0).getScore();
+        for (int i = 1; i < players.size(); i++) {
+            Player currentPlayer = players.get(i);
+            if (highestScore < currentPlayer.getScore()) {
+                highestScore = currentPlayer.getScore();
+            }
+        }
+        return highestScore;
+    }
+
+    /**
+     * Gets the winner of this game. If more than one players have the same
+     * highest score then they are all consider winners.
+     *
+     * @return the winner(s).
+     */
+    @Override
+    public List<Player> getWinner() {
+        int highestScore = getHighestScore();
+        return players.stream()
+                .filter(p -> p.getScore() == highestScore)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -37,13 +83,8 @@ public class Game implements Blokus {
     }
 
     @Override
-    public List<Player> getWinner() {
+    public void start() {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Player getCurrentPlayer() {
-        return currentPlayer;
     }
 
     @Override
@@ -53,11 +94,6 @@ public class Game implements Blokus {
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Piece[][] getBoard() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
