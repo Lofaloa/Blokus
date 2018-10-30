@@ -1,9 +1,10 @@
 package blokus.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 /**
@@ -13,17 +14,21 @@ import java.util.stream.Collectors;
  */
 public class Game implements Blokus {
 
-    private final List<Player> players;
+
+
+    private final LinkedList<Player> players;
+    private ListIterator<Player> playerIterator;
     private final Board board;
     private Player currentPlayer;
 
     public Game() {
-        this.players = new ArrayList<>(Arrays.asList(
+        this.players = new LinkedList<>(Arrays.asList(
                 new Player(Color.BLUE),
                 new Player(Color.YELLOW),
                 new Player(Color.RED),
                 new Player(Color.GREEN)));
-        this.currentPlayer = players.get(0);
+        this.playerIterator = players.listIterator();
+        this.currentPlayer = playerIterator.next();
         this.board = new Board();
     }
 
@@ -40,7 +45,7 @@ public class Game implements Blokus {
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
-    
+
     @Override
     public Piece[][] getBoard() {
         return board.getSquares();
@@ -90,6 +95,16 @@ public class Game implements Blokus {
     @Override
     public void placePiece(int row, int column) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void nextPlayer() {
+        if (currentPlayer.getColor() == Color.GREEN) {
+            playerIterator = players.listIterator(0);
+            currentPlayer = playerIterator.next();
+        } else {
+            currentPlayer = playerIterator.next();
+        }
     }
 
     @Override

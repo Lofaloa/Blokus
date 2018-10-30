@@ -37,6 +37,11 @@ public interface Blokus {
     public Player getCurrentPlayer();
 
     /**
+     * Passes to the next player.
+     */
+    public void nextPlayer();
+
+    /**
      * Places the current player piece on the board at the given position.
      *
      * @param row is a row of the board.
