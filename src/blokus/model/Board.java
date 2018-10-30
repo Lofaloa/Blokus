@@ -8,7 +8,7 @@ import blokus.exception.IllegalActionException;
  *
  * @author g47923
  */
-class Board {
+public class Board {
 
     private final static int BOARD_SIZE = 20;
     private final Piece[][] squares;

@@ -28,6 +28,15 @@ class Player {
     }
 
     /**
+     * Gets this player stock.
+     *
+     * @return this player stock.
+     */
+    Stock getStock() {
+        return stock;
+    }
+
+    /**
      * Gets this player color.
      *
      * @return this player color.

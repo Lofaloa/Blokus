@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * @author g47923
  */
-class Piece {
+public class Piece {
 
     private final Shape shape;
     private final Color color;
@@ -37,7 +37,7 @@ class Piece {
      *
      * @return this shape color.
      */
-    Color getColor() {
+    public Color getColor() {
         return color;
     }
 
