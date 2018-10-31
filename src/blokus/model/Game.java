@@ -21,6 +21,11 @@ public class Game implements Blokus {
     private Player currentPlayer;
     private Piece currentPlayerPiece;
 
+    /**
+     * Initializes this game with four players of different colors: blue,
+     * yellow, red and green (the players play in this order). The game has an
+     * empty board.
+     */
     public Game() {
         this.players = new LinkedList<>(Arrays.asList(
                 new Player(Color.BLUE),
@@ -46,10 +51,13 @@ public class Game implements Blokus {
         return currentPlayer;
     }
 
+    @Override
     public Piece getCurrentPlayerPiece() {
         return currentPlayerPiece;
     }
 
+
+    @Override
     public List<Piece> getCurrentPlayerStock() {
         return currentPlayer.getStock().getPieces();
     }
@@ -92,7 +100,13 @@ public class Game implements Blokus {
     @Override
     public boolean isOver() {
         //is over when all players are stuck OR one player stock is empty
-        throw new UnsupportedOperationException("Not supported yet.");
+        //placement libre -> pas de test sur les joueurs blockés
+        for (Player player : players) {
+            if (player.getStock().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

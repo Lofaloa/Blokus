@@ -5,7 +5,7 @@ package blokus.model;
  *
  * @author g47923
  */
-class Player {
+public class Player {
 
     private final Color color;
     private int score;

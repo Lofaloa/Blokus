@@ -5,7 +5,7 @@
  *
  * @author g47923
  */
-class Player {
+public class Player {
 
     private final Color color;
     private int score;
@@ -28,12 +28,21 @@ class Player {
     }
 
     /**
+     * Gets this player stock.
+     *
+     * @return this player stock.
+     */
+    Stock getStock() {
+<span class="nc" id="L36">        return stock;</span>
+    }
+
+    /**
      * Gets this player color.
      *
      * @return this player color.
      */
     public Color getColor() {
-<span class="fc" id="L36">        return color;</span>
+<span class="fc" id="L45">        return color;</span>
     }
 
     /**
@@ -43,7 +52,7 @@ class Player {
      * @return the wanted piece.
      */
     Piece getPiece(Shape shape) {
-<span class="fc" id="L46">        return stock.getPieceBy(shape);</span>
+<span class="fc" id="L55">        return stock.getPieceBy(shape);</span>
     }
 
 }

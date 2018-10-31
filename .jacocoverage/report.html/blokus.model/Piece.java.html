@@ -7,7 +7,7 @@ import java.util.Objects;
  *
  * @author g47923
  */
-class Piece {
+public class Piece {
 
     private final Shape shape;
     private final Color color;
@@ -28,7 +28,7 @@ class Piece {
      *
      * @return this shape size.
      */
-    Shape getShape() {
+    public Shape getShape() {
 <span class="fc" id="L32">        return shape;</span>
     }
 
@@ -37,8 +37,24 @@ class Piece {
      *
      * @return this shape color.
      */
-    Color getColor() {
+    public Color getColor() {
 <span class="fc" id="L41">        return color;</span>
+    }
+
+    /**
+     * Indicates if the given position is contained in this piece.
+     *
+     * @param i is the vertical position.
+     * @param j is the horizontal position.
+     * @return true if the given position in contained on this piece.
+     */
+    public boolean contains(int i, int j) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        for (Square square : shape.getSquares()) {</span>
+<span class="nc bnc" id="L53" title="All 4 branches missed.">            if (square.getRow() == i &amp;&amp; square.getColumn() == j) {</span>
+<span class="nc" id="L54">                return true;</span>
+            }
+<span class="nc" id="L56">        }</span>
+<span class="nc" id="L57">        return false;</span>
     }
 
     /**
@@ -48,7 +64,7 @@ class Piece {
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L51">        return Objects.hash(shape, color);</span>
+<span class="fc" id="L67">        return Objects.hash(shape, color);</span>
     }
 
     /**
@@ -60,23 +76,23 @@ class Piece {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L64">            return true;</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L80">            return true;</span>
         }
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (obj == null) {</span>
-<span class="fc" id="L67">            return false;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L83">            return false;</span>
         }
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        if (getClass() != obj.getClass()) {</span>
-<span class="fc" id="L70">            return false;</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (getClass() != obj.getClass()) {</span>
+<span class="fc" id="L86">            return false;</span>
         }
-<span class="fc" id="L72">        final Piece other = (Piece) obj;</span>
-<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (this.shape != other.shape) {</span>
-<span class="fc" id="L74">            return false;</span>
+<span class="fc" id="L88">        final Piece other = (Piece) obj;</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (this.shape != other.shape) {</span>
+<span class="fc" id="L90">            return false;</span>
         }
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (this.color != other.color) {</span>
-<span class="fc" id="L77">            return false;</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (this.color != other.color) {</span>
+<span class="fc" id="L93">            return false;</span>
         }
-<span class="fc" id="L79">        return true;</span>
+<span class="fc" id="L95">        return true;</span>
     }
 
 }

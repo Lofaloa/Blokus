@@ -8,13 +8,13 @@ import blokus.exception.IllegalActionException;
  *
  * @author g47923
  */
-class Board {
+public class Board {
 
     private final static int BOARD_SIZE = 20;
     private final Piece[][] squares;
 
     /**
-     * Initializes this board with a 20 by 20 empty grid.
+     * Initializes this board with a 20 by 20 empty grid of squares.
      */
 <span class="fc" id="L19">    Board() {</span>
 <span class="fc" id="L20">        this.squares = new Piece[BOARD_SIZE][BOARD_SIZE];</span>
@@ -35,66 +35,82 @@ class Board {
      *
      * @param row is the row of the square to test.
      * @param column is the column of the square to test.
-     * @return true if the given position is an empty cell.
+     * @return true if the given position is an empty square.
      */
-    boolean isFree(int row, int column) {
+    boolean isFreeAt(int row, int column) {
 <span class="fc bfc" id="L41" title="All 2 branches covered.">        return squares[row][column] == null;</span>
     }
 
     /**
-     * Makes sure the given square is free.
-     *
-     * @param square is the square to test.
-     * @throws IllegalActionException if the given square points to a filled
-     * cell.
-     */
-    void requireFreeSquare(Square square) {
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (!isFree(square.getRow(), square.getColumn())) {</span>
-<span class="fc" id="L53">            throw new IllegalActionException(&quot;Square (row: &quot; + square.getRow()</span>
-<span class="fc" id="L54">                    + &quot;, column: &quot; + square.getColumn() + &quot;) is not free.&quot;);</span>
-        }
-<span class="fc" id="L56">    }</span>
-
-    /**
-     * Tells if the given square is valid. A valid square is in the board
-     * bounds.
+     * Tells if the given square is in this board bounds.
      *
      * @param row is the row of the square to test.
      * @param column is the column of the square to test.
-     * @return true if the given square in the board bounds.
+     * @return true if the given square is in the board bounds.
      */
-    boolean isValid(int row, int column) {
-<span class="pc bpc" id="L67" title="1 of 8 branches missed.">        return 0 &lt;= row &amp;&amp; row &lt; BOARD_SIZE &amp;&amp; 0 &lt;= column &amp;&amp; column &lt; BOARD_SIZE;</span>
+    boolean contains(int row, int column) {
+<span class="pc bpc" id="L52" title="1 of 8 branches missed.">        return 0 &lt;= row &amp;&amp; row &lt; BOARD_SIZE &amp;&amp; 0 &lt;= column &amp;&amp; column &lt; BOARD_SIZE;</span>
     }
 
     /**
-     * Makes sure the given square is valid.
+     * Tells if the given square is valid. A valid square is in this board
+     * bounds and free.
      *
-     * @param square is the square to test.
-     * @throws BoardPositionOutOfBounds if the square is not valid.
+     * @param row is the row of the square to test.
+     * @param column is the column of the square to test.
+     * @return true if the given square is in the board bounds and free.
      */
-    void requireValidPosition(Square square) {
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (!isValid(square.getRow(), square.getColumn())) {</span>
-<span class="fc" id="L78">            throw new BoardPositionOutOfBounds(square.getRow(), square.getColumn());</span>
-        }
-<span class="fc" id="L80">    }</span>
+    boolean isValid(int row, int column) {
+<span class="fc bfc" id="L64" title="All 4 branches covered.">        return contains(row, column) &amp;&amp; isFreeAt(row, column);</span>
+    }
 
     /**
-     * Adds the given piece at the given row and column.
+     * Makes sure the given square is valid. A valid square is free and is
+     * inside the board.
      *
-     * @param piece is the piece to add to this board.
-     * @param row is the row of the square of destination in this board.
-     * @param column is the column of the square of destination in this board.
+     * @param square is the square to check.
+     * @return a valid square.
      */
-    void add(Piece piece, int row, int column) {
-<span class="fc" id="L90">        requireValidPosition(new Square(row, column));</span>
-<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (Square pieceSquare : piece.getShape().getSquares()) {</span>
-<span class="fc" id="L92">            Square square = pieceSquare.move(row, column);</span>
-<span class="fc" id="L93">            requireValidPosition(square);</span>
-<span class="fc" id="L94">            requireFreeSquare(square);</span>
-<span class="fc" id="L95">            squares[square.getRow()][square.getColumn()] = piece;</span>
-<span class="fc" id="L96">        }</span>
-<span class="fc" id="L97">    }</span>
+    Square requireValidSquare(Square square) {
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (!contains(square.getRow(), square.getColumn())) {</span>
+<span class="fc" id="L76">            throw new BoardPositionOutOfBounds(square.getRow(), square.getColumn());</span>
+        }
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (!isFreeAt(square.getRow(), square.getColumn())) {</span>
+<span class="fc" id="L79">            throw new IllegalActionException(&quot;Square at position (&quot;</span>
+<span class="fc" id="L80">                    + square.getRow() + &quot;; &quot; + square.getColumn() + &quot;) is not free.&quot;);</span>
+        }
+<span class="fc" id="L82">        return square;</span>
+    }
+
+    /**
+     * Indicates that a piece can be add or not on this board.
+     *
+     * @param piece is piece to add.
+     * @return true if the given piece can be added.
+     */
+    boolean canAddAt(Piece piece, int row, int column) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        for (Square pieceSquare : piece.getShape().getSquares()) {</span>
+<span class="fc" id="L93">            Square boardSquare = pieceSquare.move(row, column);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            if (!isValid(boardSquare.getRow(), boardSquare.getColumn())) {</span>
+<span class="fc" id="L95">                return false;</span>
+            }
+<span class="fc" id="L97">        }</span>
+<span class="fc" id="L98">        return true;</span>
+    }
+<span class="nc" id="L100"></span>
+    /**
+     * Adds the given piece at the given row and column.
+<span class="nc" id="L103">     *</span>
+<span class="nc" id="L104">     * @param piece is the piece to add to this board.</span>
+     * @param row is the row of the square of destination in this board.
+<span class="nc" id="L106">     * @param column is the column of the square of destination in this board.</span>
+     */
+<span class="nc bnc" id="L108" title="All 2 branches missed.">    void add(Piece piece, int row, int column) {</span>
+<span class="pc bpc" id="L109" title="2 of 4 branches missed.">        for (Square pieceSquare : piece.getShape().getSquares()) {</span>
+<span class="pc bnc" id="L110" title="All 2 branches missed.">            Square boardSquare = requireValidSquare(pieceSquare.move(row, column));</span>
+<span class="pc" id="L111">            squares[boardSquare.getRow()][boardSquare.getColumn()] = piece;</span>
+<span class="fc" id="L112">        }</span>
+<span class="pc" id="L113">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

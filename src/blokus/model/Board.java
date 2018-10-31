@@ -14,7 +14,7 @@ public class Board {
     private final Piece[][] squares;
 
     /**
-     * Initializes this board with a 20 by 20 empty grid.
+     * Initializes this board with a 20 by 20 empty grid of squares.
      */
     Board() {
         this.squares = new Piece[BOARD_SIZE][BOARD_SIZE];
@@ -35,48 +35,67 @@ public class Board {
      *
      * @param row is the row of the square to test.
      * @param column is the column of the square to test.
-     * @return true if the given position is an empty cell.
+     * @return true if the given position is an empty square.
      */
-    boolean isFree(int row, int column) {
+    boolean isFreeAt(int row, int column) {
         return squares[row][column] == null;
     }
 
     /**
-     * Makes sure the given square is free.
-     *
-     * @param square is the square to test.
-     * @throws IllegalActionException if the given square points to a filled
-     * cell.
-     */
-    void requireFreeSquare(Square square) {
-        if (!isFree(square.getRow(), square.getColumn())) {
-            throw new IllegalActionException("Square (row: " + square.getRow()
-                    + ", column: " + square.getColumn() + ") is not free.");
-        }
-    }
-
-    /**
-     * Tells if the given square is valid. A valid square is in the board
-     * bounds.
+     * Tells if the given square is in this board bounds.
      *
      * @param row is the row of the square to test.
      * @param column is the column of the square to test.
-     * @return true if the given square in the board bounds.
+     * @return true if the given square is in the board bounds.
      */
-    boolean isValid(int row, int column) {
+    boolean contains(int row, int column) {
         return 0 <= row && row < BOARD_SIZE && 0 <= column && column < BOARD_SIZE;
     }
 
     /**
-     * Makes sure the given square is valid.
+     * Tells if the given square is valid. A valid square is in this board
+     * bounds and free.
      *
-     * @param square is the square to test.
-     * @throws BoardPositionOutOfBounds if the square is not valid.
+     * @param row is the row of the square to test.
+     * @param column is the column of the square to test.
+     * @return true if the given square is in the board bounds and free.
      */
-    void requireValidPosition(Square square) {
-        if (!isValid(square.getRow(), square.getColumn())) {
+    boolean isValid(int row, int column) {
+        return contains(row, column) && isFreeAt(row, column);
+    }
+
+    /**
+     * Makes sure the given square is valid. A valid square is free and is
+     * inside the board.
+     *
+     * @param square is the square to check.
+     * @return a valid square.
+     */
+    Square requireValidSquare(Square square) {
+        if (!contains(square.getRow(), square.getColumn())) {
             throw new BoardPositionOutOfBounds(square.getRow(), square.getColumn());
         }
+        if (!isFreeAt(square.getRow(), square.getColumn())) {
+            throw new IllegalActionException("Square at position ("
+                    + square.getRow() + "; " + square.getColumn() + ") is not free.");
+        }
+        return square;
+    }
+
+    /**
+     * Indicates that a piece can be add or not on this board.
+     *
+     * @param piece is piece to add.
+     * @return true if the given piece can be added.
+     */
+    boolean canAddAt(Piece piece, int row, int column) {
+        for (Square pieceSquare : piece.getShape().getSquares()) {
+            Square boardSquare = pieceSquare.move(row, column);
+            if (!isValid(boardSquare.getRow(), boardSquare.getColumn())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -87,12 +106,9 @@ public class Board {
      * @param column is the column of the square of destination in this board.
      */
     void add(Piece piece, int row, int column) {
-        requireValidPosition(new Square(row, column));
         for (Square pieceSquare : piece.getShape().getSquares()) {
-            Square square = pieceSquare.move(row, column);
-            requireValidPosition(square);
-            requireFreeSquare(square);
-            squares[square.getRow()][square.getColumn()] = piece;
+            Square boardSquare = requireValidSquare(pieceSquare.move(row, column));
+            squares[boardSquare.getRow()][boardSquare.getColumn()] = piece;
         }
     }
 
