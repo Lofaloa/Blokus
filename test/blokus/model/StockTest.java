@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
+ * Tests the stock.
  *
  * @author g47923
  */

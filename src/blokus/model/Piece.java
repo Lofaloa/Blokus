@@ -28,7 +28,7 @@ public class Piece {
      *
      * @return this shape size.
      */
-    Shape getShape() {
+    public Shape getShape() {
         return shape;
     }
 
