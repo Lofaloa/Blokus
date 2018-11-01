@@ -10,12 +10,13 @@ public class Player {
     private final Color color;
     private int score;
     private final Stock stock;
-
+    private boolean isStuck;
 
     Player(Color color) {
         this.color = color;
         this.score = 0;
         this.stock = new Stock(color);
+        this.isStuck = false;
     }
 
     /**
@@ -43,6 +44,23 @@ public class Player {
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * Tells if this player is stuck. A player is stuck when she/ he cannot
+     * place any of her/ his pieces on the board.
+     *
+     * @return true if this player is stuck.
+     */
+    public boolean isStuck() {
+        return isStuck;
+    }
+
+    /**
+     * Makes this player stuck.
+     */
+    public void stuck() {
+        isStuck = true;
     }
 
     /**

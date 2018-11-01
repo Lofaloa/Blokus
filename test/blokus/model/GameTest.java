@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests tha game.
+ * Tests the game.
  *
  * @author g47923
  */

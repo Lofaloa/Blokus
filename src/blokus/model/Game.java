@@ -51,13 +51,10 @@ public class Game implements Blokus {
         return currentPlayer;
     }
 
-    @Override
-    public Piece getCurrentPlayerPiece() {
+    Piece getCurrentPlayerPiece() {
         return currentPlayerPiece;
     }
 
-
-    @Override
     public List<Piece> getCurrentPlayerStock() {
         return currentPlayer.getStock().getPieces();
     }
@@ -83,12 +80,6 @@ public class Game implements Blokus {
         return highestScore;
     }
 
-    /**
-     * Gets the winner of this game. If more than one players have the same
-     * highest score then they are all consider winners.
-     *
-     * @return the winner(s).
-     */
     @Override
     public List<Player> getWinner() {
         int highestScore = getHighestScore();
@@ -114,6 +105,38 @@ public class Game implements Blokus {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * Tells if the given piece can be added to this game board.
+     *
+     * @param piece
+     * @return
+     */
+    boolean canBePlaced(Piece piece) {
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                if (board.canAddAt(piece, j, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Tells if the current player is stuck. A player is stuck when she/ he
+     * cannot place any of the pieces.
+     *
+     * @return true if the current player is stuck.
+     */
+    boolean isCurrentPlayerStuck() {
+        for (Piece piece : currentPlayer.getStock().getPieces()) {
+            if (canBePlaced(piece)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     public void placePiece(int row, int column) {
         if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {
@@ -125,7 +148,11 @@ public class Game implements Blokus {
 
     @Override
     public void selectCurrentPlayerPiece(int id) {
-        currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);
+        if (isCurrentPlayerStuck()) {
+            nextPlayer();
+        } else {
+            currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);
+        }
     }
 
     @Override

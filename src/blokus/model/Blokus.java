@@ -17,20 +17,6 @@ public interface Blokus {
     public Player getCurrentPlayer();
 
     /**
-     * Gets the current player piece.
-     *
-     * @return the current player piece.
-     */
-    public Piece getCurrentPlayerPiece();
-
-    /**
-     * Gets the current player stock.
-     *
-     * @return the current player stock.
-     */
-    public List<Piece> getCurrentPlayerStock();
-
-    /**
      * Gets the board game.
      *
      * @return the board game.
