@@ -13,6 +13,11 @@ public interface BlokusView {
     public void printStart();
 
     /**
+     * Prints the current player of the game.
+     */
+    public void printCurrentPlayer();
+
+    /**
      * Reads and execute a command entered by an user.
      */
     public void executeCommand();

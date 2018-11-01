@@ -39,6 +39,10 @@ class Output {
                 + " stock in the board a (i; j).");
     }
 
+    void printCurrentPlayer() {
+        System.out.println(game.getCurrentPlayer().getColor() + " is playing...");
+    }
+
     /**
      * Prints a prompt for the user.
      */
@@ -69,11 +73,24 @@ class Output {
     }
 
     /**
+     * Prints the columns number of the board.
+     */
+    void printColumnNumbers() {
+        System.out.printf("%4c", ' ');
+        for (int i = 0; i < 20; i++) {
+            System.out.printf("%02d ", i);
+        }
+        System.out.println(" ");
+    }
+
+    /**
      * Prints the current state of the game board.
      */
     void printBoard() {
         Piece[][] board = game.getBoard();
+        printColumnNumbers();
         for (int i = 0; i < 20; i++) {
+            System.out.printf("%02d ", i);
             for (int j = 0; j < 20; j++) {
                 if (board[i][j] == null) {
                     System.out.print(" . ");
@@ -92,14 +109,16 @@ class Output {
      */
     void printPiece(Piece piece) {
         System.out.println(piece.getShape());
-//        for (int i = 0; i <= 5; i++) {
-//            for (int j = 0; j <= 5; j++) {
-//                if (piece.contains(i, j)) {
-//                    printSquare(piece);
-//                }
-//            }
-//            System.out.println(" ");
-//        }
+        for (int i = 0; i < piece.getShape().getSize(); i++) {
+            for (int j = 0; j < piece.getShape().getSize(); j++) {
+                if (piece.contains(i, j)) {
+                    printSquare(piece);
+                } else {
+                    System.out.print("   ");
+                }
+            }
+            System.out.println(" ");
+        }
     }
 
     /**

@@ -29,8 +29,13 @@ public class ControllerConsole {
      */
     public void launch() {
         view.printStart();
-        while (true) {
-            view.executeCommand();
+        while (!game.isOver()) {
+            try {
+                view.printCurrentPlayer();
+                view.executeCommand();
+            } catch (Exception e) {
+                System.out.println("usage: " + e.getMessage());
+            }
         }
     }
 

@@ -51,7 +51,7 @@ public class Game implements Blokus {
         return currentPlayer;
     }
 
-    Piece getCurrentPlayerPiece() {
+    public Piece getCurrentPlayerPiece() {
         return currentPlayerPiece;
     }
 
@@ -90,8 +90,7 @@ public class Game implements Blokus {
 
     @Override
     public boolean isOver() {
-        //is over when all players are stuck OR one player stock is empty
-        //placement libre -> pas de test sur les joueurs blockés
+        //TEST: pas de test sur les joueurs blockés
         for (Player player : players) {
             if (player.getStock().isEmpty()) {
                 return true;

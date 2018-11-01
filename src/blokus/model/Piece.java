@@ -49,12 +49,7 @@ public class Piece {
      * @return true if the given position in contained on this piece.
      */
     public boolean contains(int i, int j) {
-        for (Square square : shape.getSquares()) {
-            if (square.getRow() == i && square.getColumn() == j) {
-                return true;
-            }
-        }
-        return false;
+        return shape.getSquares().contains(new Square(i, j));
     }
 
     /**

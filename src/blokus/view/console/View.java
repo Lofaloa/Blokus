@@ -23,9 +23,11 @@ public class View implements BlokusView {
         out.printHelp();
     }
 
-    /**
-     * Reads command from user and imediatly execute it.
-     */
+    @Override
+    public void printCurrentPlayer() {
+        out.printCurrentPlayer();
+    }
+
     @Override
     public void executeCommand() {
         in.executeCommand(in.readCommand());
