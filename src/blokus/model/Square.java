@@ -3,7 +3,7 @@ package blokus.model;
 /**
  * Represents a unit square.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public class Square {
 
@@ -77,6 +77,6 @@ public class Square {
         return true;
     }
 
-    
+
 
 }

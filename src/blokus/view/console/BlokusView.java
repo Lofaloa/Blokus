@@ -3,7 +3,7 @@ package blokus.view.console;
 /**
  * Manages the input and the output of <i>Blokus</i>.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public interface BlokusView {
 

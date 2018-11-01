@@ -13,13 +13,13 @@ public class GameTest {
 
     @Test
     public void initializedGameShouldHaveFourPlayersAndAnEmptyBoard() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         assertTrue(g.getPlayers().size() == 4);
     }
 
     @Test
     public void winnerShouldBeThePlayerWithTheHighestScore() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         Player currentPlayer = g.getCurrentPlayer();
         g.selectCurrentPlayerPiece(4);
         g.placePiece(0, 0);
@@ -29,7 +29,7 @@ public class GameTest {
 
     @Test
     public void playersWithSameHighestScoreShouldBeBothWinners() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(4);
         g.placePiece(0, 0);
         g.nextPlayer();
@@ -42,7 +42,7 @@ public class GameTest {
 
     @Test
     public void placedPieceShouldBeOnBoardAtGivenPosition() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(1);
         g.placePiece(0, 0);
         assertEquals(Shape.SHAPE_01, g.getBoard()[0][0].getShape());
@@ -50,7 +50,7 @@ public class GameTest {
 
     @Test(expected = IllegalActionException.class)
     public void currentPlayerCannotPlaceWithoutSelectingPiece() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(2);
         g.nextPlayer();
         g.placePiece(0, 0);
@@ -58,27 +58,27 @@ public class GameTest {
 
     @Test
     public void currentPlayerPieceShouldBeTheOneSelected() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(2);
         assertEquals(Shape.SHAPE_02, g.getCurrentPlayerPiece().getShape());
     }
 
     @Test
     public void currentPlayerIsBluePlayerAfterInitialization() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         assertEquals(Color.BLUE, g.getCurrentPlayer().getColor());
     }
 
     @Test
     public void yellowPlayerShouldFollowBluePlayer() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         g.nextPlayer();
         assertEquals(Color.YELLOW, g.getCurrentPlayer().getColor());
     }
 
     @Test
     public void redPlayerShouldFollowYellowPlayer() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
         assertEquals(Color.RED, g.getCurrentPlayer().getColor());
@@ -86,7 +86,7 @@ public class GameTest {
 
     @Test
     public void greenPlayerShouldFollowRedPlayer() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
@@ -95,7 +95,7 @@ public class GameTest {
 
     @Test
     public void bluePlayerShouldFollowGreenPlayer() {
-        Game g = new Game();
+        Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();

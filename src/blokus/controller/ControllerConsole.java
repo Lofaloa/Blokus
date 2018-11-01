@@ -1,6 +1,6 @@
 package blokus.controller;
 
-import blokus.model.Game;
+import blokus.model.Blokus;
 import blokus.view.console.View;
 
 /**
@@ -10,7 +10,7 @@ import blokus.view.console.View;
  */
 public class ControllerConsole {
 
-    private final Game game;
+    private final Blokus game;
     private final View view;
 
     /**
@@ -19,7 +19,7 @@ public class ControllerConsole {
      * @param game is the game to control.
      * @param view is the view of the game to control.
      */
-    public ControllerConsole(Game game, View view) {
+    public ControllerConsole(Blokus game, View view) {
         this.game = game;
         this.view = view;
     }

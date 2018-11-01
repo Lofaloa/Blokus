@@ -3,7 +3,7 @@ package blokus.model;
 /**
  * Represents a player.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public class Player {
 

@@ -6,7 +6,7 @@ import blokus.exception.IllegalActionException;
 /**
  * Represents a board.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public class Board {
 

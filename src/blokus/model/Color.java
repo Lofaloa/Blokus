@@ -1,9 +1,9 @@
 package blokus.model;
 
 /**
- * Represents one of the color of Blokus.
+ * Represents one of the color of <i>Blokus</i>.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public enum Color {
 

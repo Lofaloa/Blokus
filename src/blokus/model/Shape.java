@@ -9,7 +9,7 @@ import java.util.List;
  * the game <a href="https://bit.ly/2ENXpH3">instructions</a> (see list of
  * parts).
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public enum Shape {
 

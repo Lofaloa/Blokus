@@ -1,7 +1,7 @@
 package blokus;
 
 import blokus.controller.ControllerConsole;
-import blokus.model.Game;
+import blokus.model.Blokus;
 import blokus.view.console.View;
 
 /**
@@ -17,7 +17,7 @@ public class BlokusConsole {
      * @param args nothing.
      */
     public static void main(String[] args) {
-        Game game = new Game();
+        Blokus game = new Blokus();
         View view = new View(game);
         ControllerConsole controller = new ControllerConsole(game, view);
         controller.launch();

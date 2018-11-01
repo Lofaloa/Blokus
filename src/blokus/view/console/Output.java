@@ -1,23 +1,23 @@
 package blokus.view.console;
 
-import blokus.model.Game;
+import blokus.model.Blokus;
 import blokus.model.Piece;
 
 /**
  * Manages the display of the game.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 class Output {
 
-    private final Game game;
+    private final Blokus game;
 
     /**
      * Initializes this view for the given game.
      *
      * @param game is the game for which manage the view.
      */
-    Output(Game game) {
+    Output(Blokus game) {
         this.game = game;
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Represents a stock of 21 pieces.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 class Stock {
 

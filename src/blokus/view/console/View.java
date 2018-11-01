@@ -1,18 +1,18 @@
 package blokus.view.console;
 
-import blokus.model.Game;
+import blokus.model.Blokus;
 
 /**
  * Represents the view.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public class View implements BlokusView {
 
     private final Input in;
     private final Output out;
 
-    public View(Game game) {
+    public View(Blokus game) {
         this.in = new Input(game);
         this.out = new Output(game);
     }

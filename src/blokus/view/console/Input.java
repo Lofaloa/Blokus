@@ -1,6 +1,6 @@
 package blokus.view.console;
 
-import blokus.model.Game;
+import blokus.model.Blokus;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
@@ -9,16 +9,16 @@ import static java.lang.Integer.parseInt;
 /**
  * Manages the input of the user.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 class Input {
 
     private final Scanner in;
     private final String[] commandsNames;
-    private final Game game;
+    private final Blokus game;
     private final Output display;
 
-    public Input(Game game) {
+    public Input(Blokus game) {
         this.in = new Scanner(System.in);
         this.commandsNames = new String[]{"show", "stock", "play"};
         this.game = game;

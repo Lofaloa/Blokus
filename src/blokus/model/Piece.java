@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Represents a piece.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public class Piece {
 
