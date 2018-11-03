@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Square.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.model</a> &gt; <span class="el_source">Square.java</span></div><h1>Square.java</h1><pre class="source lang-java linenums">package blokus.model;
 
+import blokus.exception.ModelException;
+
 /**
  * Represents a unit square.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public class Square {
 
@@ -15,11 +17,17 @@ public class Square {
      *
      * @param row is the row of this square.
      * @param column is the column of this square.
+     * @throws blokus.exception.ModelException if the given row and column are
+     * not valid.
      */
-<span class="fc" id="L19">    public Square(int row, int column) {</span>
-<span class="fc" id="L20">        this.row = row;</span>
-<span class="fc" id="L21">        this.column = column;</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L23">    public Square(int row, int column) throws ModelException {</span>
+<span class="pc bpc" id="L24" title="3 of 8 branches missed.">        if (row &lt; 0 || 19 &lt; row &amp;&amp; column &lt; 0 || 19 &lt; column) {</span>
+<span class="fc" id="L25">            throw new ModelException(&quot;Square at position (&quot; + row + &quot;; &quot;</span>
+                    + column + &quot;) is not valid, the board has 20 row and columns.&quot;);
+        }
+<span class="fc" id="L28">        this.row = row;</span>
+<span class="fc" id="L29">        this.column = column;</span>
+<span class="fc" id="L30">    }</span>
 
     /**
      * Gets the row of this square.
@@ -27,7 +35,7 @@ public class Square {
      * @return the row of this square.
      */
     public int getRow() {
-<span class="fc" id="L30">        return row;</span>
+<span class="fc" id="L38">        return row;</span>
     }
 
     /**
@@ -36,7 +44,7 @@ public class Square {
      * @return the column of this square.
      */
     public int getColumn() {
-<span class="fc" id="L39">        return column;</span>
+<span class="fc" id="L47">        return column;</span>
     }
 
     /**
@@ -45,9 +53,38 @@ public class Square {
      * @param rowOffset is the offset to apply to this square row.
      * @param columnOffset is the offset to apply to this square column.
      * @return a new position based on this position and the given offsets.
+     * @throws blokus.exception.ModelException if the new position of the square
+     * is not valid.
      */
-    public Square move(int rowOffset, int columnOffset) {
-<span class="fc" id="L50">        return new Square(row + rowOffset, column + columnOffset);</span>
+    public Square move(int rowOffset, int columnOffset) throws ModelException {
+<span class="fc" id="L60">        return new Square(row + rowOffset, column + columnOffset);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L65">        int hash = 5;</span>
+<span class="nc" id="L66">        return hash;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L72">            return true;</span>
+        }
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L75">            return false;</span>
+        }
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L78">            return false;</span>
+        }
+<span class="nc" id="L80">        final Square other = (Square) obj;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        if (this.row != other.row) {</span>
+<span class="nc" id="L82">            return false;</span>
+        }
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (this.column != other.column) {</span>
+<span class="nc" id="L85">            return false;</span>
+        }
+<span class="nc" id="L87">        return true;</span>
     }
 
 }

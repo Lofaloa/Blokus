@@ -1,5 +1,6 @@
 package blokus.model;
 
+import blokus.exception.ModelException;
 import java.util.Objects;
 
 /**
@@ -47,8 +48,9 @@ public class Piece {
      * @param i is the vertical position.
      * @param j is the horizontal position.
      * @return true if the given position in contained on this piece.
+     * @throws ModelException if the given row and column are not valid.
      */
-    public boolean contains(int i, int j) {
+    public boolean contains(int i, int j) throws ModelException {
         return shape.getSquares().contains(new Square(i, j));
     }
 

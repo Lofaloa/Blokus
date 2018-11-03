@@ -1,6 +1,7 @@
 package blokus.model;
 
 import blokus.exception.IllegalActionException;
+import blokus.exception.ModelException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -9,7 +10,7 @@ import static org.junit.Assert.*;
  *
  * @author g47923
  */
-public class GameTest {
+public class BlokusTest {
 
     @Test
     public void initializedGameShouldHaveFourPlayersAndAnEmptyBoard() {
@@ -38,6 +39,18 @@ public class GameTest {
         assertEquals(-86, g.getHighestScore());
         assertEquals(Color.BLUE, g.getWinner().get(0).getColor());
         assertEquals(Color.YELLOW, g.getWinner().get(1).getColor());
+    }
+
+    @Test(expected = ModelException.class)
+    public void tooSmallPieceIdShouldCauseExceptionWhenSelectingPiece() {
+        Blokus g = new Blokus();
+        g.selectCurrentPlayerPiece(0);
+    }
+
+    @Test(expected = ModelException.class)
+    public void tooBigPieceIdShouldCauseExceptionWhenSelectingPiece() {
+        Blokus g = new Blokus();
+        g.selectCurrentPlayerPiece(22);
     }
 
     @Test

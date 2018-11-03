@@ -3,20 +3,21 @@
 /**
  * Represents a player.
  *
- * @author g47923
+ * @author Logan Farci (47923)
  */
 public class Player {
 
     private final Color color;
     private int score;
     private final Stock stock;
-
+    private boolean isStuck;
 
 <span class="fc" id="L15">    Player(Color color) {</span>
 <span class="fc" id="L16">        this.color = color;</span>
 <span class="fc" id="L17">        this.score = 0;</span>
 <span class="fc" id="L18">        this.stock = new Stock(color);</span>
-<span class="fc" id="L19">    }</span>
+<span class="fc" id="L19">        this.isStuck = false;</span>
+<span class="fc" id="L20">    }</span>
 
     /**
      * Gets the score of this player.
@@ -24,7 +25,7 @@ public class Player {
      * @return the score of this player.
      */
     int getScore() {
-<span class="fc" id="L27">        return stock.getScore();</span>
+<span class="fc" id="L28">        return stock.getScore();</span>
     }
 
     /**
@@ -33,7 +34,7 @@ public class Player {
      * @return this player stock.
      */
     Stock getStock() {
-<span class="nc" id="L36">        return stock;</span>
+<span class="nc" id="L37">        return stock;</span>
     }
 
     /**
@@ -42,8 +43,25 @@ public class Player {
      * @return this player color.
      */
     public Color getColor() {
-<span class="fc" id="L45">        return color;</span>
+<span class="fc" id="L46">        return color;</span>
     }
+
+    /**
+     * Tells if this player is stuck. A player is stuck when she/ he cannot
+     * place any of her/ his pieces on the board.
+     *
+     * @return true if this player is stuck.
+     */
+    public boolean isStuck() {
+<span class="nc" id="L56">        return isStuck;</span>
+    }
+
+    /**
+     * Makes this player stuck.
+     */
+    public void stuck() {
+<span class="nc" id="L63">        isStuck = true;</span>
+<span class="nc" id="L64">    }</span>
 
     /**
      * Gets a piece in this player stock.
@@ -52,7 +70,7 @@ public class Player {
      * @return the wanted piece.
      */
     Piece getPiece(Shape shape) {
-<span class="fc" id="L55">        return stock.getPieceBy(shape);</span>
+<span class="fc" id="L73">        return stock.getPieceBy(shape);</span>
     }
 
 }

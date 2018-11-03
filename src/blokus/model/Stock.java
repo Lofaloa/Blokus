@@ -13,7 +13,6 @@ class Stock {
 
     private final List<Piece> pieces;
     private Piece lastTakenPiece;
-    private Color color;
 
     /**
      * Initializes this stock with 21 distinct pieces of the given color.

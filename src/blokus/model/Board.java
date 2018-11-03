@@ -2,6 +2,7 @@ package blokus.model;
 
 import blokus.exception.BoardPositionOutOfBounds;
 import blokus.exception.IllegalActionException;
+import blokus.exception.ModelException;
 
 /**
  * Represents a board.
@@ -71,9 +72,10 @@ public class Board {
      * @param square is the square to check.
      * @return a valid square.
      */
-    Square requireValidSquare(Square square) {
+    Square requireValidSquare(Square square) throws ModelException {
         if (!contains(square.getRow(), square.getColumn())) {
-            throw new BoardPositionOutOfBounds(square.getRow(), square.getColumn());
+            throw new ModelException("Square at position ("
+                    + square.getRow() + "; " + square.getColumn() + ") is out of bounds.");
         }
         if (!isFreeAt(square.getRow(), square.getColumn())) {
             throw new IllegalActionException("Square at position ("
@@ -83,29 +85,13 @@ public class Board {
     }
 
     /**
-     * Indicates that a piece can be add or not on this board.
-     *
-     * @param piece is piece to add.
-     * @return true if the given piece can be added.
-     */
-    boolean canAddAt(Piece piece, int row, int column) {
-        for (Square pieceSquare : piece.getShape().getSquares()) {
-            Square boardSquare = pieceSquare.move(row, column);
-            if (!isValid(boardSquare.getRow(), boardSquare.getColumn())) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
      * Adds the given piece at the given row and column.
      *
      * @param piece is the piece to add to this board.
      * @param row is the row of the square of destination in this board.
      * @param column is the column of the square of destination in this board.
      */
-    void add(Piece piece, int row, int column) {
+    void add(Piece piece, int row, int column) throws ModelException {
         for (Square pieceSquare : piece.getShape().getSquares()) {
             Square boardSquare = requireValidSquare(pieceSquare.move(row, column));
             squares[boardSquare.getRow()][boardSquare.getColumn()] = piece;

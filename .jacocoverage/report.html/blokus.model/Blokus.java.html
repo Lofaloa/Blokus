@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Blokus.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.model</a> &gt; <span class="el_source">Blokus.java</span></div><h1>Blokus.java</h1><pre class="source lang-java linenums">package blokus.model;
+
+import blokus.exception.IllegalActionException;
+import blokus.exception.ModelException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.stream.Collectors;
+
+/**
+ * Represents &lt;i&gt;Blokus&lt;/i&gt;.
+ *
+ * @author Logan Farci (47923)
+ */
+public class Blokus implements Game {
+
+    private final List&lt;Player&gt; players;
+    private ListIterator&lt;Player&gt; playerIterator;
+    private final Board board;
+    private Player currentPlayer;
+    private Piece currentPlayerPiece;
+
+    /**
+     * Initializes this game with four players of different colors: blue,
+     * yellow, red and green (the players play in this order). The game has an
+     * empty board.
+     */
+<span class="fc" id="L30">    public Blokus() {</span>
+<span class="fc" id="L31">        this.players = new ArrayList&lt;&gt;(Arrays.asList(</span>
+                new Player(Color.BLUE),
+                new Player(Color.YELLOW),
+                new Player(Color.RED),
+                new Player(Color.GREEN)));
+<span class="fc" id="L36">        this.playerIterator = players.listIterator();</span>
+<span class="fc" id="L37">        this.currentPlayer = playerIterator.next();</span>
+<span class="fc" id="L38">        this.board = new Board();</span>
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * Gets this game players
+     *
+     * @return this game players.
+     */
+    List&lt;Player&gt; getPlayers() {
+<span class="fc" id="L47">        return Collections.unmodifiableList(players);</span>
+    }
+
+    @Override
+    public Player getCurrentPlayer() {
+<span class="fc" id="L52">        return currentPlayer;</span>
+    }
+
+    @Override
+    public Piece getCurrentPlayerPiece() {
+<span class="fc" id="L57">        return currentPlayerPiece;</span>
+    }
+
+    @Override
+    public List&lt;Piece&gt; getCurrentPlayerStock() {
+<span class="nc" id="L62">        return currentPlayer.getStock().getPieces();</span>
+    }
+
+    @Override
+    public Piece[][] getBoard() {
+<span class="fc" id="L67">        return board.getSquares();</span>
+    }
+
+    /**
+     * Gets the highest score of this game players.
+     *
+     * @return the highest score of this game players.
+     */
+    int getHighestScore() {
+<span class="fc" id="L76">        int highestScore = players.get(0).getScore();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (int i = 1; i &lt; players.size(); i++) {</span>
+<span class="fc" id="L78">            Player currentPlayer = players.get(i);</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">            if (highestScore &lt; currentPlayer.getScore()) {</span>
+<span class="nc" id="L80">                highestScore = currentPlayer.getScore();</span>
+            }
+        }
+<span class="fc" id="L83">        return highestScore;</span>
+    }
+
+    @Override
+    public List&lt;Player&gt; getWinner() {
+<span class="fc" id="L88">        int highestScore = getHighestScore();</span>
+<span class="fc" id="L89">        return players.stream()</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">                .filter(p -&gt; p.getScore() == highestScore)</span>
+<span class="fc" id="L91">                .collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public boolean isOver() {
+        //TEST: pas de test sur les joueurs blockés
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        for (Player player : players) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            if (player.getStock().isEmpty()) {</span>
+<span class="nc" id="L99">                return true;</span>
+            }
+<span class="nc" id="L101">        }</span>
+<span class="nc" id="L102">        return false;</span>
+    }
+
+    @Override
+    public void start() {
+<span class="nc" id="L107">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;);</span>
+    }
+
+    @Override
+    public void placePiece(int row, int column) throws ModelException {
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {</span>
+<span class="fc" id="L113">            throw new IllegalActionException(&quot;The current player has not selected &quot;</span>
+                    + &quot;a piece.&quot;);
+        }
+<span class="fc" id="L116">        board.add(currentPlayerPiece, row, column);</span>
+<span class="fc" id="L117">    }</span>
+
+    @Override
+    public void selectCurrentPlayerPiece(int id) throws ModelException {
+<span class="fc bfc" id="L121" title="All 4 branches covered.">        if (id &lt; 1 || 21 &lt; id) {</span>
+<span class="fc" id="L122">            throw new ModelException(id + &quot; is not a valid piece id, there &quot;</span>
+                    + &quot;are 21 pieces.&quot;);
+        }
+<span class="fc" id="L125">        currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);</span>
+<span class="fc" id="L126">    }</span>
+
+    @Override
+    public void nextPlayer() {
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (currentPlayer.getColor() == Color.GREEN) {</span>
+<span class="fc" id="L131">            playerIterator = players.listIterator(0);</span>
+<span class="fc" id="L132">            currentPlayer = playerIterator.next();</span>
+        } else {
+<span class="fc" id="L134">            currentPlayer = playerIterator.next();</span>
+        }
+<span class="fc" id="L136">    }</span>
+
+    @Override
+    public void clear() {
+<span class="nc" id="L140">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

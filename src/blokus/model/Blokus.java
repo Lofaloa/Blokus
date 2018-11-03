@@ -1,6 +1,7 @@
 package blokus.model;
 
 import blokus.exception.IllegalActionException;
+import blokus.exception.ModelException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -106,40 +107,8 @@ public class Blokus implements Game {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    /**
-     * Tells if the given piece can be added to this game board.
-     *
-     * @param piece
-     * @return
-     */
-    boolean canBePlaced(Piece piece) {
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                if (board.canAddAt(piece, j, j)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Tells if the current player is stuck. A player is stuck when she/ he
-     * cannot place any of the pieces.
-     *
-     * @return true if the current player is stuck.
-     */
-    boolean isCurrentPlayerStuck() {
-        for (Piece piece : currentPlayer.getStock().getPieces()) {
-            if (canBePlaced(piece)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @Override
-    public void placePiece(int row, int column) {
+    public void placePiece(int row, int column) throws ModelException {
         if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {
             throw new IllegalActionException("The current player has not selected "
                     + "a piece.");
@@ -148,12 +117,12 @@ public class Blokus implements Game {
     }
 
     @Override
-    public void selectCurrentPlayerPiece(int id) {
-        if (isCurrentPlayerStuck()) {
-            nextPlayer();
-        } else {
-            currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);
+    public void selectCurrentPlayerPiece(int id) throws ModelException {
+        if (id < 1 || 21 < id) {
+            throw new ModelException(id + " is not a valid piece id, there "
+                    + "are 21 pieces.");
         }
+        currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);
     }
 
     @Override

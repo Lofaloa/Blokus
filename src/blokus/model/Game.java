@@ -1,5 +1,7 @@
 package blokus.model;
 
+import blokus.exception.IllegalActionException;
+import blokus.exception.ModelException;
 import java.util.List;
 
 /**
@@ -62,16 +64,18 @@ public interface Game {
      * Selects the piece of the current player.
      *
      * @param id is the piece id;
+     * @throws ModelException if the given id is not valid.
      */
-    public void selectCurrentPlayerPiece(int id);
+    public void selectCurrentPlayerPiece(int id) throws ModelException;
 
     /**
      * Places the current player piece on the board at the given position.
      *
      * @param row is a row of the board.
      * @param column is a column of the board.
+     * @throws ModelException if the given row and column are not valid.
      */
-    public void placePiece(int row, int column);
+    public void placePiece(int row, int column) throws ModelException;
 
     /**
      * Passes to the next player.

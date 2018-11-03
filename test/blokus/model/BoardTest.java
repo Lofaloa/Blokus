@@ -2,6 +2,7 @@ package blokus.model;
 
 import blokus.exception.BoardPositionOutOfBounds;
 import blokus.exception.IllegalActionException;
+import blokus.exception.ModelException;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -80,15 +81,15 @@ public class BoardTest {
     }
 
     @Test
-    public void boardCornersShouldBeValidAndNotCauseAnException() {
+    public void squareOnTheSideShouldBeContainedInBoard() {
         Board board = new Board();
-        board.requireValidSquare(new Square(0, 0));
-        board.requireValidSquare(new Square(0, 19));
-        board.requireValidSquare(new Square(19, 19));
-        board.requireValidSquare(new Square(19, 0));
+        assertTrue(board.contains(10, 0));
+        assertTrue(board.contains(0, 10));
+        assertTrue(board.contains(10, 10));
+        assertTrue(board.contains(19, 0));
     }
 
-    @Test(expected = BoardPositionOutOfBounds.class)
+    @Test(expected = ModelException.class)
     public void outOfBoundsSquareShouldCauseAnException() {
         Board board = new Board();
         board.requireValidSquare(new Square(10, 20));
@@ -97,39 +98,7 @@ public class BoardTest {
         board.requireValidSquare(new Square(0, -1));
     }
 
-    @Test
-    public void pieceToBeAddedInEmptyBoardShouldBeAddable() {
-        Board b = new Board();
-        Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
-        assertTrue(b.canAddAt(p, 0, 0));
-    }
-
-    @Test
-    public void pieceToBeAddedNextToAnOtherShouldBeAddable() {
-        Board b = new Board();
-        Piece neighbor = new Piece(Shape.SHAPE_04, Color.BLUE);
-        Piece p = new Piece(Shape.SHAPE_14, Color.BLUE);
-        b.add(neighbor, 0, 0);
-        assertTrue(b.canAddAt(p, 0, 1));
-    }
-
-    @Test
-    public void pieceWithOutOfBoundsPieceSquareShouldNotBeAddable() {
-        Board b = new Board();
-        Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
-        assertFalse(b.canAddAt(p, 0, 19));
-    }
-
-    @Test
-    public void pieceAddedInFilledSquareShouldNotBeAddable() {
-        Board b = new Board();
-        Piece piece = new Piece(Shape.SHAPE_04, Color.BLUE);
-        Piece overlappingPiece = new Piece(Shape.SHAPE_04, Color.RED);
-        b.add(piece, 0, 0);
-        assertFalse(b.canAddAt(overlappingPiece, 0, 1));
-    }
-
-    @Test(expected = BoardPositionOutOfBounds.class)
+    @Test(expected = ModelException.class)
     public void outOfBoundsPieceSquareShouldCauseExceptionWhenAdding() {
         Board b = new Board();
         Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
@@ -153,7 +122,7 @@ public class BoardTest {
         assertFalse(b.isFreeAt(0, 0) && b.isFreeAt(1, 0) && b.isFreeAt(1, 1));
     }
 
-    @Test(expected = BoardPositionOutOfBounds.class)
+    @Test(expected = ModelException.class)
     public void addingPieceOutOfBoardBoundsShouldCauseException() {
         Board b = new Board();
         Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
