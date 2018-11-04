@@ -115,5 +115,5 @@ public class BlokusTest {
         g.nextPlayer();
         assertEquals(Color.BLUE, g.getCurrentPlayer().getColor());
     }
-
+    
 }

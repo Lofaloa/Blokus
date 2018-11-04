@@ -93,7 +93,6 @@ public class Blokus implements Game {
 
     @Override
     public boolean isOver() {
-        //TEST: pas de test sur les joueurs blockés
         for (Player player : players) {
             if (player.getStock().isEmpty()) {
                 return true;

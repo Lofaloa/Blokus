@@ -49,7 +49,7 @@ public interface Game {
 
     /**
      * Indicates the end of the game. The game is over either when one of the
-     * player has placed all of her/ his pieces. Or all the players are stuck.
+     * player has placed all of her/ his pieces.
      *
      * @return true if the game is over.
      */
