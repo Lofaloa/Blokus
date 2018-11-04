@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-class Stock {
+public class Stock {
 
     private final List<Piece> pieces;
     private Piece lastTakenPiece;
@@ -46,7 +46,7 @@ class Stock {
      *
      * @return this stock pieces.
      */
-    List<Piece> getPieces() {
+    public List<Piece> getPieces() {
         return Collections.unmodifiableList(pieces);
     }
 

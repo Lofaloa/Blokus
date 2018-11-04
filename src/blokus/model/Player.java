@@ -24,7 +24,7 @@ public class Player {
      *
      * @return the score of this player.
      */
-    int getScore() {
+    public int getScore() {
         return stock.getScore();
     }
 
@@ -33,7 +33,7 @@ public class Player {
      *
      * @return this player stock.
      */
-    Stock getStock() {
+    public Stock getStock() {
         return stock;
     }
 
