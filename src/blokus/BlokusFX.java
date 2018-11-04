@@ -1,5 +1,8 @@
 package blokus;
 
+import blokus.model.Blokus;
+import blokus.model.Game;
+import blokus.view.fx.Stock;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -15,10 +18,14 @@ public class BlokusFX extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            primaryStage.setTitle("Basal Metabolic Rate Calculator");
-            
-            
-            
+            primaryStage.setTitle("Blokus");
+
+            Game blokus = new Blokus();
+
+            Stock s = new Stock(blokus.getCurrentPlayer());
+
+            Scene scene = new Scene(s);
+            primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception ex) {
             System.err.println(ex.getMessage());

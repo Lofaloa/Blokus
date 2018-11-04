@@ -6,6 +6,6 @@ package blokus.view.fx;
  * 
  * @author Logan Farci (47923)
  */
-public class BlokusView {
+public class MainWindow {
     
 }
