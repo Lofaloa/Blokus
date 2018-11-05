@@ -4,7 +4,6 @@ import blokus.model.Piece;
 import blokus.model.Player;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -14,19 +13,24 @@ import javafx.scene.text.Text;
  * @author Logan Farci (47923)
  */
 public class PlayerDataPane extends VBox {
-    
+
     private final Player owner;
     private final HBox header;
     private final GridPane pieces;
-    
+
     public PlayerDataPane(Player owner) {
         this.owner = owner;
         this.header = new HBox();
         this.pieces = new GridPane();
         setContent();
-        setProperties();
+        setStyle();
     }
-    
+
+    /**
+     * Gets the number of the owner.
+     *
+     * @return the number of the owner.
+     */
     int getOwnerNumber() {
         switch (owner.getColor()) {
             case BLUE:
@@ -46,7 +50,7 @@ public class PlayerDataPane extends VBox {
      * number, her/ his score and his/ her status.
      */
     void setHeaderContent() {
-        Text player = new Text("Joueur: " + getOwnerNumber());
+        Text player = new Text("Joueur n°" + getOwnerNumber());
         Text score = new Text("Score: " + owner.getScore());
         header.getChildren().addAll(player, score);
     }
@@ -73,20 +77,40 @@ public class PlayerDataPane extends VBox {
      * Sets the content of this stock view. This stock contains a header and the
      * pieces.
      */
-    void setContent() {
+    final void setContent() {
         setHeaderContent();
-        setPieces(7);
+        setPieces(8);
         this.getChildren().addAll(header, pieces);
     }
-    
+
     /**
-     * Sets the properties of this player data pane.
+     * Sets the header style.
      */
-    void setProperties() {
-        header.setSpacing(10);
-        pieces.setGridLinesVisible(true);
-        this.setSpacing(10);
-        this.setStyle("-fx-padding: 10;");
+    void setHeaderStyle() {
+        String style = "-fx-spacing: 10;\n";
+        header.setStyle(style);
     }
-    
+
+    /**
+     * Sets the pieces pane style.
+     */
+    void setPiecesStyle() {
+        pieces.setHgap(5);
+        pieces.setVgap(5);
+    }
+
+    /**
+     * Sets the style of this player data pane.
+     */
+    final void setStyle() {
+        String style = "-fx-spacing: 5;\n"
+                + "-fx-padding: 0 5 0 5;\n"
+                + "-fx-border-color: black;\n"
+                + "-fx-border-width: 1;\n"
+                + "-fx-border-style: solid;\n";
+        setHeaderStyle();
+        setPiecesStyle();
+        this.setStyle(style);
+    }
+
 }

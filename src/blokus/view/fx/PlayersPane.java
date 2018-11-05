@@ -1,7 +1,6 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
-import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
 /**
@@ -17,7 +16,7 @@ public class PlayersPane extends VBox {
     private final PlayerDataPane player2Stock;
     private final PlayerDataPane player3Stock;
     private final PlayerDataPane player4Stock;
-    
+
     public PlayersPane(Game blokus) {
         this.blokus = blokus;
         this.player1Stock = new PlayerDataPane(blokus.getPlayers().get(0));
@@ -25,6 +24,12 @@ public class PlayersPane extends VBox {
         this.player3Stock = new PlayerDataPane(blokus.getPlayers().get(2));
         this.player4Stock = new PlayerDataPane(blokus.getPlayers().get(3));
         this.getChildren().addAll(player1Stock, player2Stock, player3Stock, player4Stock);
+        setStyle();
     }
-    
+
+    final void setStyle() {
+        String style = "-fx-spacing: 5;\n";
+        this.setStyle(style);
+    }
+
 }
