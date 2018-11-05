@@ -38,7 +38,7 @@ public class Board {
      * @param column is the column of the square to test.
      * @return true if the given position is an empty square.
      */
-    boolean isFreeAt(int row, int column) {
+    boolean isEmptyAt(int row, int column) {
 <span class="fc bfc" id="L42" title="All 2 branches covered.">        return squares[row][column] == null;</span>
     }
 
@@ -62,7 +62,7 @@ public class Board {
      * @return true if the given square is in the board bounds and free.
      */
     boolean isValid(int row, int column) {
-<span class="pc bpc" id="L65" title="1 of 4 branches missed.">        return contains(row, column) &amp;&amp; isFreeAt(row, column);</span>
+<span class="pc bpc" id="L65" title="1 of 4 branches missed.">        return contains(row, column) &amp;&amp; isEmptyAt(row, column);</span>
     }
 
     /**
@@ -77,7 +77,7 @@ public class Board {
 <span class="nc" id="L77">            throw new ModelException(&quot;Square at position (&quot;</span>
 <span class="nc" id="L78">                    + square.getRow() + &quot;; &quot; + square.getColumn() + &quot;) is out of bounds.&quot;);</span>
         }
-<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (!isFreeAt(square.getRow(), square.getColumn())) {</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (!isEmptyAt(square.getRow(), square.getColumn())) {</span>
 <span class="fc" id="L81">            throw new IllegalActionException(&quot;Square at position (&quot;</span>
 <span class="fc" id="L82">                    + square.getRow() + &quot;; &quot; + square.getColumn() + &quot;) is not free.&quot;);</span>
         }

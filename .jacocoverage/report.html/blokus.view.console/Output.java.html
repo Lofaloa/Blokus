@@ -92,7 +92,7 @@ class Output {
 <span class="nc bnc" id="L92" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
 <span class="nc" id="L93">            System.out.printf(&quot;%02d &quot;, i);</span>
 <span class="nc bnc" id="L94" title="All 2 branches missed.">            for (int j = 0; j &lt; 20; j++) {</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">                if (board[i][j] == null) {</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">                if (game.isBoardEmptyAt(i, j)) {</span>
 <span class="nc" id="L96">                    System.out.print(&quot; . &quot;);</span>
                 } else {
 <span class="nc" id="L98">                    printSquare(board[i][j]);</span>
