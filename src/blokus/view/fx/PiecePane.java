@@ -38,11 +38,11 @@ public class PiecePane extends GridPane {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (piece.contains(i, j)) {
-                    Rectangle r = new Rectangle(5, 5);
+                    Rectangle r = new Rectangle(7, 7);
                     r.setFill(toColor(piece));
                     this.add(r, j, i);
                 } else {
-                    Rectangle r = new Rectangle(5, 5);
+                    Rectangle r = new Rectangle(7, 7);
                     r.setFill(Color.WHITE);
                     this.add(r, j, i);
                 }

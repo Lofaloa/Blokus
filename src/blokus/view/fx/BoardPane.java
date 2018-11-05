@@ -47,13 +47,13 @@ public class BoardPane extends GridPane {
     final void setBoard() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
-                if (blokus.getBoard()[i][j] == null) {
-                    Rectangle r = new Rectangle(25, 25);
+                if (blokus.isBoardEmptyAt(i, j)) {
+                    Rectangle r = new Rectangle(30, 30);
                     r.setFill(Color.GREY);
                     this.add(r, j, i);
                 } else {
                     Piece p = blokus.getBoard()[i][j];
-                    Rectangle r = new Rectangle(25, 25);
+                    Rectangle r = new Rectangle(30, 30);
                     r.setFill(toColor(p));
                     this.add(r, j, i);
                 }
