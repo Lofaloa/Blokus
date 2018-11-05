@@ -22,6 +22,9 @@ public class BlokusFX extends Application {
             primaryStage.setTitle("Blokus");
 
             Game blokus = new Blokus();
+            
+            blokus.selectCurrentPlayerPiece(21);
+            
             Stock s = new Stock(blokus.getCurrentPlayer());
             
             Scene scene = new Scene(s, 1000, 750);
