@@ -2,8 +2,7 @@ package blokus;
 
 import blokus.model.Blokus;
 import blokus.model.Game;
-import blokus.view.fx.PiecePane;
-import blokus.view.fx.Stock;
+import blokus.view.fx.MainWindow;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -23,11 +22,10 @@ public class BlokusFX extends Application {
 
             Game blokus = new Blokus();
             
-            blokus.selectCurrentPlayerPiece(21);
             
-            Stock s = new Stock(blokus.getCurrentPlayer());
+            MainWindow main = new MainWindow(blokus);
             
-            Scene scene = new Scene(s, 1000, 750);
+            Scene scene = new Scene(main, 1000, 750);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception ex) {

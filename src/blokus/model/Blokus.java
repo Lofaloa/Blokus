@@ -43,7 +43,7 @@ public class Blokus implements Game {
      *
      * @return this game players.
      */
-    List<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 

@@ -11,6 +11,8 @@ import java.util.List;
  */
 public interface Game {
 
+    public List<Player> getPlayers();
+
     /**
      * Gets the current player of the game.
      *

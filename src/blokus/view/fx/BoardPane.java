@@ -15,11 +15,15 @@ public class BoardPane extends GridPane {
 
     private final Game blokus;
 
+    /**
+     * Initializes this board pane with the given game.
+     *
+     * @param blokus is the game for which represent the board.
+     */
     public BoardPane(Game blokus) {
         this.blokus = blokus;
-        this.setHgap(1);
-        this.setVgap(1);
-        printBoard();
+        setBoard();
+        setProperties();
     }
 
     Color toColor(Piece piece) {
@@ -40,22 +44,29 @@ public class BoardPane extends GridPane {
     /**
      * Displays the current state of the game board.
      */
-    final void printBoard() {
+    final void setBoard() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 if (blokus.getBoard()[i][j] == null) {
-                    Rectangle r = new Rectangle(15, 15);
+                    Rectangle r = new Rectangle(25, 25);
                     r.setFill(Color.GREY);
                     this.add(r, j, i);
                 } else {
                     Piece p = blokus.getBoard()[i][j];
-                    Rectangle r = new Rectangle(15, 15);
+                    Rectangle r = new Rectangle(25, 25);
                     r.setFill(toColor(p));
                     this.add(r, j, i);
                 }
 
             }
         }
+    }
+
+    /**
+     * Set the properties of this pane content.
+     */
+    void setProperties() {
+        this.setGridLinesVisible(true);
     }
 
 }

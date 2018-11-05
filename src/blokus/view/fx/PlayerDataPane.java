@@ -13,13 +13,13 @@ import javafx.scene.text.Text;
  *
  * @author Logan Farci (47923)
  */
-public class Stock extends VBox {
+public class PlayerDataPane extends VBox {
     
     private final Player owner;
     private final HBox header;
     private final GridPane pieces;
     
-    public Stock(Player owner) {
+    public PlayerDataPane(Player owner) {
         this.owner = owner;
         this.header = new HBox();
         this.pieces = new GridPane();
@@ -79,8 +79,12 @@ public class Stock extends VBox {
         this.getChildren().addAll(header, pieces);
     }
     
+    /**
+     * Sets the properties of this player data pane.
+     */
     void setProperties() {
         header.setSpacing(10);
+        pieces.setGridLinesVisible(true);
         this.setSpacing(10);
         this.setStyle("-fx-padding: 10;");
     }
