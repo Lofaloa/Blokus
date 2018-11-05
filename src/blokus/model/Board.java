@@ -38,7 +38,7 @@ public class Board {
      * @param column is the column of the square to test.
      * @return true if the given position is an empty square.
      */
-    boolean isFreeAt(int row, int column) {
+    boolean isEmptyAt(int row, int column) {
         return squares[row][column] == null;
     }
 
@@ -62,7 +62,7 @@ public class Board {
      * @return true if the given square is in the board bounds and free.
      */
     boolean isValid(int row, int column) {
-        return contains(row, column) && isFreeAt(row, column);
+        return contains(row, column) && isEmptyAt(row, column);
     }
 
     /**
@@ -77,7 +77,7 @@ public class Board {
             throw new ModelException("Square at position ("
                     + square.getRow() + "; " + square.getColumn() + ") is out of bounds.");
         }
-        if (!isFreeAt(square.getRow(), square.getColumn())) {
+        if (!isEmptyAt(square.getRow(), square.getColumn())) {
             throw new IllegalActionException("Square at position ("
                     + square.getRow() + "; " + square.getColumn() + ") is not free.");
         }

@@ -11,6 +11,11 @@ import java.util.List;
  */
 public interface Game {
 
+    /**
+     * Gets this game players
+     *
+     * @return this game players.
+     */
     public List<Player> getPlayers();
 
     /**
@@ -40,6 +45,24 @@ public interface Game {
      * @return the board game.
      */
     public Piece[][] getBoard();
+    
+    
+    /**
+     * Tells if the board is empty at the given position.
+     * 
+     * @param row is the row of the position.
+     * @param column is the column of the position.
+     * @return true if the board is not empty at the given position.
+     */
+    public boolean isBoardEmptyAt(int row, int column);
+    
+    /**
+     * Gets the score of the given player.
+     * 
+     * @param playerNumber is the number of the player.
+     * @return the score of the given player.
+     */
+    public int getPlayerScore(int playerNumber);
 
     /**
      * Gets the winner of the game. The winner has the highest score. If two

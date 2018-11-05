@@ -92,7 +92,7 @@ class Output {
         for (int i = 0; i < 20; i++) {
             System.out.printf("%02d ", i);
             for (int j = 0; j < 20; j++) {
-                if (board[i][j] == null) {
+                if (game.isBoardEmptyAt(i, j)) {
                     System.out.print(" . ");
                 } else {
                     printSquare(board[i][j]);

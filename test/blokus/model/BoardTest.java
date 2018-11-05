@@ -28,13 +28,13 @@ public class BoardTest {
         Board board = new Board();
         Piece fillingPiece = new Piece(Shape.SHAPE_01, Color.BLUE);
         board.add(fillingPiece, 0, 0);
-        assertFalse(board.isFreeAt(0, 0));
+        assertFalse(board.isEmptyAt(0, 0));
     }
 
     @Test
     public void squareShouldBeFreeWhenNotFilledWithPiece() {
         Board board = new Board();
-        assertTrue(board.isFreeAt(0, 0));
+        assertTrue(board.isEmptyAt(0, 0));
     }
 
     @Test
@@ -119,7 +119,7 @@ public class BoardTest {
         Board b = new Board();
         Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
         b.add(p, 0, 0);
-        assertFalse(b.isFreeAt(0, 0) && b.isFreeAt(1, 0) && b.isFreeAt(1, 1));
+        assertFalse(b.isEmptyAt(0, 0) && b.isEmptyAt(1, 0) && b.isEmptyAt(1, 1));
     }
 
     @Test(expected = ModelException.class)

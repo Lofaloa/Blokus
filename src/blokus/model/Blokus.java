@@ -38,11 +38,7 @@ public class Blokus implements Game {
         this.board = new Board();
     }
 
-    /**
-     * Gets this game players
-     *
-     * @return this game players.
-     */
+    @Override
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
@@ -65,6 +61,16 @@ public class Blokus implements Game {
     @Override
     public Piece[][] getBoard() {
         return board.getSquares();
+    }
+    
+    @Override
+    public boolean isBoardEmptyAt(int i, int j) {
+        return board.isEmptyAt(i, j);
+    }
+
+    @Override
+    public int getPlayerScore(int playerNumber) {
+        return players.get(playerNumber).getScore();
     }
 
     /**
