@@ -1,5 +1,7 @@
 package blokus.view.fx;
 
+import blokus.model.Blokus;
+import blokus.model.Game;
 import blokus.model.Piece;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -12,37 +14,37 @@ import javafx.scene.shape.Rectangle;
  */
 public class PiecePane extends GridPane {
 
-//    private final int PANE_SIZE = 5;
     private final int size;
     private final Piece piece;
+    private final Game game;
 
     /**
      * Initializes this piece pane with the piece to represent.
      *
+     * @param game is the game of the piece to represent.
      * @param piece is the piece to represent.
      */
-    public PiecePane(Piece piece) {
+    public PiecePane(Game game, Piece piece) {
         this.piece = piece;
-        this.size = piece.getShape().getSize();
+        this.game = game;
+        this.size = game.getPieceSize(piece);
         setPiece();
     }
 
     /**
-     * Converts the given piece to a color. A piece can be blue, yellow, red or
-     * green.
+     * Gets the color of this pane piece.
      *
-     * @param piece the piece to convert.
-     * @return the color corresponding to the given piece.
+     * @return the color of this pane piece.
      */
-    Color toColor(Piece piece) {
-        switch (piece.getColor()) {
-            case BLUE:
+    Color getColor() {
+        switch (game.getPieceColor(piece)) {
+            case "BLUE":
                 return Color.BLUE;
-            case YELLOW:
+            case "YELLOW":
                 return Color.YELLOW;
-            case RED:
+            case "RED":
                 return Color.RED;
-            case GREEN:
+            case "GREEN":
                 return Color.GREEN;
             default:
                 return Color.GREY;
@@ -50,7 +52,7 @@ public class PiecePane extends GridPane {
     }
 
     /**
-     * Draws a square at row and column of the given color.
+     * Displays a square at row and column of the given color.
      *
      * @param color is the color of the square.
      * @param row is the row of the square.
@@ -67,13 +69,13 @@ public class PiecePane extends GridPane {
     }
 
     /**
-     * Draws the piece of this pane.
+     * Displays the piece of this pane.
      */
-    void setPiece() {
+    final void setPiece() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (piece.contains(i, j)) {
-                    setSquare(toColor(piece), i, j, true);
+                if (game.isInsidePiece(piece, i, j)) {
+                    setSquare(getColor(), i, j, true);
                 } else {
                     setSquare(Color.TRANSPARENT, i, j, false);
                 }

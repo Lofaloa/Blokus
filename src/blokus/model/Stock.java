@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-public class Stock {
+class Stock {
 
     private final List<Piece> pieces;
     private Piece lastTakenPiece;
@@ -19,7 +19,7 @@ public class Stock {
      *
      * @param color is the color of this stock.
      */
-    public Stock(Color color) {
+    Stock(Color color) {
         this.pieces = buildPiecesOf(color);
     }
 
@@ -46,7 +46,7 @@ public class Stock {
      *
      * @return this stock pieces.
      */
-    public List<Piece> getPieces() {
+    List<Piece> getPieces() {
         return pieces;
     }
 

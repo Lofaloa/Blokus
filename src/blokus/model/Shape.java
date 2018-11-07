@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-public enum Shape {
+enum Shape {
 
     /**
      * Represents the shape of piece 01.
@@ -132,7 +132,7 @@ public enum Shape {
      *
      * @return the Squares of this shape.
      */
-    public List<Square> getSquares() {
+    List<Square> getSquares() {
         return squares;
     }
 
@@ -141,7 +141,7 @@ public enum Shape {
      *
      * @return the size of this shape.
      */
-    public int getSize() {
+    int getSize() {
         return squares.size();
     }
 

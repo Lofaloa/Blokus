@@ -18,11 +18,11 @@ public class MainWindow extends VBox {
     private final GamePane game;
     private final ControlPane control;
     
-    public MainWindow(Game blokus) {
-        this.game = new GamePane(blokus);
+    public MainWindow(Game game) {
+        this.game = new GamePane(game);
         this.menu = new MenuBar(new Menu("File"), new Menu("Options"), new Menu("Help"));
         this.control = new ControlPane();
-        this.getChildren().addAll(menu, game, control);
+        this.getChildren().addAll(menu, this.game, control);
         this.setSpacing(20);
     }
     

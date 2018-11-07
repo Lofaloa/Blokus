@@ -39,8 +39,12 @@ class Output {
                 + " stock in the board a (i; j).");
     }
 
+    /**
+     * Prints a message telling the current player.
+     */
     void printCurrentPlayer() {
-        System.out.println(game.getCurrentPlayer().getColor() + " is playing...");
+        int currentPlayerId = game.getCurrentPlayer();
+        System.out.println(game.getPlayerColor(currentPlayerId) + " is playing...");
     }
 
     /**
@@ -51,24 +55,44 @@ class Output {
     }
 
     /**
-     * Prints the given piece.
-     *
-     * @param container is the piece containing the square to print.
+     * Prints an empty square.
      */
-    void printSquare(Piece container) {
-        switch (container.getColor()) {
-            case BLUE:
+    void printEmptySquare() {
+        System.out.print(" . ");
+    }
+
+    /**
+     * Prints a square of the given color name.
+     *
+     * @param color is the color name of the square to print.
+     */
+    void printFilledSquare(String color) {
+        switch (color) {
+            case "BLUE":
                 System.out.print(" b ");
                 break;
-            case YELLOW:
+            case "YELLOW":
                 System.out.print(" y ");
                 break;
-            case RED:
+            case "RED":
                 System.out.print(" r ");
                 break;
-            case GREEN:
+            case "GREEN":
                 System.out.print(" g ");
                 break;
+        }
+    }
+
+    /**
+     * Prints a square.
+     *
+     * @param color is the color name of the square to print if filled.
+     */
+    void printSquare(String color) {
+        if (color == null) {
+            printEmptySquare();
+        } else {
+            printFilledSquare(color);
         }
     }
 
@@ -87,16 +111,11 @@ class Output {
      * Prints the current state of the game board.
      */
     void printBoard() {
-        Piece[][] board = game.getBoard();
         printColumnNumbers();
-        for (int i = 0; i < 20; i++) {
-            System.out.printf("%02d ", i);
-            for (int j = 0; j < 20; j++) {
-                if (game.isBoardEmptyAt(i, j)) {
-                    System.out.print(" . ");
-                } else {
-                    printSquare(board[i][j]);
-                }
+        for (int row = 0; row < 20; row++) {
+            System.out.printf("%02d ", row);
+            for (int column = 0; column < 20; column++) {
+                printSquare(game.getBoardColorAt(row, column));
             }
             System.out.println(" ");
         }
@@ -108,11 +127,10 @@ class Output {
      * @param piece is piece to print.
      */
     void printPiece(Piece piece) {
-        System.out.println(piece.getShape());
-        for (int i = 0; i < piece.getShape().getSize(); i++) {
-            for (int j = 0; j < piece.getShape().getSize(); j++) {
-                if (piece.contains(i, j)) {
-                    printSquare(piece);
+        for (int i = 0; i < game.getPieceSize(piece); i++) {
+            for (int j = 0; j < game.getPieceSize(piece); j++) {
+                if (game.isInsidePiece(piece, i, j)) {
+                    System.out.print(" x ");
                 } else {
                     System.out.print("   ");
                 }
@@ -125,8 +143,10 @@ class Output {
      * Prints the stock of the current player.
      */
     void printCurrentPlayerStock() {
-        for (Piece piece : game.getCurrentPlayerStock()) {
+        int currentPlayerId = game.getCurrentPlayer();
+        for (Piece piece : game.getPlayerStock(currentPlayerId)) {
             printPiece(piece);
+            System.out.println(" ");
         }
     }
 

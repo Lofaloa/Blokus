@@ -26,18 +26,65 @@ public class BoardPane extends GridPane {
         setProperties();
     }
 
-    Color toColor(Piece piece) {
-        switch (piece.getColor()) {
-            case BLUE:
+    /**
+     * Converts the given name color to a color.
+     *
+     * @param color is the name of the color.
+     * @return a color carresponding to the given color name.
+     */
+    Color toColor(String color) {
+        switch (color) {
+            case "BLUE":
                 return Color.BLUE;
-            case YELLOW:
+            case "YELLOW":
                 return Color.YELLOW;
-            case RED:
+            case "RED":
                 return Color.RED;
-            case GREEN:
+            case "GREEN":
                 return Color.GREEN;
             default:
                 return Color.GREY;
+        }
+    }
+
+    /**
+     * Sets an empty square in the board at the given position. An empty square
+     * is grey.
+     *
+     * @param row is the row of the square to set.
+     * @param column is the column of the square to set.
+     */
+    void setEmptySquare(int row, int column) {
+        Rectangle r = new Rectangle(30, 30);
+        r.setFill(Color.GREY);
+        this.add(r, column, row);
+    }
+
+    /**
+     * Sets a filled square in the board at the given position.
+     *
+     * @param color is the color of the filled square to set.
+     * @param row is the row of the filled square to set.
+     * @param column is the column of the filled square to set.
+     */
+    void setFilledSquare(Color squareColor, int row, int column) {
+        Rectangle r = new Rectangle(30, 30);
+        r.setFill(squareColor);
+        this.add(r, column, row);
+    }
+
+    /**
+     * Sets a square in the board at the given position.
+     *
+     * @param color is the color of the square to set.
+     * @param row is the row of the square to set.
+     * @param column is the column of the square to set.
+     */
+    void setSquare(String color, int row, int column) {
+        if (color == null) {
+            setEmptySquare(row, column);
+        } else {
+            setFilledSquare(toColor(color), row, column);
         }
     }
 
@@ -47,17 +94,7 @@ public class BoardPane extends GridPane {
     final void setBoard() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
-                if (blokus.isBoardEmptyAt(i, j)) {
-                    Rectangle r = new Rectangle(30, 30);
-                    r.setFill(Color.GREY);
-                    this.add(r, j, i);
-                } else {
-                    Piece p = blokus.getBoard()[i][j];
-                    Rectangle r = new Rectangle(30, 30);
-                    r.setFill(toColor(p));
-                    this.add(r, j, i);
-                }
-
+                setSquare(blokus.getBoardColorAt(i, j), i, j);
             }
         }
     }
@@ -65,7 +102,7 @@ public class BoardPane extends GridPane {
     /**
      * Set the properties of this pane content.
      */
-    void setProperties() {
+    final void setProperties() {
         this.setGridLinesVisible(true);
     }
 

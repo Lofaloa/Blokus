@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 import java.util.List;
 
@@ -12,18 +11,11 @@ import java.util.List;
 public interface Game {
 
     /**
-     * Gets this game players
+     * Gets the current player number of the game.
      *
-     * @return this game players.
+     * @return the current player number of the game.
      */
-    public List<Player> getPlayers();
-
-    /**
-     * Gets the current player of the game.
-     *
-     * @return the current player of the game.
-     */
-    public Player getCurrentPlayer();
+    public int getCurrentPlayer();
 
     /**
      * Gets the piece selected by the current player.
@@ -33,36 +25,78 @@ public interface Game {
     public Piece getCurrentPlayerPiece();
 
     /**
-     * Gets the current player stock.
-     *
-     * @return the current player stock.
-     */
-    public List<Piece> getCurrentPlayerStock();
-
-    /**
      * Gets the board game.
      *
      * @return the board game.
      */
     public Piece[][] getBoard();
-    
-    
+
     /**
-     * Tells if the board is empty at the given position.
-     * 
-     * @param row is the row of the position.
-     * @param column is the column of the position.
-     * @return true if the board is not empty at the given position.
+     * Gets the color of the square located at the given position in the board.
+     *
+     * @param row is the row of the square.
+     * @param column is the column of the square.
+     * @return the color of the square located at the given position.
+     * <code>null</code> is returned when the given square is empty.
      */
-    public boolean isBoardEmptyAt(int row, int column);
-    
+    public String getBoardColorAt(int row, int column);
+
     /**
-     * Gets the score of the given player.
-     * 
-     * @param playerNumber is the number of the player.
+     * Tells if the given position is inside the given piece.
+     *
+     * @param row the row of the position.
+     * @param column the column of the position.
+     * @return true if the given position in the given piece.
+     */
+    public boolean isInsidePiece(Piece piece, int row, int column);
+
+    /**
+     * Gets the color name of the given piece.
+     *
+     * @param piece is the piece to get the color name for.
+     * @return the color name of the given piece.
+     */
+    public String getPieceColor(Piece piece);
+
+    /**
+     * Gets the size of the given piece.
+     *
+     * @param piece is the piece to get the size for.
+     * @return the size of the given piece.
+     */
+    public int getPieceSize(Piece piece);
+
+    /**
+     * Gets the player matching the given id.
+     *
+     * @param playerId is the id of the player.
+     * @return the player.
+     */
+    public Player getPlayer(int playerId);
+
+    /**
+     * Gets the player score matching the given id.
+     *
+     * @param playerId is the id of the player.
      * @return the score of the given player.
      */
-    public int getPlayerScore(int playerNumber);
+    public int getPlayerScore(int playerId);
+
+    /**
+     * Gets the player color matching the given id.
+     *
+     * @param playerId is the id of the player.
+     * @return the color of the given player.
+     */
+    public Color getPlayerColor(int playerId);
+
+    /**
+     * Gets the player stock matching the given id.
+     *
+     * @param playerId is the id of the player.
+     * @return the stock of the given player.
+     */
+    public List<Piece> getPlayerStock(int playerId);
 
     /**
      * Gets the winner of the game. The winner has the highest score. If two

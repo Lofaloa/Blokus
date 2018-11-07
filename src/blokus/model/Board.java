@@ -9,7 +9,7 @@ import blokus.exception.ModelException;
  *
  * @author Logan Farci (47923)
  */
-public class Board {
+class Board {
 
     private final static int BOARD_SIZE = 20;
     private final Piece[][] squares;

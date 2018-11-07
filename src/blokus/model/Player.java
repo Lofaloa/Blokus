@@ -1,5 +1,7 @@
 package blokus.model;
 
+import java.util.List;
+
 /**
  * Represents a player.
  *
@@ -38,8 +40,8 @@ public class Player {
      *
      * @return this player stock.
      */
-    public Stock getStock() {
-        return stock;
+    public List<Piece> getStock() {
+        return stock.getPieces();
     }
 
     /**

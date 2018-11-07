@@ -29,7 +29,7 @@ public class Piece {
      *
      * @return this shape size.
      */
-    public Shape getShape() {
+    Shape getShape() {
         return shape;
     }
 
@@ -38,7 +38,7 @@ public class Piece {
      *
      * @return this shape color.
      */
-    public Color getColor() {
+    Color getColor() {
         return color;
     }
 
@@ -50,7 +50,7 @@ public class Piece {
      * @return true if the given position in contained on this piece.
      * @throws ModelException if the given row and column are not valid.
      */
-    public boolean contains(int i, int j) throws ModelException {
+    boolean contains(int i, int j) throws ModelException {
         return shape.getSquares().contains(new Square(i, j));
     }
 

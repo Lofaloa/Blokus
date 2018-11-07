@@ -1,5 +1,6 @@
 package blokus.view.fx;
 
+import blokus.model.Game;
 import blokus.model.Piece;
 import blokus.model.Player;
 import javafx.scene.layout.GridPane;
@@ -8,18 +9,26 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
- * Represents the view of a player stock.
+ * Represents the view of a player data. This pane player score, his/ her score
+ * and his/her stock are displaid.
  *
  * @author Logan Farci (47923)
  */
 public class PlayerDataPane extends VBox {
 
-    private final Player owner;
+    private final Game game;
+    private final int ownerId;
     private final HBox header;
     private final GridPane pieces;
 
-    public PlayerDataPane(Player owner) {
-        this.owner = owner;
+    /**
+     * Initializes this pane with the given player.
+     *
+     * @param owner is the player this pane display data for.
+     */
+    public PlayerDataPane(Game blokus, int ownerId) {
+        this.game = blokus;
+        this.ownerId = ownerId;
         this.header = new HBox();
         this.pieces = new GridPane();
         setContent();
@@ -27,31 +36,12 @@ public class PlayerDataPane extends VBox {
     }
 
     /**
-     * Gets the number of the owner.
-     *
-     * @return the number of the owner.
-     */
-    int getOwnerNumber() {
-        switch (owner.getColor()) {
-            case BLUE:
-                return 1;
-            case YELLOW:
-                return 2;
-            case RED:
-                return 3;
-            case GREEN:
-                return 4;
-        }
-        return -1;
-    }
-
-    /**
      * Sets the content of this stock header. The header contains the owner
      * number, her/ his score and his/ her status.
      */
     void setHeaderContent() {
-        Text player = new Text("Joueur n°" + getOwnerNumber());
-        Text score = new Text("Score: " + owner.getScore());
+        Text player = new Text("Joueur n°" + ownerId + 1);
+        Text score = new Text("Score: " + game.getPlayerScore(ownerId));
         header.getChildren().addAll(player, score);
     }
 
@@ -62,8 +52,8 @@ public class PlayerDataPane extends VBox {
         int row = 0;
         int col = 0;
         int added = 0;
-        for (Piece piece : owner.getStock().getPieces()) {
-            this.pieces.add(new PiecePane(piece), col, row);
+        for (Piece piece : game.getPlayerStock(ownerId)) {
+            this.pieces.add(new PiecePane(game, piece), col, row);
             col++;
             added++;
             if (added % nbOfPiecesPerRow == 0) {

@@ -39,38 +39,78 @@ public class Blokus implements Game {
     }
 
     @Override
-    public List<Player> getPlayers() {
+    public Piece[][] getBoard() {
+        return board.getSquares();
+    }
+
+    /**
+     * Tells if the given square located at the given position in the board is
+     * empty.
+     *
+     * @param row is the row of the given square.
+     * @param column is the column of the given square.
+     * @return true if the given square is empty.
+     */
+    public boolean isBoardEmptyAt(int row, int column) {
+        return board.isEmptyAt(row, column);
+    }
+    
+    @Override
+    public boolean isInsidePiece(Piece piece, int row, int column) {
+        return piece.contains(row, column);
+    }
+
+    @Override
+    public String getPieceColor(Piece piece) {
+        return piece.getColor().toString();
+    }
+    
+    @Override
+    public int getPieceSize(Piece piece) {
+        return piece.getShape().getSize();
+    }
+
+    @Override
+    public String getBoardColorAt(int row, int column) {
+        if (isBoardEmptyAt(row, column)) {
+            return null;
+        } else {
+            return board.getSquares()[row][column].getColor().toString();
+        }
+    }
+
+    List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
     @Override
-    public Player getCurrentPlayer() {
-        return currentPlayer;
+    public int getCurrentPlayer() {
+        return players.indexOf(currentPlayer);
     }
-
+    
     @Override
     public Piece getCurrentPlayerPiece() {
         return currentPlayerPiece;
     }
 
     @Override
-    public List<Piece> getCurrentPlayerStock() {
-        return currentPlayer.getStock().getPieces();
+    public Player getPlayer(int playerId) {
+        return players.get(playerId);
     }
 
     @Override
-    public Piece[][] getBoard() {
-        return board.getSquares();
-    }
-    
-    @Override
-    public boolean isBoardEmptyAt(int i, int j) {
-        return board.isEmptyAt(i, j);
+    public int getPlayerScore(int playerId) {
+        return players.get(playerId).getScore();
     }
 
     @Override
-    public int getPlayerScore(int playerNumber) {
-        return players.get(playerNumber).getScore();
+    public Color getPlayerColor(int playerId) {
+        return players.get(playerId).getColor();
+    }
+
+    @Override
+    public List<Piece> getPlayerStock(int playerId) {
+        return Collections.unmodifiableList(players.get(playerId).getStock());
     }
 
     /**

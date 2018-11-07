@@ -7,7 +7,7 @@ import blokus.exception.ModelException;
  *
  * @author Logan Farci (47923)
  */
-public class Square {
+class Square {
 
     private final int row;
     private final int column;
@@ -20,7 +20,7 @@ public class Square {
      * @throws blokus.exception.ModelException if the given row and column are
      * not valid.
      */
-    public Square(int row, int column) throws ModelException {
+    Square(int row, int column) throws ModelException {
         if (row < 0 || 19 < row || column < 0 || 19 < column) {
             throw new ModelException("Square at position (" + row + "; "
                     + column + ") is not valid, the board has 20 row and columns.");
@@ -34,7 +34,7 @@ public class Square {
      *
      * @return the row of this square.
      */
-    public int getRow() {
+    int getRow() {
         return row;
     }
 
@@ -43,7 +43,7 @@ public class Square {
      *
      * @return the column of this square.
      */
-    public int getColumn() {
+    int getColumn() {
         return column;
     }
 
@@ -56,7 +56,7 @@ public class Square {
      * @throws blokus.exception.ModelException if the new position of the square
      * is not valid.
      */
-    public Square move(int rowOffset, int columnOffset) throws ModelException {
+    Square move(int rowOffset, int columnOffset) throws ModelException {
         return new Square(row + rowOffset, column + columnOffset);
     }
 

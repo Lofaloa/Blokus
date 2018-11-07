@@ -10,11 +10,11 @@ import javafx.scene.layout.Priority;
  */
 public class GamePane extends HBox {
     
-    private final PlayersPane playersData;
+    private final PlayersDataPane playersData;
     private final BoardPane board;
     
     GamePane(Game blokus) {
-        this.playersData = new PlayersPane(blokus);
+        this.playersData = new PlayersDataPane(blokus);
         this.board = new BoardPane(blokus);
         this.getChildren().addAll(playersData, board);
         this.setSpacing(10);

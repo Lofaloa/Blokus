@@ -21,7 +21,7 @@ public class BlokusTest {
     @Test
     public void winnerShouldBeThePlayerWithTheHighestScore() {
         Blokus g = new Blokus();
-        Player currentPlayer = g.getCurrentPlayer();
+        Player currentPlayer = g.getPlayer(g.getCurrentPlayer());
         g.selectCurrentPlayerPiece(4);
         g.placePiece(0, 0);
         assertEquals(-86, g.getHighestScore());
@@ -36,7 +36,7 @@ public class BlokusTest {
         g.placePiece(0, 0);
         g.nextPlayer();
         g.selectCurrentPlayerPiece(3);
-        g.getCurrentPlayer().clearStock();
+        g.getPlayer(g.getCurrentPlayer()).clearStock();
         assertEquals(Color.YELLOW, g.getWinner().get(0).getColor());
     }
 
@@ -91,14 +91,14 @@ public class BlokusTest {
     @Test
     public void currentPlayerIsBluePlayerAfterInitialization() {
         Blokus g = new Blokus();
-        assertEquals(Color.BLUE, g.getCurrentPlayer().getColor());
+        assertEquals(Color.BLUE, g.getPlayerColor(g.getCurrentPlayer()));
     }
 
     @Test
     public void yellowPlayerShouldFollowBluePlayer() {
         Blokus g = new Blokus();
         g.nextPlayer();
-        assertEquals(Color.YELLOW, g.getCurrentPlayer().getColor());
+        assertEquals(Color.YELLOW, g.getPlayerColor(g.getCurrentPlayer()));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class BlokusTest {
         Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals(Color.RED, g.getCurrentPlayer().getColor());
+        assertEquals(Color.RED, g.getPlayerColor(g.getCurrentPlayer()));
     }
 
     @Test
@@ -115,7 +115,7 @@ public class BlokusTest {
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals(Color.GREEN, g.getCurrentPlayer().getColor());
+        assertEquals(Color.GREEN, g.getPlayerColor(g.getCurrentPlayer()));
     }
 
     @Test
@@ -125,25 +125,25 @@ public class BlokusTest {
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals(Color.BLUE, g.getCurrentPlayer().getColor());
+        assertEquals(Color.BLUE, g.getPlayerColor(g.getCurrentPlayer()));
     }
 
     @Test
     public void blokusShouldBeOverWhenAllPlayersHaveAnEmptyStock() {
         Game g = new Blokus();
-        g.getPlayers().get(0).clearStock();
-        g.getPlayers().get(1).clearStock();
-        g.getPlayers().get(2).clearStock();
-        g.getPlayers().get(3).clearStock();
+        g.getPlayer(0).clearStock();
+        g.getPlayer(1).clearStock();
+        g.getPlayer(2).clearStock();
+        g.getPlayer(3).clearStock();
         assertTrue(g.isOver());
     }
 
     @Test
     public void blokusShouldNotBeOverWhenOneOfThePlayerHasNotAnEmptyStock() {
         Game g = new Blokus();
-        g.getPlayers().get(0).clearStock();
-        g.getPlayers().get(1).clearStock();
-        g.getPlayers().get(3).clearStock();
+        g.getPlayer(0).clearStock();
+        g.getPlayer(1).clearStock();
+        g.getPlayer(3).clearStock();
         assertFalse(g.isOver());
     }
 
