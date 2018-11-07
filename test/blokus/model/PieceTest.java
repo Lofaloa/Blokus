@@ -1,5 +1,6 @@
 package blokus.model;
 
+import blokus.exception.ModelException;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -15,6 +16,19 @@ public class PieceTest {
         Piece piece = new Piece(Shape.SHAPE_21, Color.BLUE);
         assertTrue(piece.getShape() == Shape.SHAPE_21
                 && Color.BLUE == piece.getColor());
+    }
+
+    @Test
+    public void pieceShouldContainItsSquares() {
+        Piece piece = new Piece(Shape.SHAPE_03, Color.BLUE);
+        assertTrue(piece.contains(0, 0) && piece.contains(1, 0)
+                && piece.contains(2, 0));
+    }
+
+    @Test(expected = ModelException.class)
+    public void containsMethodShouldCauseExceptionWhenArgumentsNotValid() {
+        Piece piece = new Piece(Shape.SHAPE_03, Color.BLUE);
+        piece.contains(0, -1);
     }
 
     @Test

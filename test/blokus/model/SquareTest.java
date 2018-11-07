@@ -16,15 +16,25 @@ public class SquareTest {
         Square pos = new Square(2, 3);
         assertTrue(pos.getRow() == 2 && pos.getColumn() == 3);
     }
-    
+
     @Test(expected = ModelException.class)
     public void initASquareWithTooSmallRowShouldCauseException() {
         Square s = new Square(-1, 3);
     }
-    
+
+    @Test(expected = ModelException.class)
+    public void initASquareWithTooBigRowShouldCauseException() {
+        Square s = new Square(20, 3);
+    }
+
     @Test(expected = ModelException.class)
     public void initASquareWithTooBigColumnShouldCauseException() {
         Square s = new Square(2, 20);
+    }
+
+    @Test(expected = ModelException.class)
+    public void initASquareWithTooSmallColumnShouldCauseException() {
+        Square s = new Square(2, -1);
     }
 
     @Test

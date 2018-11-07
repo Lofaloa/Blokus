@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.BoardPositionOutOfBounds;
 import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 import static org.junit.Assert.*;
@@ -46,12 +45,31 @@ public class BoardTest {
     }
 
     @Test
+    public void squareShouldNBeValidWhenNotFilledWithPiece() {
+        Board board = new Board();
+        assertTrue(board.isValid(0, 0));
+    }
+
+    @Test
+    public void outOfBoundsSquarenShouldNotBeContainedInBoard() {
+        Board board = new Board();
+        assertFalse(board.contains(-1, -1));
+        assertFalse(board.contains(-1, 1));
+        assertFalse(board.contains(1, -1));
+        assertFalse(board.contains(0, 20));
+        assertFalse(board.contains(20, 0));
+        assertFalse(board.contains(20, 20));
+    }
+
+    @Test
     public void squareShouldNotBeValidWhenOutOfBounds() {
         Board board = new Board();
-        assertFalse(board.isValid(10, 20));
+        assertFalse(board.isValid(-1, -1));
+        assertFalse(board.isValid(-1, 1));
+        assertFalse(board.isValid(1, -1));
         assertFalse(board.isValid(0, 20));
-        assertFalse(board.isValid(10, -1));
-        assertFalse(board.isValid(0, -1));
+        assertFalse(board.isValid(20, 0));
+        assertFalse(board.isValid(20, 20));
     }
 
     @Test(expected = IllegalActionException.class)
@@ -61,41 +79,18 @@ public class BoardTest {
         board.add(fillingPiece, 1, 1);
         board.requireValidSquare(new Square(1, 1));
     }
-
-    @Test
-    public void outOfBoundsSquarenShouldNotBeContainedInBoard() {
-        Board board = new Board();
-        assertFalse(board.contains(10, 20));
-        assertFalse(board.contains(0, 20));
-        assertFalse(board.contains(10, -1));
-        assertFalse(board.contains(0, -1));
-    }
-
-    @Test
-    public void boardCornersShouldBeContainedInBoard() {
-        Board board = new Board();
-        assertTrue(board.contains(0, 0));
-        assertTrue(board.contains(0, 19));
-        assertTrue(board.contains(19, 19));
-        assertTrue(board.contains(19, 0));
-    }
-
-    @Test
-    public void squareOnTheSideShouldBeContainedInBoard() {
-        Board board = new Board();
-        assertTrue(board.contains(10, 0));
-        assertTrue(board.contains(0, 10));
-        assertTrue(board.contains(10, 10));
-        assertTrue(board.contains(19, 0));
-    }
-
+    
     @Test(expected = ModelException.class)
     public void outOfBoundsSquareShouldCauseAnException() {
         Board board = new Board();
-        board.requireValidSquare(new Square(10, 20));
-        board.requireValidSquare(new Square(0, 20));
-        board.requireValidSquare(new Square(10, -1));
-        board.requireValidSquare(new Square(0, -1));
+        board.requireValidSquare(new Square(1, -1));
+    }
+
+    @Test
+    public void requireValidSquareShouldReturnAValidSquare() {
+        Board board = new Board();
+        Square s = board.requireValidSquare(new Square(1, 1));
+        assertTrue(board.isValid(s.getRow(), s.getColumn()));
     }
 
     @Test(expected = ModelException.class)

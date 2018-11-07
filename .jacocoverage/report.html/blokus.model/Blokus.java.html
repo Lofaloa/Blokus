@@ -82,8 +82,8 @@ public class Blokus implements Game {
 <span class="fc" id="L82">        int highestScore = players.get(0).getScore();</span>
 <span class="fc bfc" id="L83" title="All 2 branches covered.">        for (int i = 1; i &lt; players.size(); i++) {</span>
 <span class="fc" id="L84">            Player currentPlayer = players.get(i);</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">            if (highestScore &lt; currentPlayer.getScore()) {</span>
-<span class="nc" id="L86">                highestScore = currentPlayer.getScore();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (highestScore &lt; currentPlayer.getScore()) {</span>
+<span class="fc" id="L86">                highestScore = currentPlayer.getScore();</span>
             }
         }
 <span class="fc" id="L89">        return highestScore;</span>
@@ -99,51 +99,41 @@ public class Blokus implements Game {
 
     @Override
     public boolean isOver() {
-<span class="nc bnc" id="L102" title="All 2 branches missed.">        for (Player player : players) {</span>
-<span class="nc bnc" id="L103" title="All 2 branches missed.">            if (player.getStock().isEmpty()) {</span>
-<span class="nc" id="L104">                return true;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for (Player player : players) {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            if (!player.getStock().isEmpty()) {</span>
+<span class="fc" id="L104">                return false;</span>
             }
-<span class="nc" id="L106">        }</span>
-<span class="nc" id="L107">        return false;</span>
-    }
-
-    @Override
-    public void start() {
-<span class="nc" id="L112">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;);</span>
+<span class="fc" id="L106">        }</span>
+<span class="fc" id="L107">        return true;</span>
     }
 
     @Override
     public void placePiece(int row, int column) throws ModelException {
-<span class="fc bfc" id="L117" title="All 2 branches covered.">        if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {</span>
-<span class="fc" id="L118">            throw new IllegalActionException(&quot;The current player has not selected &quot;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {</span>
+<span class="fc" id="L113">            throw new IllegalActionException(&quot;The current player has not selected &quot;</span>
                     + &quot;a piece.&quot;);
         }
-<span class="fc" id="L121">        board.add(currentPlayerPiece, row, column);</span>
-<span class="fc" id="L122">    }</span>
+<span class="fc" id="L116">        board.add(currentPlayerPiece, row, column);</span>
+<span class="fc" id="L117">    }</span>
 
     @Override
     public void selectCurrentPlayerPiece(int id) throws ModelException {
-<span class="fc bfc" id="L126" title="All 4 branches covered.">        if (id &lt; 1 || 21 &lt; id) {</span>
-<span class="fc" id="L127">            throw new ModelException(id + &quot; is not a valid piece id, there &quot;</span>
+<span class="fc bfc" id="L121" title="All 4 branches covered.">        if (id &lt; 1 || 21 &lt; id) {</span>
+<span class="fc" id="L122">            throw new ModelException(id + &quot; is not a valid piece id, there &quot;</span>
                     + &quot;are 21 pieces.&quot;);
         }
-<span class="fc" id="L130">        currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);</span>
-<span class="fc" id="L131">    }</span>
+<span class="fc" id="L125">        currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);</span>
+<span class="fc" id="L126">    }</span>
 
     @Override
     public void nextPlayer() {
-<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (currentPlayer.getColor() == Color.GREEN) {</span>
-<span class="fc" id="L136">            playerIterator = players.listIterator(0);</span>
-<span class="fc" id="L137">            currentPlayer = playerIterator.next();</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (currentPlayer.getColor() == Color.GREEN) {</span>
+<span class="fc" id="L131">            playerIterator = players.listIterator(0);</span>
+<span class="fc" id="L132">            currentPlayer = playerIterator.next();</span>
         } else {
-<span class="fc" id="L139">            currentPlayer = playerIterator.next();</span>
+<span class="fc" id="L134">            currentPlayer = playerIterator.next();</span>
         }
-<span class="fc" id="L141">    }</span>
-
-    @Override
-    public void clear() {
-<span class="nc" id="L145">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;);</span>
-    }
+<span class="fc" id="L136">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

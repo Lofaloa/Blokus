@@ -12,11 +12,16 @@ public class Player {
     private final Stock stock;
     private boolean isStuck;
 
+    /**
+     * Initializes this player of the given color with a score of 0 and a stock
+     * of 21 distinct piece.
+     *
+     * @param color is the color of this player.
+     */
     Player(Color color) {
         this.color = color;
         this.score = 0;
         this.stock = new Stock(color);
-        this.isStuck = false;
     }
 
     /**
@@ -47,23 +52,6 @@ public class Player {
     }
 
     /**
-     * Tells if this player is stuck. A player is stuck when she/ he cannot
-     * place any of her/ his pieces on the board.
-     *
-     * @return true if this player is stuck.
-     */
-    public boolean isStuck() {
-        return isStuck;
-    }
-
-    /**
-     * Makes this player stuck.
-     */
-    public void stuck() {
-        isStuck = true;
-    }
-
-    /**
      * Gets a piece in this player stock.
      *
      * @param shape is the shape of the wanted piece.
@@ -71,6 +59,13 @@ public class Player {
      */
     Piece getPiece(Shape shape) {
         return stock.getPieceBy(shape);
+    }
+    
+    /**
+     * Clears this player stock.
+     */
+    void clearStock() {
+        stock.getPieces().clear();
     }
 
 }

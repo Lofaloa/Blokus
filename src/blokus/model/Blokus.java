@@ -100,16 +100,11 @@ public class Blokus implements Game {
     @Override
     public boolean isOver() {
         for (Player player : players) {
-            if (player.getStock().isEmpty()) {
-                return true;
+            if (!player.getStock().isEmpty()) {
+                return false;
             }
         }
-        return false;
-    }
-
-    @Override
-    public void start() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return true;
     }
 
     @Override
@@ -138,11 +133,6 @@ public class Blokus implements Game {
         } else {
             currentPlayer = playerIterator.next();
         }
-    }
-
-    @Override
-    public void clear() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }

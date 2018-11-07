@@ -21,7 +21,7 @@ public class Square {
      * not valid.
      */
     public Square(int row, int column) throws ModelException {
-        if (row < 0 || 19 < row && column < 0 || 19 < column) {
+        if (row < 0 || 19 < row || column < 0 || 19 < column) {
             throw new ModelException("Square at position (" + row + "; "
                     + column + ") is not valid, the board has 20 row and columns.");
         }

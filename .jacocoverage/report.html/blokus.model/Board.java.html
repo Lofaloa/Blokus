@@ -5,7 +5,7 @@ import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 
 /**
- * Represents a board.
+ * Represents the board of &lt;i&gt;Blokus&lt;/i&gt;.
  *
  * @author Logan Farci (47923)
  */
@@ -50,7 +50,7 @@ public class Board {
      * @return true if the given square is in the board bounds.
      */
     boolean contains(int row, int column) {
-<span class="pc bpc" id="L53" title="2 of 8 branches missed.">        return 0 &lt;= row &amp;&amp; row &lt; BOARD_SIZE &amp;&amp; 0 &lt;= column &amp;&amp; column &lt; BOARD_SIZE;</span>
+<span class="fc bfc" id="L53" title="All 8 branches covered.">        return 0 &lt;= row &amp;&amp; row &lt; BOARD_SIZE &amp;&amp; 0 &lt;= column &amp;&amp; column &lt; BOARD_SIZE;</span>
     }
 
     /**
@@ -62,7 +62,7 @@ public class Board {
      * @return true if the given square is in the board bounds and free.
      */
     boolean isValid(int row, int column) {
-<span class="pc bpc" id="L65" title="1 of 4 branches missed.">        return contains(row, column) &amp;&amp; isEmptyAt(row, column);</span>
+<span class="fc bfc" id="L65" title="All 4 branches covered.">        return contains(row, column) &amp;&amp; isEmptyAt(row, column);</span>
     }
 
     /**

@@ -21,7 +21,7 @@ public class Square {
      * not valid.
      */
 <span class="fc" id="L23">    public Square(int row, int column) throws ModelException {</span>
-<span class="pc bpc" id="L24" title="3 of 8 branches missed.">        if (row &lt; 0 || 19 &lt; row &amp;&amp; column &lt; 0 || 19 &lt; column) {</span>
+<span class="fc bfc" id="L24" title="All 8 branches covered.">        if (row &lt; 0 || 19 &lt; row || column &lt; 0 || 19 &lt; column) {</span>
 <span class="fc" id="L25">            throw new ModelException(&quot;Square at position (&quot; + row + &quot;; &quot;</span>
                     + column + &quot;) is not valid, the board has 20 row and columns.&quot;);
         }

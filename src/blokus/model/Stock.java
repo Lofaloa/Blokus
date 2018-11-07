@@ -47,7 +47,7 @@ public class Stock {
      * @return this stock pieces.
      */
     public List<Piece> getPieces() {
-        return Collections.unmodifiableList(pieces);
+        return pieces;
     }
 
     /**

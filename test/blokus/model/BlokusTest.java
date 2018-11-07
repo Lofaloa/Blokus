@@ -29,6 +29,18 @@ public class BlokusTest {
     }
 
     @Test
+    public void sencondPlayerWithAnEmptyStockShouldBeTheWinner() {
+        Blokus g = new Blokus();
+        Player player = g.getPlayers().get(2);
+        g.selectCurrentPlayerPiece(1);
+        g.placePiece(0, 0);
+        g.nextPlayer();
+        g.selectCurrentPlayerPiece(3);
+        g.getCurrentPlayer().clearStock();
+        assertEquals(Color.YELLOW, g.getWinner().get(0).getColor());
+    }
+
+    @Test
     public void playersWithSameHighestScoreShouldBeBothWinners() {
         Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(4);
@@ -115,5 +127,24 @@ public class BlokusTest {
         g.nextPlayer();
         assertEquals(Color.BLUE, g.getCurrentPlayer().getColor());
     }
-    
+
+    @Test
+    public void blokusShouldBeOverWhenAllPlayersHaveAnEmptyStock() {
+        Game g = new Blokus();
+        g.getPlayers().get(0).clearStock();
+        g.getPlayers().get(1).clearStock();
+        g.getPlayers().get(2).clearStock();
+        g.getPlayers().get(3).clearStock();
+        assertTrue(g.isOver());
+    }
+
+    @Test
+    public void blokusShouldNotBeOverWhenOneOfThePlayerHasNotAnEmptyStock() {
+        Game g = new Blokus();
+        g.getPlayers().get(0).clearStock();
+        g.getPlayers().get(1).clearStock();
+        g.getPlayers().get(3).clearStock();
+        assertFalse(g.isOver());
+    }
+
 }

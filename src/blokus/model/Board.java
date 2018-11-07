@@ -5,7 +5,7 @@ import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 
 /**
- * Represents a board.
+ * Represents the board of <i>Blokus</i>.
  *
  * @author Logan Farci (47923)
  */

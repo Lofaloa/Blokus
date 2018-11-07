@@ -81,11 +81,6 @@ public interface Game {
     public boolean isOver();
 
     /**
-     * Starts a game of <i>Blokus</i>.
-     */
-    public void start();
-
-    /**
      * Selects the piece of the current player.
      *
      * @param id is the piece id;
@@ -106,10 +101,5 @@ public interface Game {
      * Passes to the next player.
      */
     public void nextPlayer();
-
-    /**
-     * Clears the board game.
-     */
-    public void clear();
 
 }
