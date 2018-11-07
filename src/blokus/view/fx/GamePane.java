@@ -19,8 +19,15 @@ public class GamePane extends HBox {
         this.getChildren().addAll(playersData, board);
         this.setSpacing(10);
         this.setHgrow(playersData, Priority.ALWAYS);
-        this.setHgrow(board, Priority.ALWAYS);
-        
+        this.setHgrow(board, Priority.ALWAYS); 
+    }
+    
+    /**
+     * Updates this pane content.
+     */
+    void updateContent() {
+        playersData.updateContent();
+        board.setBoard();
     }
     
 }

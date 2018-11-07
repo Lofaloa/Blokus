@@ -43,7 +43,7 @@ class Output {
      * Prints a message telling the current player.
      */
     void printCurrentPlayer() {
-        int currentPlayerId = game.getCurrentPlayer();
+        int currentPlayerId = game.getCurrentPlayerId();
         System.out.println(game.getPlayerColor(currentPlayerId) + " is playing...");
     }
 
@@ -143,7 +143,7 @@ class Output {
      * Prints the stock of the current player.
      */
     void printCurrentPlayerStock() {
-        int currentPlayerId = game.getCurrentPlayer();
+        int currentPlayerId = game.getCurrentPlayerId();
         for (Piece piece : game.getPlayerStock(currentPlayerId)) {
             printPiece(piece);
             System.out.println(" ");

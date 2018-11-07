@@ -2,6 +2,7 @@ package blokus.model;
 
 import blokus.exception.ModelException;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Represents the game.
@@ -9,20 +10,6 @@ import java.util.List;
  * @author Logan Farci (47923)
  */
 public interface Game {
-
-    /**
-     * Gets the current player number of the game.
-     *
-     * @return the current player number of the game.
-     */
-    public int getCurrentPlayer();
-
-    /**
-     * Gets the piece selected by the current player.
-     *
-     * @return the piece selected by the current player.
-     */
-    public Piece getCurrentPlayerPiece();
 
     /**
      * Gets the board game.
@@ -67,6 +54,20 @@ public interface Game {
     public int getPieceSize(Piece piece);
 
     /**
+     * Gets the current player id of the game.
+     *
+     * @return the current player id of the game.
+     */
+    public int getCurrentPlayerId();
+
+    /**
+     * Gets the piece selected by the current player.
+     *
+     * @return the piece selected by the current player.
+     */
+    public Piece getCurrentPlayerPiece();
+
+    /**
      * Gets the player matching the given id.
      *
      * @param playerId is the id of the player.
@@ -83,12 +84,12 @@ public interface Game {
     public int getPlayerScore(int playerId);
 
     /**
-     * Gets the player color matching the given id.
+     * Gets the player color name matching the given id.
      *
      * @param playerId is the id of the player.
-     * @return the color of the given player.
+     * @return the color name of the given player.
      */
-    public Color getPlayerColor(int playerId);
+    public String getPlayerColor(int playerId);
 
     /**
      * Gets the player stock matching the given id.
@@ -107,8 +108,8 @@ public interface Game {
     public List<Player> getWinner();
 
     /**
-     * Indicates the end of the game. The game is over either when one of the
-     * player has placed all of her/ his pieces.
+     * Indicates the end of the game. The game is over either when all players have 
+     * placed all of their pieces.
      *
      * @return true if the game is over.
      */

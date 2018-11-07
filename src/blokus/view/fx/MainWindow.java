@@ -1,9 +1,10 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
+import java.util.Observable;
+import java.util.Observer;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -12,7 +13,7 @@ import javafx.scene.layout.VBox;
  * 
  * @author Logan Farci (47923)
  */
-public class MainWindow extends VBox {
+public class MainWindow extends VBox implements Observer {
     
     private final MenuBar menu;
     private final GamePane game;
@@ -24,6 +25,15 @@ public class MainWindow extends VBox {
         this.control = new ControlPane();
         this.getChildren().addAll(menu, this.game, control);
         this.setSpacing(20);
+        
     }
+
+    @Override
+    public void update(Observable o, Object o1) {
+        System.out.println("UPDATE");
+        game.updateContent();
+    }
+    
+    
     
 }

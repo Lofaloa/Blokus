@@ -32,6 +32,16 @@ public class PlayersDataPane extends VBox {
     }
 
     /**
+     * Updates this pane content.
+     */
+    void updateContent() {
+        bluePlayerData.setContent();
+        yellowPlayerData.setContent();
+        redPlayerData.setContent();
+        greenPlayerData.setContent();
+    }
+    
+    /**
      * Sets this pane content.
      */
     final void setContent() {
