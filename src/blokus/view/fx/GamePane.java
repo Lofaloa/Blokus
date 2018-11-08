@@ -26,8 +26,8 @@ public class GamePane extends HBox {
      * Updates this pane content.
      */
     void updateContent() {
-        playersData.updateContent();
-        board.setBoard();
+        playersData.update();
+        board.update();
     }
     
 }

@@ -1,7 +1,7 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
-import blokus.model.Piece;
+import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -33,17 +33,21 @@ public class BoardPane extends GridPane {
      * @return a color carresponding to the given color name.
      */
     Color toColor(String color) {
-        switch (color) {
-            case "BLUE":
-                return Color.BLUE;
-            case "YELLOW":
-                return Color.YELLOW;
-            case "RED":
-                return Color.RED;
-            case "GREEN":
-                return Color.GREEN;
-            default:
-                return Color.GREY;
+        if (color == null) {
+            return Color.GREY;
+        } else {
+            switch (color) {
+                case "BLUE":
+                    return Color.BLUE;
+                case "YELLOW":
+                    return Color.YELLOW;
+                case "RED":
+                    return Color.RED;
+                case "GREEN":
+                    return Color.GREEN;
+                default:
+                    return Color.GREY;
+            }
         }
     }
 
@@ -95,6 +99,25 @@ public class BoardPane extends GridPane {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 setSquare(blokus.getBoardColorAt(i, j), i, j);
+            }
+        }
+    }
+
+    Rectangle getSquare(int row, int column) {
+        for (Node children : getChildren()) {
+            if (GridPane.getRowIndex(children) == row
+                    && GridPane.getColumnIndex(children) == column) {
+                return (Rectangle) children;
+            }
+        }
+        return null;
+    }
+
+    void update() {
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                Color color = toColor(blokus.getBoardColorAt(i, j));
+                getSquare(i, j).setFill(color);
             }
         }
     }

@@ -14,7 +14,7 @@ import javafx.scene.shape.Rectangle;
  */
 public class PiecePane extends GridPane {
 
-    private final int size;
+    private final int SIZE;
     private final Piece piece;
     private final Game game;
 
@@ -27,7 +27,7 @@ public class PiecePane extends GridPane {
     public PiecePane(Game game, Piece piece) {
         this.piece = piece;
         this.game = game;
-        this.size = game.getPieceSize(piece);
+        this.SIZE = game.getPieceSize(piece);
         setPiece();
     }
 
@@ -72,8 +72,8 @@ public class PiecePane extends GridPane {
      * Displays the piece of this pane.
      */
     final void setPiece() {
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
                 if (game.isInsidePiece(piece, i, j)) {
                     setSquare(getColor(), i, j, true);
                 } else {

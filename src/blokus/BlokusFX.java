@@ -2,8 +2,7 @@ package blokus;
 
 import blokus.controller.ControllerFX;
 import blokus.model.Blokus;
-import blokus.model.Game;
-import blokus.view.fx.MainWindow;
+import blokus.view.fx.MainBox;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -20,8 +19,8 @@ public class BlokusFX extends Application {
     public void start(Stage primaryStage) {
         try {
             primaryStage.setTitle("Blokus");
-            Blokus blokus = new Blokus();
-            MainWindow main = new MainWindow(blokus);
+            Blokus blokus = new Blokus();           
+            MainBox main = new MainBox(blokus);
             blokus.addObserver(main);
             ControllerFX controller = new ControllerFX(blokus, main);
             controller.start();
@@ -30,6 +29,7 @@ public class BlokusFX extends Application {
             primaryStage.show();
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
+            ex.printStackTrace();
             Platform.exit();
         }
     }

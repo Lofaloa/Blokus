@@ -166,7 +166,6 @@ public class Blokus extends Observable implements Game{
         }
         board.add(currentPlayerPiece, row, column);
         setChanged();
-        System.out.println("Notifying");
         notifyObservers();
     }
 

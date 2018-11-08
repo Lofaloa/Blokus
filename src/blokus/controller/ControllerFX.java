@@ -1,7 +1,7 @@
 package blokus.controller;
 
 import blokus.model.Blokus;
-import blokus.view.fx.MainWindow;
+import blokus.view.fx.MainBox;
 
 /**
  *
@@ -9,10 +9,10 @@ import blokus.view.fx.MainWindow;
  */
 public class ControllerFX {
 
-    private final MainWindow main;
+    private final MainBox main;
     private final Blokus game;
     
-    public ControllerFX(Blokus game, MainWindow main) {
+    public ControllerFX(Blokus game, MainBox main) {
         this.game = game;
         this.main = main;
     }
