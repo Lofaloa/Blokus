@@ -51,7 +51,7 @@ public class Piece {
      * @throws ModelException if the given row and column are not valid.
      */
     boolean contains(int i, int j) throws ModelException {
-        return shape.contains(i, j);
+        return shape.getSquares().contains(new Square(i, j));
     }
 
     /**

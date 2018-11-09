@@ -60,11 +60,7 @@ public class Player {
      * @return the wanted piece.
      */
     Piece getPiece(Shape shape) {
-        return stock.takePiece(shape);
-    }
-    
-    boolean owns(Shape shape) {
-        return stock.getPieces().contains(new Piece(shape, color));
+        return stock.getPieceBy(shape);
     }
     
     /**

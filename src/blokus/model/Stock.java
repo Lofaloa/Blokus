@@ -1,6 +1,7 @@
 package blokus.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -91,24 +92,13 @@ class Stock {
      * @param shape is the shape of the wanted piece.
      * @return the wanted piece if it is in this stock, if not null is returned.
      */
-    Piece getPiece(Shape shape) {
+    Piece getPieceBy(Shape shape) {
         Piece wantedPiece = null;
         for (Piece piece : pieces) {
             if (shape == piece.getShape()) {
                 wantedPiece = piece;
             }
         }
-        return wantedPiece;
-    }
-
-    /**
-     * Gets a piece of this stock by its shape and remove it.
-     *
-     * @param shape is the shape of the wanted piece.
-     * @return the wanted piece if it is in this stock, if not null is returned.
-     */
-    Piece takePiece(Shape shape) {
-        Piece wantedPiece = getPiece(shape);
         pieces.remove(wantedPiece);
         lastTakenPiece = wantedPiece;
         return wantedPiece;
