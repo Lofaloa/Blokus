@@ -11,22 +11,20 @@ import javafx.scene.layout.GridPane;
  */
 public class StockPane extends GridPane {
 
-    private final int PIECES_PER_ROW = 8;
-    
     private final int ownerId;
     private final Game blokus;
 
     public StockPane(Game blokus, int ownerId) {
         this.ownerId = ownerId;
         this.blokus = blokus;
-        setPieces();
+        setPieces(8);
         setStyle();
     }
 
     /**
      * Sets the pieces contained in the represented stock.
      */
-    final void setPieces() {
+    final void setPieces(int nbOfPiecesPerRow) {
         int row = 0;
         int col = 0;
         int added = 0;
@@ -34,7 +32,7 @@ public class StockPane extends GridPane {
             add(new PiecePane(blokus, piece), col, row);
             col++;
             added++;
-            if (added % PIECES_PER_ROW == 0) {
+            if (added % nbOfPiecesPerRow == 0) {
                 col = 0;
                 row++;
             }
@@ -46,7 +44,7 @@ public class StockPane extends GridPane {
      */
     void update() {
         getChildren().clear();
-        setPieces();
+        setPieces(8);
     }
 
     /**
