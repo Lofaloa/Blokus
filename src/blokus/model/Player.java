@@ -59,15 +59,25 @@ class Player {
     boolean ownsPieceOf(int shapeId) {
         return stock.contains(shapeId);
     }
+    
+    /**
+     * Selects one of the piece of this player stock.
+     * 
+     * @param pieceId is the id of the piece to select.
+     * @return the selected piece.
+     */
+    Piece selectPiece(int pieceId) {
+        return stock.getPiece(Shape.values()[pieceId]);
+    }
 
     /**
-     * Gets a piece in this player stock.
+     * Gets a piece in this player stock and remove it.
      *
      * @param shape is the shape of the wanted piece.
      * @return the wanted piece.
      */
     Piece getPiece(Shape shape) {
-        return stock.getPieceBy(shape);
+        return stock.takePiece(shape);
     }
     
     /**

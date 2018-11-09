@@ -100,7 +100,7 @@ public class BoardTest {
         b.add(p, 0, 19);
     }
 
-    @Test(expected = IllegalActionException.class)
+    @Test(expected = ModelException.class)
     public void addingAnOverlappingPieceShouldCauseException() {
         Board b = new Board();
         Piece piece = new Piece(Shape.SHAPE_04, Color.BLUE);

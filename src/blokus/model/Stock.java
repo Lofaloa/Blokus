@@ -86,26 +86,43 @@ class Stock {
     }
 
     /**
-     * Gets a piece of this stock by its shape.
+     * Gets the piece of the given shape in this stock.
+     *
+     * @param shape is the shape of the piece to get.
+     * @return the piece of the given shape. If no piece is found
+     * <code>null</code> is returned.
+     */
+    Piece getPiece(Shape shape) {
+        for (Piece piece : pieces) {
+            if (shape == piece.getShape()) {
+                return piece;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets a piece of this stock by its shape and remove it.
      *
      * @param shape is the shape of the wanted piece.
      * @return the wanted piece if it is in this stock, if not null is returned.
      */
-    Piece getPieceBy(Shape shape) {
-        Piece wantedPiece = null;
-        for (Piece piece : pieces) {
-            if (shape == piece.getShape()) {
-                wantedPiece = piece;
-            }
+    Piece takePiece(Shape shape) {
+        Piece wantedPiece = getPiece(shape);
+        if (wantedPiece != null) {
+            pieces.remove(wantedPiece);
+            lastTakenPiece = wantedPiece;
         }
-        pieces.remove(wantedPiece);
-        lastTakenPiece = wantedPiece;
         return wantedPiece;
+    }
+    
+    void remove(Piece piece) {
+        pieces.remove(piece);
     }
 
     /**
      * Tells if this stock contains a piece of the given shape.
-     * 
+     *
      * @param shapeId is the id of the shape to look for.
      * @return true if a piece of given shape is in this stock.
      */

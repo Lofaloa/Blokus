@@ -36,13 +36,14 @@ public class Blokus extends Observable implements Game {
                 new Player(Color.GREEN)));
         this.playerIterator = players.listIterator();
         this.currentPlayer = playerIterator.next();
+        this.currentPlayerPiece = null;
         this.board = new Board();
     }
-    
+
     Piece[][] getBoard() {
         return board.getSquares();
     }
-    
+
     Piece getCurrentPlayerPiece() {
         return currentPlayerPiece;
     }
@@ -80,7 +81,7 @@ public class Blokus extends Observable implements Game {
 
     /**
      * Gets the players matching the given id.
-     * 
+     *
      * @return the player matching the given id.
      */
     Player getPlayer(int playerId) {
@@ -146,20 +147,18 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
-    public void selectCurrentPlayerPiece(int id) throws ModelException {
-        if (id < 1 || 21 < id) {
-            throw new ModelException(id + " is not a valid piece id, there "
+    public void selectCurrentPlayerPiece(int pieceId) throws ModelException {
+        if (pieceId < 1 || 21 < pieceId) {
+            throw new ModelException(pieceId + " is not a valid piece id, there "
                     + "are 21 pieces.");
         }
-        currentPlayerPiece = currentPlayer.getPiece(Shape.values()[--id]);
+        currentPlayerPiece = currentPlayer.selectPiece(pieceId);
     }
 
     @Override
     public void placePiece(int row, int column) throws ModelException {
-        if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {
-            throw new IllegalActionException("The current player has not selected "
-                    + "a piece.");
-        }
+        board.requireValidSquare(row, column);
+        currentPlayer.getStock().remove(currentPlayerPiece);
         board.add(currentPlayerPiece, row, column);
         setChanged();
         notifyObservers();

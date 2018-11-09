@@ -71,16 +71,26 @@ class Board {
      * @param square is the square to check.
      * @return a valid square.
      */
-    Square requireValidSquare(Square square) throws ModelException {
-        if (!contains(square.getRow(), square.getColumn())) {
-            throw new ModelException("Square at position ("
-                    + square.getRow() + "; " + square.getColumn() + ") is out of bounds.");
+    void requireValidSquare(int row, int column) throws ModelException {
+        if (!contains(row, column)) {
+            throw new ModelException("Square at position row "
+                    + row + ", " + column + " is out of the board bounds.");
         }
-        if (!isEmptyAt(square.getRow(), square.getColumn())) {
-            throw new IllegalActionException("Square at position ("
-                    + square.getRow() + "; " + square.getColumn() + ") is not free.");
+        if (!isEmptyAt(row, column)) {
+            throw new ModelException("not a free position at row " + row + ", "
+                    + "column " + column + " is occupied by "
+                    + squares[row][column].getColor() + " player.");
         }
-        return square;
+    }
+
+    boolean hasSpaceFor(Piece piece, int row, int column) {
+        for (Square square : piece.getShape().getSquares()) {
+            Square boardSquare = square.move(row, column);
+            if (!isValid(boardSquare.getRow(), boardSquare.getColumn())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -91,8 +101,11 @@ class Board {
      * @param column is the column of the square of destination in this board.
      */
     void add(Piece piece, int row, int column) throws ModelException {
+        if (!hasSpaceFor(piece, row, column)) {
+            throw new ModelException("The given piece cannot be place at row " + row + ", column " + column);
+        }
         for (Square pieceSquare : piece.getShape().getSquares()) {
-            Square boardSquare = requireValidSquare(pieceSquare.move(row, column));
+            Square boardSquare = pieceSquare.move(row, column);
             squares[boardSquare.getRow()][boardSquare.getColumn()] = piece;
         }
     }

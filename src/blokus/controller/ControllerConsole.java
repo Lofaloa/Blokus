@@ -36,7 +36,7 @@ public class ControllerConsole {
                 view.printCurrentPlayer();
                 view.executeCommand();
             } catch (ModelException | IllegalActionException e) {
-                System.out.println("usage: " + e.getMessage());
+                System.err.println("usage: " + e.getMessage());
             }
         }
     }
