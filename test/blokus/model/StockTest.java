@@ -29,9 +29,7 @@ public class StockTest {
     @Test
     public void emptyStockShouldBeEmpty() {
         Stock s = new Stock(Color.RED);
-        for (Shape shape : Shape.values()) {
-            s.takePiece(shape);
-        }
+        s.clear();
         assertTrue(s.isEmpty());
     }
 
@@ -44,27 +42,15 @@ public class StockTest {
     @Test
     public void numberOfSquaresUnitInEmptyStockShouldBe0() {
         Stock s = new Stock(Color.BLUE);
-        for (Shape shape : Shape.values()) {
-            s.takePiece(shape);
-        }
+        s.clear();
         assertEquals(0, s.getNumberOfSquares());
-    }
-
-    @Test
-    public void pieceGotByShapeShouldBeWantedPiece() {
-        Stock s = new Stock(Color.BLUE);
-        Piece piece = s.takePiece(Shape.SHAPE_15);
-        assertTrue(piece.equals(new Piece(Shape.SHAPE_15, Color.BLUE)));
-        assertEquals(20, s.getPieces().size());
-        assertTrue(piece.equals(s.getLastTakenPiece()));
     }
 
     @Test
     public void nullShouldBeReturnedIfAskedShapeIsNotInStock() {
         Stock s = new Stock(Color.BLUE);
-        s.takePiece(Shape.SHAPE_15);
-        Piece notFoundPiece = s.takePiece(Shape.SHAPE_15);
-        assertEquals(null, notFoundPiece);
+        s.remove(new Piece(Shape.SHAPE_01, Color.BLUE));
+        assertNull(s.getPiece(Shape.SHAPE_01));
     }
 
     @Test
@@ -72,9 +58,9 @@ public class StockTest {
         Stock s = new Stock(Color.BLUE);
         Shape[] shapes = Shape.values();
         for (int i = 1; i < shapes.length; i++) {
-            s.takePiece(shapes[i]);
+            s.remove(new Piece(shapes[i], Color.BLUE));
         }
-        s.takePiece(shapes[0]);
+        s.remove(new Piece(shapes[0], Color.BLUE));
         assertEquals(20, s.getScore());
     }
 
@@ -82,9 +68,9 @@ public class StockTest {
     public void scoreShouldBe15WhenStockIsEmptyButSmallestPieceIsFirstTaken() {
         Stock s = new Stock(Color.BLUE);
         Shape[] shapes = Shape.values();
-        s.takePiece(shapes[0]);
+        s.remove(new Piece(shapes[0], Color.BLUE));
         for (int i = 1; i < shapes.length; i++) {
-            s.takePiece(shapes[i]);
+            s.remove(new Piece(shapes[i], Color.BLUE));
         }
         assertEquals(15, s.getScore());
     }
@@ -92,10 +78,6 @@ public class StockTest {
     @Test
     public void scoreShouldBeNegativeWhenStockIsNotEmpty() {
         Stock s = new Stock(Color.BLUE);
-        Shape[] shapes = Shape.values();
-        for (int i = 15; i < shapes.length; i++) {
-            s.takePiece(shapes[i]);
-        }
         assertTrue(s.getScore() < 0);
     }
 

@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Logan Farci (47923)
  */
-public class Piece {
+class Piece {
 
     private final Shape shape;
     private final Color color;
@@ -29,7 +29,7 @@ public class Piece {
      *
      * @return this shape size.
      */
-    public Shape getShape() {
+    Shape getShape() {
 <span class="fc" id="L33">        return shape;</span>
     }
 
@@ -38,7 +38,7 @@ public class Piece {
      *
      * @return this shape color.
      */
-    public Color getColor() {
+    Color getColor() {
 <span class="fc" id="L42">        return color;</span>
     }
 
@@ -50,7 +50,7 @@ public class Piece {
      * @return true if the given position in contained on this piece.
      * @throws ModelException if the given row and column are not valid.
      */
-    public boolean contains(int i, int j) throws ModelException {
+    boolean contains(int i, int j) throws ModelException {
 <span class="fc" id="L54">        return shape.getSquares().contains(new Square(i, j));</span>
     }
 

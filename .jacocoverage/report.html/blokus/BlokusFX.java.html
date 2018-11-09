@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BlokusFX.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus</a> &gt; <span class="el_source">BlokusFX.java</span></div><h1>BlokusFX.java</h1><pre class="source lang-java linenums">package blokus;
 
+import blokus.controller.ControllerFX;
 import blokus.model.Blokus;
-import blokus.model.Game;
-import blokus.view.fx.MainWindow;
+import blokus.view.fx.MainBox;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -15,42 +15,35 @@ import javafx.stage.Stage;
  */
 <span class="nc" id="L16">public class BlokusFX extends Application {</span>
 
-    public void simulateBlokusFirstTurn(Game blokus) {
-<span class="nc" id="L19">        blokus.selectCurrentPlayerPiece(15);</span>
-<span class="nc" id="L20">        blokus.placePiece(0, 0);</span>
-<span class="nc" id="L21">        blokus.nextPlayer();</span>
-<span class="nc" id="L22">        blokus.selectCurrentPlayerPiece(11);</span>
-<span class="nc" id="L23">        blokus.placePiece(16, 0);</span>
-<span class="nc" id="L24">        blokus.nextPlayer();</span>
-<span class="nc" id="L25">        blokus.selectCurrentPlayerPiece(10);</span>
-<span class="nc" id="L26">        blokus.placePiece(0, 19);</span>
-<span class="nc" id="L27">        blokus.nextPlayer();</span>
-<span class="nc" id="L28">        blokus.selectCurrentPlayerPiece(9);</span>
-<span class="nc" id="L29">        blokus.placePiece(18, 17);</span>
-<span class="nc" id="L30">    }</span>
-
+    /**
+     * Starts &lt;i&gt;Blokus&lt;/i&gt;.
+     * 
+     * @param primaryStage nothing.
+     */
     @Override
     public void start(Stage primaryStage) {
         try {
-<span class="nc" id="L35">            primaryStage.setTitle(&quot;Blokus&quot;);</span>
-<span class="nc" id="L36">            Game blokus = new Blokus();</span>
-<span class="nc" id="L37">            simulateBlokusFirstTurn(blokus);</span>
-<span class="nc" id="L38">            MainWindow main = new MainWindow(blokus);</span>
-<span class="nc" id="L39">            Scene scene = new Scene(main, 1000, 750);</span>
-<span class="nc" id="L40">            primaryStage.setScene(scene);</span>
-<span class="nc" id="L41">            primaryStage.show();</span>
-<span class="nc" id="L42">        } catch (Exception ex) {</span>
-<span class="nc" id="L43">            System.err.println(ex.getMessage());</span>
-<span class="nc" id="L44">            Platform.exit();</span>
-<span class="nc" id="L45">        }</span>
-<span class="nc" id="L46">    }</span>
+<span class="nc" id="L26">            primaryStage.setTitle(&quot;Blokus&quot;);</span>
+<span class="nc" id="L27">            Blokus blokus = new Blokus();           </span>
+<span class="nc" id="L28">            MainBox main = new MainBox(blokus);</span>
+<span class="nc" id="L29">            blokus.addObserver(main);</span>
+<span class="nc" id="L30">            ControllerFX controller = new ControllerFX(blokus);</span>
+<span class="nc" id="L31">            controller.start();</span>
+<span class="nc" id="L32">            Scene scene = new Scene(main, 1000, 750);</span>
+<span class="nc" id="L33">            primaryStage.setScene(scene);</span>
+<span class="nc" id="L34">            primaryStage.show();</span>
+<span class="nc" id="L35">        } catch (Exception ex) {</span>
+<span class="nc" id="L36">            System.err.println(ex.getMessage());</span>
+<span class="nc" id="L37">            Platform.exit();</span>
+<span class="nc" id="L38">        }</span>
+<span class="nc" id="L39">    }</span>
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-<span class="nc" id="L52">        Application.launch(args);</span>
-<span class="nc" id="L53">    }</span>
+<span class="nc" id="L45">        Application.launch(args);</span>
+<span class="nc" id="L46">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

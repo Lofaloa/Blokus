@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,34 +18,87 @@ public class BlokusTest {
     }
 
     @Test
+    public void gameShouldGetTheExpectedColorInBoardAtGivenPosition() {
+        Blokus g = new Blokus();
+        g.selectCurrentPlayerPiece(3);
+        g.placePiece(0, 0);
+        assertEquals("BLUE", g.getBoardColorAt(0, 0));
+    }
+
+    @Test
+    public void gameShouldGetANullColorInBoardAtEmptyPosition() {
+        Blokus g = new Blokus();
+        assertNull(g.getBoardColorAt(0, 0));
+    }
+
+    @Test
+    public void gameShouldTellIfBoardIsEmptyAtGivenPosition() {
+        Blokus g = new Blokus();
+        assertTrue(g.isBoardEmptyAt(0, 0));
+    }
+
+    @Test
+    public void gameShouldTellIfAPieceContainsAGivenSquare() {
+        Blokus g = new Blokus();
+        assertTrue(g.isInsideShape(2, 0, 0));
+        assertTrue(g.isInsideShape(2, 1, 0));
+        assertTrue(g.isInsideShape(2, 2, 0));
+    }
+
+    @Test
+    public void gameShouldGetExpectedShapeSize() {
+        Blokus g = new Blokus();
+        assertEquals(5, g.getShapeSize(20));
+    }
+
+    @Test
+    public void gameShouldTellIfAPlayerOwnsAPiece() {
+        Blokus g = new Blokus();
+        assertTrue(g.playerOwnsPieceOf(0, 0));
+    }
+
+    @Test
+    public void gameShouldTellIfAPlayerDoesNotOwnAPiece() {
+        Blokus g = new Blokus();
+        g.getPlayer(0).getStock().remove(0);
+        assertFalse(g.playerOwnsPieceOf(0, 0));
+    }
+
+    @Test
     public void winnerShouldBeThePlayerWithTheHighestScore() {
         Blokus g = new Blokus();
         Player currentPlayer = g.getPlayer(g.getCurrentPlayerId());
-        g.selectCurrentPlayerPiece(4);
+        g.selectCurrentPlayerPiece(3);
         g.placePiece(0, 0);
         assertEquals(-86, g.getHighestScore());
         assertEquals(currentPlayer.getColor(), g.getWinner().get(0).getColor());
     }
 
     @Test
-    public void sencondPlayerWithAnEmptyStockShouldBeTheWinner() {
+    public void secondPlayerShouldBeWinnerWithEmptyStock() {
         Blokus g = new Blokus();
-        Player player = g.getPlayers().get(2);
-        g.selectCurrentPlayerPiece(1);
-        g.placePiece(0, 0);
-        g.nextPlayer();
-        g.selectCurrentPlayerPiece(3);
-        g.getPlayer(g.getCurrentPlayerId()).clearStock();
-        assertEquals(Color.YELLOW, g.getWinner().get(0).getColor());
+        Player winner = g.getPlayer(1);
+        winner.take(new Piece(Shape.SHAPE_21, Color.YELLOW));
+        assertEquals(-84, g.getHighestScore());
+        assertEquals(winner.getColor(), g.getWinner().get(0).getColor());
+    }
+
+    @Test
+    public void gameShouldGetExpectedPlayerScore() {
+        Blokus g = new Blokus();
+        g.getPlayer(0).take(new Piece(Shape.SHAPE_01, Color.BLUE));
+        g.getPlayer(0).take(new Piece(Shape.SHAPE_02, Color.BLUE));
+        g.getPlayer(0).take(new Piece(Shape.SHAPE_03, Color.BLUE));
+        assertEquals(-83, g.getPlayerScore(0));
     }
 
     @Test
     public void playersWithSameHighestScoreShouldBeBothWinners() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(4);
+        g.selectCurrentPlayerPiece(3);
         g.placePiece(0, 0);
         g.nextPlayer();
-        g.selectCurrentPlayerPiece(4);
+        g.selectCurrentPlayerPiece(3);
         g.placePiece(5, 5);
         assertEquals(-86, g.getHighestScore());
         assertEquals(Color.BLUE, g.getWinner().get(0).getColor());
@@ -56,7 +108,7 @@ public class BlokusTest {
     @Test(expected = ModelException.class)
     public void tooSmallPieceIdShouldCauseExceptionWhenSelectingPiece() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(0);
+        g.selectCurrentPlayerPiece(-1);
     }
 
     @Test(expected = ModelException.class)
@@ -68,23 +120,15 @@ public class BlokusTest {
     @Test
     public void placedPieceShouldBeOnBoardAtGivenPosition() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(1);
+        g.selectCurrentPlayerPiece(0);
         g.placePiece(0, 0);
         assertEquals(Shape.SHAPE_01, g.getBoard()[0][0].getShape());
-    }
-
-    @Test(expected = IllegalActionException.class)
-    public void currentPlayerCannotPlaceWithoutSelectingPiece() {
-        Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(2);
-        g.nextPlayer();
-        g.placePiece(0, 0);
     }
 
     @Test
     public void currentPlayerPieceShouldBeTheOneSelected() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(2);
+        g.selectCurrentPlayerPiece(1);
         assertEquals(Shape.SHAPE_02, g.getCurrentPlayerPiece().getShape());
     }
 

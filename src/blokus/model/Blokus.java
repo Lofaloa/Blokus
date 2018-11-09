@@ -147,7 +147,7 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public void selectCurrentPlayerPiece(int pieceId) throws ModelException {
-        if (pieceId < 1 || 21 < pieceId) {
+        if (pieceId < 0 || 20 < pieceId) {
             throw new ModelException(pieceId + " is not a valid piece id, there "
                     + "are 21 pieces.");
         }
@@ -157,7 +157,7 @@ public class Blokus extends Observable implements Game {
     @Override
     public void placePiece(int row, int column) throws ModelException {
         board.requireValidSquare(row, column);
-        currentPlayer.loses(currentPlayerPiece);
+        currentPlayer.take(currentPlayerPiece);
         board.add(currentPlayerPiece, row, column);
         setChanged();
         notifyObservers();

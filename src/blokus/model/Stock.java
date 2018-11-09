@@ -32,15 +32,6 @@ class Stock {
     }
 
     /**
-     * Gets the last taken piece.
-     *
-     * @return the last taken piece.
-     */
-    Piece getLastTakenPiece() {
-        return new Piece(lastTakenPiece.getShape(), lastTakenPiece.getColor());
-    }
-
-    /**
      * Gets this stock pieces.
      *
      * @return this stock pieces.
@@ -100,13 +91,14 @@ class Stock {
         }
         return null;
     }
-    
+
     /**
      * Removes the given piece.
-     * 
+     *
      * @param piece the piece to remove.
      */
     void remove(Piece piece) {
+        lastTakenPiece = piece;
         pieces.remove(piece);
     }
 
@@ -138,6 +130,13 @@ class Stock {
             builtPieces.add(new Piece(shape, color));
         }
         return builtPieces;
+    }
+
+    /**
+     * Clears this stock.
+     */
+    void clear() {
+        pieces.clear();
     }
 
 }

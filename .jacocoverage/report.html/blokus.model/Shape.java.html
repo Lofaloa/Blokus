@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Shape.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.model</a> &gt; <span class="el_source">Shape.java</span></div><h1>Shape.java</h1><pre class="source lang-java linenums">package blokus.model;
 
-import blokus.exception.ModelException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,108 +11,108 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-<span class="pc" id="L15">public enum Shape {</span>
+<span class="pc" id="L14">enum Shape {</span>
 
     /**
      * Represents the shape of piece 01.
      */
-<span class="fc" id="L20">    SHAPE_01(new Square(0, 0)),</span>
+<span class="fc" id="L19">    SHAPE_01(new Square(0, 0)),</span>
     /**
      * Represents the shape of piece 02.
      */
-<span class="fc" id="L24">    SHAPE_02(new Square(0, 0), new Square(1, 0)),</span>
+<span class="fc" id="L23">    SHAPE_02(new Square(0, 0), new Square(1, 0)),</span>
     /**
      * Represents the shape of piece 03.
      */
-<span class="fc" id="L28">    SHAPE_03(new Square(0, 0), new Square(1, 0), new Square(2, 0)),</span>
+<span class="fc" id="L27">    SHAPE_03(new Square(0, 0), new Square(1, 0), new Square(2, 0)),</span>
     /**
      * Represents the shape of piece 04.
      */
-<span class="fc" id="L32">    SHAPE_04(new Square(0, 0), new Square(1, 0), new Square(1, 1)),</span>
+<span class="fc" id="L31">    SHAPE_04(new Square(0, 0), new Square(1, 0), new Square(1, 1)),</span>
     /**
      * Represents the shape of piece 05.
      */
-<span class="fc" id="L36">    SHAPE_05(new Square(0, 0), new Square(1, 0), new Square(2, 0),</span>
+<span class="fc" id="L35">    SHAPE_05(new Square(0, 0), new Square(1, 0), new Square(2, 0),</span>
             new Square(3, 0)),
     /**
      * Represents the shape of piece 06.
      */
-<span class="fc" id="L41">    SHAPE_06(new Square(2, 0), new Square(2, 1), new Square(1, 1),</span>
+<span class="fc" id="L40">    SHAPE_06(new Square(2, 0), new Square(2, 1), new Square(1, 1),</span>
             new Square(0, 1)),
     /**
      * Represents the shape of piece 07.
      */
-<span class="fc" id="L46">    SHAPE_07(new Square(0, 0), new Square(1, 0), new Square(2, 0),</span>
+<span class="fc" id="L45">    SHAPE_07(new Square(0, 0), new Square(1, 0), new Square(2, 0),</span>
             new Square(1, 1)),
     /**
      * Represents the shape of piece 08.
      */
-<span class="fc" id="L51">    SHAPE_08(new Square(0, 0), new Square(1, 0), new Square(1, 1),</span>
+<span class="fc" id="L50">    SHAPE_08(new Square(0, 0), new Square(1, 0), new Square(1, 1),</span>
             new Square(0, 1)),
     /**
      * Represents the shape of piece 09.
      */
-<span class="fc" id="L56">    SHAPE_09(new Square(0, 0), new Square(0, 1), new Square(1, 1),</span>
+<span class="fc" id="L55">    SHAPE_09(new Square(0, 0), new Square(0, 1), new Square(1, 1),</span>
             new Square(1, 2)),
     /**
      * Represents the shape of piece 10.
      */
-<span class="fc" id="L61">    SHAPE_10(new Square(0, 0), new Square(1, 0), new Square(2, 0),</span>
+<span class="fc" id="L60">    SHAPE_10(new Square(0, 0), new Square(1, 0), new Square(2, 0),</span>
             new Square(3, 0), new Square(4, 0)),
     /**
      * Represents the shape of piece 11.
      */
-<span class="fc" id="L66">    SHAPE_11(new Square(3, 0), new Square(3, 1), new Square(2, 1),</span>
+<span class="fc" id="L65">    SHAPE_11(new Square(3, 0), new Square(3, 1), new Square(2, 1),</span>
             new Square(1, 1), new Square(0, 1)),
     /**
      * Represents the shape of piece 12.
      */
-<span class="fc" id="L71">    SHAPE_12(new Square(0, 1), new Square(1, 1), new Square(2, 0),</span>
+<span class="fc" id="L70">    SHAPE_12(new Square(0, 1), new Square(1, 1), new Square(2, 0),</span>
             new Square(2, 1), new Square(3, 0)),
     /**
      * Represents the shape of piece 13.
      */
-<span class="fc" id="L76">    SHAPE_13(new Square(0, 1), new Square(1, 0), new Square(1, 1),</span>
+<span class="fc" id="L75">    SHAPE_13(new Square(0, 1), new Square(1, 0), new Square(1, 1),</span>
             new Square(2, 0), new Square(2, 1)),
     /**
      * Represents the shape of piece 14.
      */
-<span class="fc" id="L81">    SHAPE_14(new Square(0, 0), new Square(0, 1),</span>
+<span class="fc" id="L80">    SHAPE_14(new Square(0, 0), new Square(0, 1),</span>
             new Square(1, 1), new Square(2, 0), new Square(2, 1)),
     /**
      * Represents the shape of piece 15.
      */
-<span class="fc" id="L86">    SHAPE_15(new Square(0, 0), new Square(1, 0),</span>
+<span class="fc" id="L85">    SHAPE_15(new Square(0, 0), new Square(1, 0),</span>
             new Square(1, 1), new Square(2, 0), new Square(3, 0)),
     /**
      * Represents the shape of piece 16.
      */
-<span class="fc" id="L91">    SHAPE_16(new Square(0, 1), new Square(1, 1), new Square(2, 0),</span>
+<span class="fc" id="L90">    SHAPE_16(new Square(0, 1), new Square(1, 1), new Square(2, 0),</span>
             new Square(2, 1), new Square(2, 2)),
     /**
      * Represents the shape of piece 17.
      */
-<span class="fc" id="L96">    SHAPE_17(new Square(0, 0), new Square(1, 0), new Square(2, 0),</span>
+<span class="fc" id="L95">    SHAPE_17(new Square(0, 0), new Square(1, 0), new Square(2, 0),</span>
             new Square(2, 1), new Square(2, 2)),
     /**
      * Represents the shape of piece 18.
      */
-<span class="fc" id="L101">    SHAPE_18(new Square(0, 0), new Square(0, 1), new Square(1, 1),</span>
+<span class="fc" id="L100">    SHAPE_18(new Square(0, 0), new Square(0, 1), new Square(1, 1),</span>
             new Square(1, 2), new Square(2, 2)),
     /**
      * Represents the shape of piece 19.
      */
-<span class="fc" id="L106">    SHAPE_19(new Square(0, 0), new Square(1, 0), new Square(1, 1),</span>
+<span class="fc" id="L105">    SHAPE_19(new Square(0, 0), new Square(1, 0), new Square(1, 1),</span>
             new Square(1, 2), new Square(2, 2)),
     /**
      * Represents the shape of piece 20.
      */
-<span class="fc" id="L111">    SHAPE_20(new Square(0, 0), new Square(1, 0), new Square(1, 1),</span>
+<span class="fc" id="L110">    SHAPE_20(new Square(0, 0), new Square(1, 0), new Square(1, 1),</span>
             new Square(1, 2), new Square(2, 1)),
     /**
      * Represents the shape of piece 21.
      */
-<span class="fc" id="L116">    SHAPE_21(new Square(0, 1), new Square(1, 1), new Square(1, 0),</span>
+<span class="fc" id="L115">    SHAPE_21(new Square(0, 1), new Square(1, 1), new Square(1, 0),</span>
             new Square(1, 2), new Square(2, 1));
 
     private final List&lt;Square&gt; squares;
@@ -123,17 +122,17 @@ import java.util.List;
      *
      * @param Squares is the set of Squares of this shape.
      */
-<span class="fc" id="L126">    Shape(Square... Squares) {</span>
-<span class="fc" id="L127">        this.squares = new ArrayList&lt;&gt;(Arrays.asList(Squares));</span>
-<span class="fc" id="L128">    }</span>
+<span class="fc" id="L125">    Shape(Square... Squares) {</span>
+<span class="fc" id="L126">        this.squares = new ArrayList&lt;&gt;(Arrays.asList(Squares));</span>
+<span class="fc" id="L127">    }</span>
 
     /**
      * Gets the Squares of this shape.
      *
      * @return the Squares of this shape.
      */
-    public List&lt;Square&gt; getSquares() {
-<span class="fc" id="L136">        return squares;</span>
+    List&lt;Square&gt; getSquares() {
+<span class="fc" id="L135">        return squares;</span>
     }
 
     /**
@@ -141,8 +140,19 @@ import java.util.List;
      *
      * @return the size of this shape.
      */
-    public int getSize() {
-<span class="fc" id="L145">        return squares.size();</span>
+    int getSize() {
+<span class="fc" id="L144">        return squares.size();</span>
+    }
+    
+    /**
+     * Tells if the given square is in this shape.
+     * 
+     * @param row is the row of the square.
+     * @param column is the column of the square.
+     * @return true if the square is in the shape.
+     */
+    boolean contains(int row, int column) {
+<span class="fc" id="L155">        return squares.contains(new Square(row, column));</span>
     }
 
 }

@@ -55,7 +55,7 @@ class Player {
      *
      * @param piece is the piece to lose.
      */
-    void loses(Piece piece) {
+    void take(Piece piece) {
         stock.remove(piece);
     }
 
@@ -83,7 +83,7 @@ class Player {
      * Clears this player stock.
      */
     void clearStock() {
-        stock.getPieces().clear();
+        stock.clear();
     }
 
 }

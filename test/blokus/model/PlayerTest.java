@@ -1,9 +1,5 @@
 package blokus.model;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,11 +16,12 @@ public class PlayerTest {
         assertTrue(p.getColor() == Color.BLUE && !p.getStock().isEmpty()
                 && p.getScore() == -89);
     }
-    
+
     @Test
     public void playerShouldBeAbleToGetAPieceOfStock() {
         Player player = new Player(Color.BLUE);
-        Piece p1 = player.getPiece(Shape.SHAPE_01);
+        Piece p1 = player.getPiece(0);
+        System.out.println(p1.getShape());
         assertTrue(p1.equals(new Piece(Shape.SHAPE_01, Color.BLUE)));
     }
 

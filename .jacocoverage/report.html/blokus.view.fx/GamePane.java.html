@@ -10,18 +10,25 @@ import javafx.scene.layout.Priority;
  */
 public class GamePane extends HBox {
     
-    private final PlayersPane playersData;
+    private final PlayersDataPane playersData;
     private final BoardPane board;
     
 <span class="nc" id="L16">    GamePane(Game blokus) {</span>
-<span class="nc" id="L17">        this.playersData = new PlayersPane(blokus);</span>
+<span class="nc" id="L17">        this.playersData = new PlayersDataPane(blokus);</span>
 <span class="nc" id="L18">        this.board = new BoardPane(blokus);</span>
 <span class="nc" id="L19">        this.getChildren().addAll(playersData, board);</span>
 <span class="nc" id="L20">        this.setSpacing(10);</span>
 <span class="nc" id="L21">        this.setHgrow(playersData, Priority.ALWAYS);</span>
-<span class="nc" id="L22">        this.setHgrow(board, Priority.ALWAYS);</span>
-        
-<span class="nc" id="L24">    }</span>
+<span class="nc" id="L22">        this.setHgrow(board, Priority.ALWAYS); </span>
+<span class="nc" id="L23">    }</span>
+    
+    /**
+     * Updates this pane content.
+     */
+    void updateContent() {
+<span class="nc" id="L29">        playersData.update();</span>
+<span class="nc" id="L30">        board.update();</span>
+<span class="nc" id="L31">    }</span>
     
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

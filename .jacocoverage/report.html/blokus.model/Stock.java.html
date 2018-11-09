@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Stock.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.model</a> &gt; <span class="el_source">Stock.java</span></div><h1>Stock.java</h1><pre class="source lang-java linenums">package blokus.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -9,7 +8,7 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-public class Stock {
+class Stock {
 
     private final List&lt;Piece&gt; pieces;
     private Piece lastTakenPiece;
@@ -19,9 +18,9 @@ public class Stock {
      *
      * @param color is the color of this stock.
      */
-<span class="fc" id="L22">    public Stock(Color color) {</span>
-<span class="fc" id="L23">        this.pieces = buildPiecesOf(color);</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L21">    Stock(Color color) {</span>
+<span class="fc" id="L22">        this.pieces = buildPiecesOf(color);</span>
+<span class="fc" id="L23">    }</span>
 
     /**
      * Indicates that this stock is empty.
@@ -29,16 +28,7 @@ public class Stock {
      * @return true if this stock is empty.
      */
     boolean isEmpty() {
-<span class="fc" id="L32">        return pieces.isEmpty();</span>
-    }
-
-    /**
-     * Gets the last taken piece.
-     *
-     * @return the last taken piece.
-     */
-    Piece getLastTakenPiece() {
-<span class="fc" id="L41">        return new Piece(lastTakenPiece.getShape(), lastTakenPiece.getColor());</span>
+<span class="fc" id="L31">        return pieces.isEmpty();</span>
     }
 
     /**
@@ -46,8 +36,8 @@ public class Stock {
      *
      * @return this stock pieces.
      */
-    public List&lt;Piece&gt; getPieces() {
-<span class="fc" id="L50">        return pieces;</span>
+    List&lt;Piece&gt; getPieces() {
+<span class="fc" id="L40">        return pieces;</span>
     }
 
     /**
@@ -56,14 +46,14 @@ public class Stock {
      * @return the number of unit squares contained in this stock.
      */
     int getNumberOfSquares() {
-<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (isEmpty()) {</span>
-<span class="fc" id="L60">            return 0;</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (isEmpty()) {</span>
+<span class="fc" id="L50">            return 0;</span>
         } else {
-<span class="fc" id="L62">            int nbOfSquare = 0;</span>
-<span class="fc bfc" id="L63" title="All 2 branches covered.">            for (Piece piece : pieces) {</span>
-<span class="fc" id="L64">                nbOfSquare += piece.getShape().getSize();</span>
-<span class="fc" id="L65">            }</span>
-<span class="fc" id="L66">            return nbOfSquare;</span>
+<span class="fc" id="L52">            int nbOfSquare = 0;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">            for (Piece piece : pieces) {</span>
+<span class="fc" id="L54">                nbOfSquare += piece.getShape().getSize();</span>
+<span class="fc" id="L55">            }</span>
+<span class="fc" id="L56">            return nbOfSquare;</span>
         }
     }
 
@@ -73,35 +63,59 @@ public class Stock {
      * @return the score of this stock.
      */
     int getScore() {
-<span class="fc" id="L76">        int score = 0;</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (isEmpty()) {</span>
-<span class="fc" id="L78">            score += 15;</span>
-<span class="fc bfc" id="L79" title="All 2 branches covered.">            if (lastTakenPiece.getShape() == Shape.SHAPE_01) {</span>
-<span class="fc" id="L80">                System.out.println(&quot;test&quot;);</span>
-<span class="fc" id="L81">                score += 5;</span>
+<span class="fc" id="L66">        int score = 0;</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (isEmpty()) {</span>
+<span class="fc" id="L68">            score += 15;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (lastTakenPiece.getShape() == Shape.SHAPE_01) {</span>
+<span class="fc" id="L70">                System.out.println(&quot;test&quot;);</span>
+<span class="fc" id="L71">                score += 5;</span>
             }
         } else {
-<span class="fc" id="L84">            score -= getNumberOfSquares();</span>
+<span class="fc" id="L74">            score -= getNumberOfSquares();</span>
         }
-<span class="fc" id="L86">        return score;</span>
+<span class="fc" id="L76">        return score;</span>
     }
 
     /**
-     * Gets a piece of this stock by its shape.
+     * Gets the piece of the given shape in this stock.
      *
-     * @param shape is the shape of the wanted piece.
-     * @return the wanted piece if it is in this stock, if not null is returned.
+     * @param shape is the shape of the piece to get.
+     * @return the piece of the given shape. If no piece is found
+     * &lt;code&gt;null&lt;/code&gt; is returned.
      */
-    Piece getPieceBy(Shape shape) {
-<span class="fc" id="L96">        Piece wantedPiece = null;</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">        for (Piece piece : pieces) {</span>
-<span class="fc bfc" id="L98" title="All 2 branches covered.">            if (shape == piece.getShape()) {</span>
-<span class="fc" id="L99">                wantedPiece = piece;</span>
+    Piece getPiece(Shape shape) {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for (Piece piece : pieces) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (shape == piece.getShape()) {</span>
+<span class="fc" id="L89">                return piece;</span>
             }
-<span class="fc" id="L101">        }</span>
-<span class="fc" id="L102">        pieces.remove(wantedPiece);</span>
-<span class="fc" id="L103">        lastTakenPiece = wantedPiece;</span>
-<span class="fc" id="L104">        return wantedPiece;</span>
+<span class="fc" id="L91">        }</span>
+<span class="fc" id="L92">        return null;</span>
+    }
+
+    /**
+     * Removes the given piece.
+     *
+     * @param piece the piece to remove.
+     */
+    void remove(Piece piece) {
+<span class="fc" id="L101">        lastTakenPiece = piece;</span>
+<span class="fc" id="L102">        pieces.remove(piece);</span>
+<span class="fc" id="L103">    }</span>
+
+    /**
+     * Tells if this stock contains a piece of the given shape.
+     *
+     * @param shapeId is the id of the shape to look for.
+     * @return true if a piece of given shape is in this stock.
+     */
+    boolean contains(int shapeId) {
+<span class="fc" id="L112">        Shape shape = Shape.values()[shapeId];</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        for (Piece piece : pieces) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">            if (shape == piece.getShape()) {</span>
+<span class="fc" id="L115">                return true;</span>
+            }
+<span class="fc" id="L117">        }</span>
+<span class="fc" id="L118">        return false;</span>
     }
 
     /**
@@ -111,12 +125,19 @@ public class Stock {
      * @return the newly built pieces.
      */
     final List&lt;Piece&gt; buildPiecesOf(Color color) {
-<span class="fc" id="L114">        List&lt;Piece&gt; builtPieces = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        for (Shape shape : Shape.values()) {</span>
-<span class="fc" id="L116">            builtPieces.add(new Piece(shape, color));</span>
+<span class="fc" id="L128">        List&lt;Piece&gt; builtPieces = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        for (Shape shape : Shape.values()) {</span>
+<span class="fc" id="L130">            builtPieces.add(new Piece(shape, color));</span>
         }
-<span class="fc" id="L118">        return builtPieces;</span>
+<span class="fc" id="L132">        return builtPieces;</span>
     }
+
+    /**
+     * Clears this stock.
+     */
+    void clear() {
+<span class="fc" id="L139">        pieces.clear();</span>
+<span class="fc" id="L140">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
