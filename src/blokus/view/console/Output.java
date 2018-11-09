@@ -47,6 +47,15 @@ class Output {
     }
 
     /**
+     * Prints the score of the current player.
+     */
+    void printCurrentPlayerScore() {
+        int currentPlayerId = game.getCurrentPlayerId();
+        System.out.println(game.getPlayerColor(currentPlayerId) + " player, your"
+                + " current score is " + game.getPlayerScore(currentPlayerId) + "!");
+    }
+
+    /**
      * Prints a prompt for the user.
      */
     void printPrompt() {

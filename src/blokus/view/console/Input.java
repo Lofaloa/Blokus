@@ -20,7 +20,7 @@ class Input {
 
     public Input(Blokus game) {
         this.in = new Scanner(System.in);
-        this.commandsNames = new String[]{"show", "stock", "play"};
+        this.commandsNames = new String[]{"show", "stock", "play", "score"};
         this.game = game;
         this.display = new Output(game);
     }
@@ -75,7 +75,7 @@ class Input {
      * @param column is the column of the board.
      */
     void play(int pieceId, int row, int column) {
-        game.selectCurrentPlayerPiece(pieceId);
+        game.selectCurrentPlayerPiece(--pieceId);
         game.placePiece(row, column);
         game.nextPlayer();
     }
@@ -103,6 +103,8 @@ class Input {
                 break;
             case "stock":
                 display.printCurrentPlayerStock();
+            case "score":
+                display.printCurrentPlayerScore();
                 break;
         }
     }
