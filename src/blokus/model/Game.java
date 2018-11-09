@@ -2,7 +2,6 @@ package blokus.model;
 
 import blokus.exception.ModelException;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Represents the game.
@@ -31,11 +30,12 @@ public interface Game {
     /**
      * Tells if the given position is inside the given piece.
      *
+     * @param pieceId is the piece id.
      * @param row the row of the position.
      * @param column the column of the position.
      * @return true if the given position in the given piece.
      */
-    public boolean isInsidePiece(Piece piece, int row, int column);
+    public boolean isInsidePiece(int pieceId, int row, int column);
 
     /**
      * Gets the color name of the given piece.
@@ -44,6 +44,14 @@ public interface Game {
      * @return the color name of the given piece.
      */
     public String getPieceColor(Piece piece);
+    
+    /**
+     * 
+     * @param playerId
+     * @param pieceId
+     * @return 
+     */
+    public boolean playersOwnsPiece(int playerId, int pieceId);
 
     /**
      * Gets the size of the given piece.

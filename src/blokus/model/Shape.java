@@ -144,5 +144,9 @@ enum Shape {
     int getSize() {
         return squares.size();
     }
+    
+    boolean contains(int row, int column) {
+        return squares.contains(new Square(row, column));
+    }
 
 }

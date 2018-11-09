@@ -1,22 +1,28 @@
 package blokus.controller;
 
 import blokus.model.Blokus;
-import blokus.view.fx.MainBox;
 
 /**
- *
+ * Emulate the first turn of a <i>Blokus</i> game.
+ * 
  * @author Logan Farci (47923)
  */
 public class ControllerFX {
 
-    private final MainBox main;
     private final Blokus game;
     
-    public ControllerFX(Blokus game, MainBox main) {
+    /**
+     * Initializes this controller with the given game.
+     * 
+     * @param game is the game to control.
+     */
+    public ControllerFX(Blokus game) {
         this.game = game;
-        this.main = main;
     }
 
+    /**
+     * Start the emulation of the first turn of the game.
+     */
     public void start() {
         game.selectCurrentPlayerPiece(15);
         game.placePiece(0, 0);

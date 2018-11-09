@@ -9,12 +9,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
+ * Main of <i>Blokus</i>.
  *
  * @author Logan Farci (47923)
  */
 public class BlokusFX extends Application {
 
+    /**
+     * Starts the game.
+     * 
+     * @param primaryStage .
+     */
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -22,14 +27,13 @@ public class BlokusFX extends Application {
             Blokus blokus = new Blokus();           
             MainBox main = new MainBox(blokus);
             blokus.addObserver(main);
-            ControllerFX controller = new ControllerFX(blokus, main);
+            ControllerFX controller = new ControllerFX(blokus);
             controller.start();
             Scene scene = new Scene(main, 1000, 750);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
-            ex.printStackTrace();
             Platform.exit();
         }
     }

@@ -16,7 +16,7 @@ import javafx.beans.InvalidationListener;
  *
  * @author Logan Farci (47923)
  */
-public class Blokus extends Observable implements Game{
+public class Blokus extends Observable implements Game {
 
     private final List<Player> players;
     private ListIterator<Player> playerIterator;
@@ -67,8 +67,8 @@ public class Blokus extends Observable implements Game{
     }
 
     @Override
-    public boolean isInsidePiece(Piece piece, int row, int column) {
-        return piece.contains(row, column);
+    public boolean isInsidePiece(int pieceId, int row, int column) {
+        return Shape.values()[pieceId--].contains(row, column);
     }
 
     @Override
@@ -108,6 +108,11 @@ public class Blokus extends Observable implements Game{
     @Override
     public String getPlayerColor(int playerId) {
         return players.get(playerId).getColor().toString();
+    }
+
+    @Override
+    public boolean playersOwnsPiece(int playerId, int pieceId) {
+        
     }
 
     @Override
@@ -178,6 +183,5 @@ public class Blokus extends Observable implements Game{
             currentPlayer = playerIterator.next();
         }
     }
-    
 
 }
