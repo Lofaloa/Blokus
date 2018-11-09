@@ -87,12 +87,12 @@ class Input {
      */
     void executeCommand(String[] tokens) {
         if (tokens.length == 0) {
-            throw new IllegalArgumentException("No command to execute.");
+            throw new IllegalArgumentException("no command to execute.");
         }
         switch (requireCommandName(tokens[0])) {
             case "play":
                 if (tokens.length < 4) {
-                    throw new IllegalArgumentException("For playing a piece, "
+                    throw new IllegalArgumentException("for playing a piece, "
                             + "please enter its id and the position where to "
                             + "place it.");
                 }
