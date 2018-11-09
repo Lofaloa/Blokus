@@ -100,22 +100,12 @@ class Stock {
         }
         return null;
     }
-
-    /**
-     * Gets a piece of this stock by its shape and remove it.
-     *
-     * @param shape is the shape of the wanted piece.
-     * @return the wanted piece if it is in this stock, if not null is returned.
-     */
-    Piece takePiece(Shape shape) {
-        Piece wantedPiece = getPiece(shape);
-        if (wantedPiece != null) {
-            pieces.remove(wantedPiece);
-            lastTakenPiece = wantedPiece;
-        }
-        return wantedPiece;
-    }
     
+    /**
+     * Removes the given piece.
+     * 
+     * @param piece the piece to remove.
+     */
     void remove(Piece piece) {
         pieces.remove(piece);
     }

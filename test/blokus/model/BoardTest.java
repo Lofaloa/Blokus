@@ -72,25 +72,18 @@ public class BoardTest {
         assertFalse(board.isValid(20, 20));
     }
 
-    @Test(expected = IllegalActionException.class)
+    @Test(expected = ModelException.class)
     public void notValidSquareShouldCauseAnException() {
         Board board = new Board();
         Piece fillingPiece = new Piece(Shape.SHAPE_01, Color.BLUE);
         board.add(fillingPiece, 1, 1);
-        board.requireValidSquare(new Square(1, 1));
+        board.requireValidSquare(1, 1);
     }
     
     @Test(expected = ModelException.class)
     public void outOfBoundsSquareShouldCauseAnException() {
         Board board = new Board();
-        board.requireValidSquare(new Square(1, -1));
-    }
-
-    @Test
-    public void requireValidSquareShouldReturnAValidSquare() {
-        Board board = new Board();
-        Square s = board.requireValidSquare(new Square(1, 1));
-        assertTrue(board.isValid(s.getRow(), s.getColumn()));
+        board.requireValidSquare(1, -1);
     }
 
     @Test(expected = ModelException.class)

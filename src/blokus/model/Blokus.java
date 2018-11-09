@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -152,13 +151,13 @@ public class Blokus extends Observable implements Game {
             throw new ModelException(pieceId + " is not a valid piece id, there "
                     + "are 21 pieces.");
         }
-        currentPlayerPiece = currentPlayer.selectPiece(pieceId);
+        currentPlayerPiece = currentPlayer.getPiece(pieceId);
     }
 
     @Override
     public void placePiece(int row, int column) throws ModelException {
         board.requireValidSquare(row, column);
-        currentPlayer.getStock().remove(currentPlayerPiece);
+        currentPlayer.loses(currentPlayerPiece);
         board.add(currentPlayerPiece, row, column);
         setChanged();
         notifyObservers();

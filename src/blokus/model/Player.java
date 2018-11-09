@@ -13,8 +13,8 @@ class Player {
     private final Stock stock;
 
     /**
-     * Initializes this player of the given color and a stock
-     * of 21 distinct piece.
+     * Initializes this player of the given color and a stock of 21 distinct
+     * piece.
      *
      * @param color is the color of this player.
      */
@@ -49,37 +49,36 @@ class Player {
     public Color getColor() {
         return color;
     }
-    
+
+    /**
+     * Makes this player lose the given piece.
+     *
+     * @param piece is the piece to lose.
+     */
+    void loses(Piece piece) {
+        stock.remove(piece);
+    }
+
     /**
      * Tells if this player owns a piece of the given shape.
-     * 
+     *
      * @param shapeId is the id of the shape to look for.
      * @return true if the given shape is this player stock.
      */
     boolean ownsPieceOf(int shapeId) {
         return stock.contains(shapeId);
     }
-    
+
     /**
-     * Selects one of the piece of this player stock.
-     * 
+     * Gets one of the piece of this player stock.
+     *
      * @param pieceId is the id of the piece to select.
      * @return the selected piece.
      */
-    Piece selectPiece(int pieceId) {
+    Piece getPiece(int pieceId) {
         return stock.getPiece(Shape.values()[pieceId]);
     }
 
-    /**
-     * Gets a piece in this player stock and remove it.
-     *
-     * @param shape is the shape of the wanted piece.
-     * @return the wanted piece.
-     */
-    Piece getPiece(Shape shape) {
-        return stock.takePiece(shape);
-    }
-    
     /**
      * Clears this player stock.
      */
