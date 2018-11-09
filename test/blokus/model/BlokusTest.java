@@ -91,14 +91,14 @@ public class BlokusTest {
     @Test
     public void currentPlayerIsBluePlayerAfterInitialization() {
         Blokus g = new Blokus();
-        assertEquals(Color.BLUE, g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("BLUE", g.getPlayerColor(g.getCurrentPlayerId()));
     }
 
     @Test
     public void yellowPlayerShouldFollowBluePlayer() {
         Blokus g = new Blokus();
         g.nextPlayer();
-        assertEquals(Color.YELLOW, g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("YELLOW", g.getPlayerColor(g.getCurrentPlayerId()));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class BlokusTest {
         Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals(Color.RED, g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("RED", g.getPlayerColor(g.getCurrentPlayerId()));
     }
 
     @Test
@@ -115,7 +115,7 @@ public class BlokusTest {
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals(Color.GREEN, g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("GREEN", g.getPlayerColor(g.getCurrentPlayerId()));
     }
 
     @Test
@@ -125,12 +125,12 @@ public class BlokusTest {
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals(Color.BLUE, g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("BLUE", g.getPlayerColor(g.getCurrentPlayerId()));
     }
 
     @Test
     public void blokusShouldBeOverWhenAllPlayersHaveAnEmptyStock() {
-        Game g = new Blokus();
+        Blokus g = new Blokus();
         g.getPlayer(0).clearStock();
         g.getPlayer(1).clearStock();
         g.getPlayer(2).clearStock();
@@ -140,7 +140,7 @@ public class BlokusTest {
 
     @Test
     public void blokusShouldNotBeOverWhenOneOfThePlayerHasNotAnEmptyStock() {
-        Game g = new Blokus();
+        Blokus g = new Blokus();
         g.getPlayer(0).clearStock();
         g.getPlayer(1).clearStock();
         g.getPlayer(3).clearStock();

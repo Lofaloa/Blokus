@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Logan Farci (47923)
  */
-public class Piece {
+class Piece {
 
     private final Shape shape;
     private final Color color;

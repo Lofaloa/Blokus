@@ -2,7 +2,6 @@ package blokus.model;
 
 import blokus.exception.ModelException;
 import java.util.List;
-import java.util.Observable;
 
 /**
  * Represents the game.
@@ -10,13 +9,6 @@ import java.util.Observable;
  * @author Logan Farci (47923)
  */
 public interface Game {
-
-    /**
-     * Gets the board game.
-     *
-     * @return the board game.
-     */
-    public Piece[][] getBoard();
 
     /**
      * Gets the color of the square located at the given position in the board.
@@ -31,27 +23,20 @@ public interface Game {
     /**
      * Tells if the given position is inside the given piece.
      *
+     * @param shapeId is the shape id of the shape.
      * @param row the row of the position.
      * @param column the column of the position.
      * @return true if the given position in the given piece.
      */
-    public boolean isInsidePiece(Piece piece, int row, int column);
+    public boolean isInsideShape(int shapeId, int row, int column);
 
     /**
-     * Gets the color name of the given piece.
+     * Gets the size of the given shape.
      *
-     * @param piece is the piece to get the color name for.
-     * @return the color name of the given piece.
+     * @param shapeId is the shape id of the shape to get the size for.
+     * @return the size of the given shape.
      */
-    public String getPieceColor(Piece piece);
-
-    /**
-     * Gets the size of the given piece.
-     *
-     * @param piece is the piece to get the size for.
-     * @return the size of the given piece.
-     */
-    public int getPieceSize(Piece piece);
+    public int getShapeSize(int shapeId);
 
     /**
      * Gets the current player id of the game.
@@ -59,21 +44,6 @@ public interface Game {
      * @return the current player id of the game.
      */
     public int getCurrentPlayerId();
-
-    /**
-     * Gets the piece selected by the current player.
-     *
-     * @return the piece selected by the current player.
-     */
-    public Piece getCurrentPlayerPiece();
-
-    /**
-     * Gets the player matching the given id.
-     *
-     * @param playerId is the id of the player.
-     * @return the player.
-     */
-    public Player getPlayer(int playerId);
 
     /**
      * Gets the player score matching the given id.
@@ -90,14 +60,15 @@ public interface Game {
      * @return the color name of the given player.
      */
     public String getPlayerColor(int playerId);
-
+    
     /**
-     * Gets the player stock matching the given id.
-     *
-     * @param playerId is the id of the player.
-     * @return the stock of the given player.
+     * Tells if the given player owns a piece of the given shape.
+     * 
+     * @param playerId is the owner of the shape.
+     * @param shapeId is the owned shape.
+     * @return true if the player owns a piece of the given shape.
      */
-    public List<Piece> getPlayerStock(int playerId);
+    public boolean playerOwnsPieceOf(int playerId, int shapeId);
 
     /**
      * Gets the winner of the game. The winner has the highest score. If two

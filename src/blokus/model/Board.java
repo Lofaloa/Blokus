@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.BoardPositionOutOfBounds;
 import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 

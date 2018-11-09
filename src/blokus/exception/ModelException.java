@@ -7,6 +7,11 @@ package blokus.exception;
  */
 public class ModelException extends RuntimeException {
         
+        /**
+         * Initializes this exception with a message.
+         * 
+         * @param msg is the message to print when thrown.
+         */
         public ModelException(String msg) {
             super(msg);
         }

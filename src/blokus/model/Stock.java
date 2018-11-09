@@ -1,7 +1,6 @@
 package blokus.model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -102,6 +101,22 @@ class Stock {
         pieces.remove(wantedPiece);
         lastTakenPiece = wantedPiece;
         return wantedPiece;
+    }
+
+    /**
+     * Tells if this stock contains a piece of the given shape.
+     * 
+     * @param shapeId is the id of the shape to look for.
+     * @return true if a piece of given shape is in this stock.
+     */
+    boolean contains(int shapeId) {
+        Shape shape = Shape.values()[shapeId];
+        for (Piece piece : pieces) {
+            if (shape == piece.getShape()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

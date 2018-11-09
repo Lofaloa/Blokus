@@ -9,14 +9,13 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Observable;
 import java.util.stream.Collectors;
-import javafx.beans.InvalidationListener;
 
 /**
  * Represents <i>Blokus</i>.
  *
  * @author Logan Farci (47923)
  */
-public class Blokus extends Observable implements Game{
+public class Blokus extends Observable implements Game {
 
     private final List<Player> players;
     private ListIterator<Player> playerIterator;
@@ -39,10 +38,13 @@ public class Blokus extends Observable implements Game{
         this.currentPlayer = playerIterator.next();
         this.board = new Board();
     }
-
-    @Override
-    public Piece[][] getBoard() {
+    
+    Piece[][] getBoard() {
         return board.getSquares();
+    }
+    
+    Piece getCurrentPlayerPiece() {
+        return currentPlayerPiece;
     }
 
     @Override
@@ -67,18 +69,22 @@ public class Blokus extends Observable implements Game{
     }
 
     @Override
-    public boolean isInsidePiece(Piece piece, int row, int column) {
-        return piece.contains(row, column);
+    public boolean isInsideShape(int shapeId, int row, int column) {
+        return Shape.values()[shapeId].contains(row, column);
     }
 
     @Override
-    public String getPieceColor(Piece piece) {
-        return piece.getColor().toString();
+    public int getShapeSize(int shapeId) {
+        return Shape.values()[shapeId].getSize();
     }
 
-    @Override
-    public int getPieceSize(Piece piece) {
-        return piece.getShape().getSize();
+    /**
+     * Gets the players matching the given id.
+     * 
+     * @return the player matching the given id.
+     */
+    Player getPlayer(int playerId) {
+        return players.get(playerId);
     }
 
     List<Player> getPlayers() {
@@ -91,18 +97,8 @@ public class Blokus extends Observable implements Game{
     }
 
     @Override
-    public Piece getCurrentPlayerPiece() {
-        return currentPlayerPiece;
-    }
-
-    @Override
-    public Player getPlayer(int playerId) {
-        return players.get(playerId);
-    }
-
-    @Override
     public int getPlayerScore(int playerId) {
-        return players.get(playerId).getScore();
+        return getPlayer(playerId).getScore();
     }
 
     @Override
@@ -111,8 +107,8 @@ public class Blokus extends Observable implements Game{
     }
 
     @Override
-    public List<Piece> getPlayerStock(int playerId) {
-        return Collections.unmodifiableList(players.get(playerId).getStock());
+    public boolean playerOwnsPieceOf(int playerId, int shapeId) {
+        return getPlayer(playerId).ownsPieceOf(shapeId);
     }
 
     /**
@@ -178,6 +174,5 @@ public class Blokus extends Observable implements Game{
             currentPlayer = playerIterator.next();
         }
     }
-    
 
 }

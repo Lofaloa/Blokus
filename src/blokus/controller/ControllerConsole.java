@@ -1,5 +1,7 @@
 package blokus.controller;
 
+import blokus.exception.IllegalActionException;
+import blokus.exception.ModelException;
 import blokus.model.Blokus;
 import blokus.view.console.View;
 
@@ -33,7 +35,7 @@ public class ControllerConsole {
             try {
                 view.printCurrentPlayer();
                 view.executeCommand();
-            } catch (Exception e) {
+            } catch (ModelException | IllegalActionException e) {
                 System.out.println("usage: " + e.getMessage());
             }
         }

@@ -1,7 +1,6 @@
 package blokus.view.console;
 
 import blokus.model.Blokus;
-import blokus.model.Piece;
 
 /**
  * Manages the display of the game.
@@ -124,12 +123,12 @@ class Output {
     /**
      * Prints the given piece.
      *
-     * @param piece is piece to print.
+     * @param shapeId is piece to print.
      */
-    void printPiece(Piece piece) {
-        for (int i = 0; i < game.getPieceSize(piece); i++) {
-            for (int j = 0; j < game.getPieceSize(piece); j++) {
-                if (game.isInsidePiece(piece, i, j)) {
+    void printPiece(int shapeId) {
+        for (int i = 0; i < game.getShapeSize(shapeId); i++) {
+            for (int j = 0; j < game.getShapeSize(shapeId); j++) {
+                if (game.isInsideShape(shapeId, i, j)) {
                     System.out.print(" x ");
                 } else {
                     System.out.print("   ");
@@ -144,8 +143,10 @@ class Output {
      */
     void printCurrentPlayerStock() {
         int currentPlayerId = game.getCurrentPlayerId();
-        for (Piece piece : game.getPlayerStock(currentPlayerId)) {
-            printPiece(piece);
+        for (int pieceId = 0; pieceId < 21; pieceId++) {
+            if (game.playerOwnsPieceOf(currentPlayerId, pieceId)) {
+                printPiece(pieceId);
+            }
             System.out.println(" ");
         }
     }

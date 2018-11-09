@@ -1,7 +1,6 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
-import blokus.model.Piece;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -28,8 +27,8 @@ public class StockPane extends GridPane {
         int row = 0;
         int col = 0;
         int added = 0;
-        for (Piece piece : blokus.getPlayerStock(ownerId)) {
-            add(new PiecePane(blokus, piece), col, row);
+        for (int i = 0; i < 21; i++) {
+            add(new PiecePane(blokus, i, blokus.getPlayerColor(ownerId)), col, row);
             col++;
             added++;
             if (added % nbOfPiecesPerRow == 0) {

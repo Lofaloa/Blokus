@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.ModelException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -143,6 +142,17 @@ enum Shape {
      */
     int getSize() {
         return squares.size();
+    }
+    
+    /**
+     * Tells if the given square is in this shape.
+     * 
+     * @param row is the row of the square.
+     * @param column is the column of the square.
+     * @return true if the square is in the shape.
+     */
+    boolean contains(int row, int column) {
+        return squares.contains(new Square(row, column));
     }
 
 }

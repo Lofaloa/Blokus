@@ -7,22 +7,19 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-public class Player {
+class Player {
 
     private final Color color;
-    private int score;
     private final Stock stock;
-    private boolean isStuck;
 
     /**
-     * Initializes this player of the given color with a score of 0 and a stock
+     * Initializes this player of the given color and a stock
      * of 21 distinct piece.
      *
      * @param color is the color of this player.
      */
     Player(Color color) {
         this.color = color;
-        this.score = 0;
         this.stock = new Stock(color);
     }
 
@@ -51,6 +48,16 @@ public class Player {
      */
     public Color getColor() {
         return color;
+    }
+    
+    /**
+     * Tells if this player owns a piece of the given shape.
+     * 
+     * @param shapeId is the id of the shape to look for.
+     * @return true if the given shape is this player stock.
+     */
+    boolean ownsPieceOf(int shapeId) {
+        return stock.contains(shapeId);
     }
 
     /**
