@@ -13,6 +13,13 @@ public class StockPane extends GridPane {
     private final int ownerId;
     private final Game blokus;
 
+    /**
+     * Initializes this pane with the game to represent and the id of the stock 
+     * owner.
+     * 
+     * @param blokus is the game of the stock to represent.
+     * @param ownerId is the id of the owner of the stock to represent.
+     */
     public StockPane(Game blokus, int ownerId) {
         this.ownerId = ownerId;
         this.blokus = blokus;

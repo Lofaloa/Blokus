@@ -71,12 +71,12 @@ public interface Game {
     public boolean playerOwnsPieceOf(int playerId, int shapeId);
 
     /**
-     * Gets the winner of the game. The winner has the highest score. If two
+     * Gets the id of the winner of the game. The winner has the highest score. If two
      * players happen to have the same highest score, they both win the game.
      *
-     * @return the winner(s).
+     * @return the winner(s) id.
      */
-    public List<Player> getWinner();
+    public List<Integer> getWinner();
 
     /**
      * Indicates the end of the game. The game is over either when all players have 

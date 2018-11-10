@@ -44,6 +44,12 @@ public class MainBox extends VBox implements Observer {
         this.setSpacing(20);
     }
 
+    /**
+     * Updates the content of game box.
+     * 
+     * @param o the game.
+     * @param o1 nothing.
+     */
     @Override
     public void update(Observable o, Object o1) {
         game.updateContent();

@@ -1,6 +1,5 @@
 package blokus.view.fx;
 
-import blokus.model.Blokus;
 import blokus.model.Game;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -22,7 +21,8 @@ public class PiecePane extends GridPane {
      * Initializes this piece pane with the piece to represent.
      *
      * @param game is the game of the piece to represent.
-     * @param piece is the piece to represent.
+     * @param shapeId is the shape id of the piece shape to represent.
+     * @param color is the color name of the piece to represent.
      */
     public PiecePane(Game game, int shapeId, String color) {
         this.shapeId = shapeId;
@@ -37,7 +37,7 @@ public class PiecePane extends GridPane {
      *
      * @return the color of this pane piece.
      */
-    Color getColor(String color) {
+    final Color getColor(String color) {
         switch (color) {
             case "BLUE":
                 return Color.BLUE;

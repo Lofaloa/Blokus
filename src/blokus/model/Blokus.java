@@ -128,21 +128,18 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
-    public List<Player> getWinner() {
+    public List<Integer> getWinner() {
         int highestScore = getHighestScore();
         return players.stream()
-                .filter(p -> p.getScore() == highestScore)
-                .collect(Collectors.toList());
+                      .filter(p -> p.getScore() == highestScore)
+                      .mapToInt(w -> players.indexOf(w))
+                      .boxed()
+                      .collect(Collectors.toList());
     }
 
     @Override
     public boolean isOver() {
-        for (Player player : players) {
-            if (!player.getStock().isEmpty()) {
-                return false;
-            }
-        }
-        return true;
+          return players.stream().allMatch(p -> p.getStock().isEmpty());
     }
 
     @Override
@@ -158,7 +155,7 @@ public class Blokus extends Observable implements Game {
     public void placePiece(int row, int column) throws ModelException {
         board.requireValidSquare(row, column);
         currentPlayer.take(currentPlayerPiece);
-        board.add(currentPlayerPiece, row, column);
+        board.addPiece(currentPlayerPiece, row, column);
         setChanged();
         notifyObservers();
     }

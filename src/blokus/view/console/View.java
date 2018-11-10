@@ -12,6 +12,11 @@ public class View implements BlokusView {
     private final Input in;
     private final Output out;
 
+    /**
+     * Initializes this view with the game to represent.
+     * 
+     * @param game is the game to represent.
+     */
     public View(Blokus game) {
         this.in = new Input(game);
         this.out = new Output(game);

@@ -19,7 +19,7 @@ class Input {
     private final Output display;
 
     public Input(Blokus game) {
-        this.in = new Scanner(System.in);
+        this.in = new Scanner(System.in, "utf-8");
         this.commandsNames = new String[]{"show", "stock", "play", "score"};
         this.game = game;
         this.display = new Output(game);
@@ -103,9 +103,12 @@ class Input {
                 break;
             case "stock":
                 display.printCurrentPlayerStock();
+                break;
             case "score":
                 display.printCurrentPlayerScore();
                 break;
+            default:
+                throw new IllegalArgumentException("The command is not defined.");
         }
     }
 

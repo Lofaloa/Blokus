@@ -88,6 +88,8 @@ class Output {
             case "GREEN":
                 System.out.print(" g ");
                 break;
+            default:
+                throw new IllegalArgumentException("the color is not defined.");
         }
     }
 
@@ -158,6 +160,24 @@ class Output {
             }
             System.out.println(" ");
         }
+    }
+    
+    /**
+     * Prints winners of the game.
+     */
+    void printWinners() {
+        game.getWinner().forEach((winnerId) -> {
+            System.out.print(game.getPlayerColor(winnerId) + " player, ");
+        });
+        System.out.println("win the game.");
+    }
+    
+    /**
+     * Prints end.
+     */
+    void printEnd() {
+        System.out.println("End of the game!");
+        printWinners();
     }
 
 }

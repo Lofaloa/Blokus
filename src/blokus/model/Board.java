@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 
 /**
@@ -85,37 +84,37 @@ class Board {
 
     /**
      * Tells if the given piece can be placed at the given position.
-     * 
+     *
      * @param piece is the piece to check the placement for.
      * @param row is the row where the piece is to be placed.
      * @param column is the column where the piece is to be placed.
      * @return true if the given piece can placed at the given position.
      */
     boolean hasSpaceFor(Piece piece, int row, int column) {
-        for (Square square : piece.getShape().getSquares()) {
-            Square boardSquare = square.move(row, column);
-            if (!isValid(boardSquare.getRow(), boardSquare.getColumn())) {
-                return false;
-            }
-        }
-        return true;
+        return piece.getShape().getSquares().stream()
+                .map(s -> s.move(row, column))
+                .allMatch(s -> isValid(s.getRow(), s.getColumn()));
+    }
+
+    void addSquare(Piece piece, int row, int column) {
+        squares[row][column] = piece;
     }
 
     /**
      * Adds the given piece at the given row and column.
      *
-     * @param piece is the piece to add to this board.
+     * @param piece is the piece to addPiece to this board.
      * @param row is the row of the square of destination in this board.
      * @param column is the column of the square of destination in this board.
      */
-    void add(Piece piece, int row, int column) throws ModelException {
+    void addPiece(Piece piece, int row, int column) throws ModelException {
         if (!hasSpaceFor(piece, row, column)) {
-            throw new ModelException("the given piece cannot be place at row " 
+            throw new ModelException("the given piece cannot be place at row "
                     + row + ", column " + column + ".");
         }
         for (Square pieceSquare : piece.getShape().getSquares()) {
             Square boardSquare = pieceSquare.move(row, column);
-            squares[boardSquare.getRow()][boardSquare.getColumn()] = piece;
+            addSquare(piece, boardSquare.getRow(), boardSquare.getColumn());
         }
     }
 

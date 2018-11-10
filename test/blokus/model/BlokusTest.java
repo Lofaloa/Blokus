@@ -67,11 +67,10 @@ public class BlokusTest {
     @Test
     public void winnerShouldBeThePlayerWithTheHighestScore() {
         Blokus g = new Blokus();
-        Player currentPlayer = g.getPlayer(g.getCurrentPlayerId());
         g.selectCurrentPlayerPiece(3);
         g.placePiece(0, 0);
         assertEquals(-86, g.getHighestScore());
-        assertEquals(currentPlayer.getColor(), g.getWinner().get(0).getColor());
+        assertEquals(new Integer(0), g.getWinner().get(0));
     }
 
     @Test
@@ -80,7 +79,7 @@ public class BlokusTest {
         Player winner = g.getPlayer(1);
         winner.take(new Piece(Shape.SHAPE_21, Color.YELLOW));
         assertEquals(-84, g.getHighestScore());
-        assertEquals(winner.getColor(), g.getWinner().get(0).getColor());
+        assertEquals(new Integer(1), g.getWinner().get(0));
     }
 
     @Test
@@ -101,8 +100,8 @@ public class BlokusTest {
         g.selectCurrentPlayerPiece(3);
         g.placePiece(5, 5);
         assertEquals(-86, g.getHighestScore());
-        assertEquals(Color.BLUE, g.getWinner().get(0).getColor());
-        assertEquals(Color.YELLOW, g.getWinner().get(1).getColor());
+        assertEquals(new Integer(0), g.getWinner().get(0));
+        assertEquals(new Integer(1), g.getWinner().get(1));
     }
 
     @Test(expected = ModelException.class)

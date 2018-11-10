@@ -50,9 +50,9 @@ class Stock {
             return 0;
         } else {
             int nbOfSquare = 0;
-            for (Piece piece : pieces) {
-                nbOfSquare += piece.getShape().getSize();
-            }
+            nbOfSquare = pieces.stream()
+                               .map(piece -> piece.getShape().getSize())
+                               .reduce(nbOfSquare, Integer::sum);
             return nbOfSquare;
         }
     }
@@ -110,12 +110,7 @@ class Stock {
      */
     boolean contains(int shapeId) {
         Shape shape = Shape.values()[shapeId];
-        for (Piece piece : pieces) {
-            if (shape == piece.getShape()) {
-                return true;
-            }
-        }
-        return false;
+        return pieces.stream().anyMatch(piece -> shape == piece.getShape());
     }
 
     /**
