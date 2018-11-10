@@ -23,7 +23,7 @@ public class BoardPane extends GridPane {
     public BoardPane(Game blokus) {
         this.blokus = blokus;
         setBoard();
-        setProperties();
+        setStyle();
     }
 
     /**
@@ -103,6 +103,13 @@ public class BoardPane extends GridPane {
         }
     }
 
+    /**
+     * Gets the square located at the given position in this board pane.
+     *
+     * @param row is the row of the square to get.
+     * @param column is the column of the square to get.
+     * @return the square located at the given position.
+     */
     Rectangle getSquare(int row, int column) {
         for (Node children : getChildren()) {
             if (GridPane.getRowIndex(children) == row
@@ -113,6 +120,9 @@ public class BoardPane extends GridPane {
         return null;
     }
 
+    /**
+     * Updates this board pane.
+     */
     void update() {
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
@@ -125,7 +135,7 @@ public class BoardPane extends GridPane {
     /**
      * Set the properties of this pane content.
      */
-    final void setProperties() {
+    final void setStyle() {
         this.setGridLinesVisible(true);
     }
 
