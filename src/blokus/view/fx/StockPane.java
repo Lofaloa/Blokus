@@ -14,9 +14,9 @@ public class StockPane extends GridPane {
     private final Game blokus;
 
     /**
-     * Initializes this pane with the game to represent and the id of the stock 
+     * Initializes this pane with the game to represent and the id of the stock
      * owner.
-     * 
+     *
      * @param blokus is the game of the stock to represent.
      * @param ownerId is the id of the owner of the stock to represent.
      */
@@ -44,13 +44,28 @@ public class StockPane extends GridPane {
             }
         }
     }
-    
+
     /**
-     * Updates this stock content.
+     * Updates this stock display.
      */
     void update() {
         getChildren().clear();
-        setPieces(8);
+        int row = 0;
+        int col = 0;
+        int added = 0;
+        for (int pieceId = 0; pieceId < 21; pieceId++) {
+            if (blokus.playerOwnsPieceOf(ownerId, pieceId)) {
+                add(new PiecePane(blokus, pieceId, blokus.getPlayerColor(ownerId)), col, row);
+            }
+            col++;
+            added++;
+            if (added % 8 == 0) {
+                col = 0;
+                row++;
+            }
+        }
+
+        System.out.println(" ");
     }
 
     /**

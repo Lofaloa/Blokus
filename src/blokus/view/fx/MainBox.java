@@ -28,6 +28,8 @@ public class MainBox extends VBox implements Observer {
         this.game = new GameBox(game);
         this.menu = new MenuBar(new Menu("File"), new Menu("Options"), new Menu("Help"));
         this.control = new ControlPane();
+        setContent();
+        setStyle();
     }
 
     /**
