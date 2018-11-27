@@ -37,6 +37,15 @@ class Output {
         System.out.println("play n i j - place the piece n of the current player"
                 + " stock in the board a (i; j).");
     }
+    
+    /**
+     * Prints the message of the given exception.
+     * 
+     * @param exception is the exception to print the message for.
+     */
+    void printExceptionMessage(Exception exception) {
+        System.err.println(exception.getMessage());
+    }
 
     /**
      * Prints a message telling the current player.

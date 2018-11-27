@@ -18,7 +18,7 @@ public class View implements BlokusView {
      * @param game is the game to represent.
      */
     public View(Blokus game) {
-        this.in = new Input(game);
+        this.in = new Input();
         this.out = new Output(game);
     }
 
@@ -29,13 +29,33 @@ public class View implements BlokusView {
     }
 
     @Override
+    public void printBoard() {
+        out.printBoard();
+    }   
+
+    @Override
     public void printCurrentPlayer() {
         out.printCurrentPlayer();
     }
 
     @Override
-    public void executeCommand() {
-        in.executeCommand(in.readCommand());
+    public void printCurrentPlayerStock() {
+        out.printCurrentPlayerStock();
+    }
+
+    @Override
+    public void printCurrentPlayerScore() {
+        out.printCurrentPlayerScore();
+    }
+
+    @Override
+    public void printExceptionMessage(Exception exception) {
+        out.printExceptionMessage(exception);
+    }
+
+    @Override
+    public String[] readCommand() {
+        return in.readCommand();
     }
 
     @Override
