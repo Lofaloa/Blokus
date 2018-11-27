@@ -1,6 +1,6 @@
 package blokus.view.fx;
 
-import blokus.model.Game;
+import blokus.model.Player;
 import javafx.scene.layout.VBox;
 
 /**
@@ -20,9 +20,9 @@ public class PlayerDataPane extends VBox {
      * @param blokus is the game.
      * @param playerId is the player id  of the player this pane display data for.
      */
-    public PlayerDataPane(Game blokus, int playerId) {
-        this.header = new HeaderBox(blokus, playerId);
-        this.stock = new StockPane(blokus, playerId);
+    public PlayerDataPane(Player owner) {
+        this.header = new HeaderBox(owner);
+        this.stock = new StockPane(owner);
         setContent();
         setStyle();
     }
@@ -34,7 +34,7 @@ public class PlayerDataPane extends VBox {
     final void setContent() {
         this.getChildren().addAll(header, stock);
     }
-    
+
     /**
      * Updates this player data pane.
      */

@@ -8,8 +8,9 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-class Stock {
+public class Stock {
 
+    public static final int NB_OF_PIECES = 21;
     private final List<Piece> pieces;
     private Piece lastTakenPiece;
 
@@ -107,9 +108,8 @@ class Stock {
      * @param shapeId is the id of the shape to look for.
      * @return true if a piece of given shape is in this stock.
      */
-    boolean contains(int shapeId) {
-        Shape shape = Shape.values()[shapeId];
-        return pieces.stream().anyMatch(piece -> shape == piece.getShape());
+    boolean contains(Piece piece) {
+        return pieces.contains(piece);
     }
 
     /**

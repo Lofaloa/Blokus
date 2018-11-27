@@ -8,7 +8,7 @@ import java.util.Objects;
  *
  * @author Logan Farci (47923)
  */
-class Piece {
+public class Piece {
 
     static final int MAX_SIZE = 5;
     private final Shape shape;
@@ -23,6 +23,24 @@ class Piece {
     Piece(Shape shape, BlokusColor color) {
         this.shape = shape;
         this.color = color;
+    }
+
+    /**
+     * Gets the size of this piece.
+     *
+     * @return the size of this piece.
+     */
+    public int getSize() {
+        return shape.getSize();
+    }
+
+    /**
+     * Gets this shape color.
+     *
+     * @return this shape color.
+     */
+    public BlokusColor getColor() {
+        return color;
     }
 
     /**
@@ -44,15 +62,6 @@ class Piece {
     }
 
     /**
-     * Gets this shape color.
-     *
-     * @return this shape color.
-     */
-    BlokusColor getColor() {
-        return color;
-    }
-
-    /**
      * Tells if this piece is the smallest of the game. The smallest being a
      * piece of one square.
      *
@@ -71,7 +80,7 @@ class Piece {
      * @throws IllegalArgumentException if the given coordinates are negative or
      * greater than 5.
      */
-    boolean contains(int row, int column) {
+    public boolean contains(int row, int column) {
         if (row < 0 || MAX_SIZE < row || column < 0 || MAX_SIZE < column) {
             throw new IllegalArgumentException("Position " + row + ", " + column
                     + " is not a valid position.");

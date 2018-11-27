@@ -22,13 +22,7 @@ public class BlokusTest {
         Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(3);
         g.placePiece(0, 0);
-        assertEquals("BLUE", g.getBoardColorAt(0, 0));
-    }
-
-    @Test
-    public void gameShouldGetANullColorInBoardAtEmptyPosition() {
-        Blokus g = new Blokus();
-        assertNull(g.getBoardColorAt(0, 0));
+        assertEquals("BLUE", g.getBoard().getColorAt(0, 0));
     }
 
     @Test
@@ -38,30 +32,9 @@ public class BlokusTest {
     }
 
     @Test
-    public void gameShouldTellIfAPieceContainsAGivenSquare() {
-        Blokus g = new Blokus();
-        assertTrue(g.isInsideShape(2, 0, 0));
-        assertTrue(g.isInsideShape(2, 1, 0));
-        assertTrue(g.isInsideShape(2, 2, 0));
-    }
-
-    @Test
     public void gameShouldGetExpectedShapeSize() {
         Blokus g = new Blokus();
         assertEquals(5, g.getShapeSize(20));
-    }
-
-    @Test
-    public void gameShouldTellIfAPlayerOwnsAPiece() {
-        Blokus g = new Blokus();
-        assertTrue(g.playerOwnsPieceOf(0, 0));
-    }
-
-    @Test
-    public void gameShouldTellIfAPlayerDoesNotOwnAPiece() {
-        Blokus g = new Blokus();
-        g.getPlayer(0).getStock().remove(0);
-        assertFalse(g.playerOwnsPieceOf(0, 0));
     }
 
     @Test
@@ -80,15 +53,6 @@ public class BlokusTest {
         winner.remove(new Piece(Shape.SHAPE_21, BlokusColor.YELLOW));
         assertEquals(-84, g.getHighestScore());
         assertEquals(new Integer(1), g.getWinner().get(0));
-    }
-
-    @Test
-    public void gameShouldGetExpectedPlayerScore() {
-        Blokus g = new Blokus();
-        g.getPlayer(0).remove(new Piece(Shape.SHAPE_01, BlokusColor.BLUE));
-        g.getPlayer(0).remove(new Piece(Shape.SHAPE_02, BlokusColor.BLUE));
-        g.getPlayer(0).remove(new Piece(Shape.SHAPE_03, BlokusColor.BLUE));
-        assertEquals(-83, g.getPlayerScore(0));
     }
 
     @Test
@@ -117,14 +81,6 @@ public class BlokusTest {
     }
 
     @Test
-    public void placedPieceShouldBeOnBoardAtGivenPosition() {
-        Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(0);
-        g.placePiece(0, 0);
-        assertEquals(Shape.SHAPE_01, g.getBoard()[0][0].getShape());
-    }
-
-    @Test
     public void currentPlayerPieceShouldBeTheOneSelected() {
         Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(1);
@@ -134,14 +90,14 @@ public class BlokusTest {
     @Test
     public void currentPlayerIsBluePlayerAfterInitialization() {
         Blokus g = new Blokus();
-        assertEquals("BLUE", g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("BLUE", g.getCurrentPlayer().getColor());
     }
 
     @Test
     public void yellowPlayerShouldFollowBluePlayer() {
         Blokus g = new Blokus();
         g.nextPlayer();
-        assertEquals("YELLOW", g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("YELLOW", g.getCurrentPlayer().getColor());
     }
 
     @Test
@@ -149,7 +105,7 @@ public class BlokusTest {
         Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals("RED", g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("RED", g.getCurrentPlayer().getColor());
     }
 
     @Test
@@ -158,7 +114,7 @@ public class BlokusTest {
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals("GREEN", g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("GREEN", g.getCurrentPlayer().getColor());
     }
 
     @Test
@@ -168,7 +124,7 @@ public class BlokusTest {
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals("BLUE", g.getPlayerColor(g.getCurrentPlayerId()));
+        assertEquals("BLUE", g.getCurrentPlayer().getColor());
     }
 
     @Test

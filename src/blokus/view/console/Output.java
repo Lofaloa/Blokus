@@ -1,6 +1,8 @@
 package blokus.view.console;
 
 import blokus.model.Blokus;
+import blokus.model.BlokusColor;
+import blokus.model.Piece;
 
 /**
  * Manages the display of the game.
@@ -37,10 +39,10 @@ class Output {
         System.out.println("play n i j - place the piece n of the current player"
                 + " stock in the board a (i; j).");
     }
-    
+
     /**
      * Prints the message of the given exception.
-     * 
+     *
      * @param exception is the exception to print the message for.
      */
     void printExceptionMessage(Exception exception) {
@@ -51,17 +53,15 @@ class Output {
      * Prints a message telling the current player.
      */
     void printCurrentPlayer() {
-        int currentPlayerId = game.getCurrentPlayerId();
-        System.out.println(game.getPlayerColor(currentPlayerId) + " is playing...");
+        System.out.println(game.getCurrentPlayer().getColor() + " is playing...");
     }
 
     /**
      * Prints the score of the current player.
      */
     void printCurrentPlayerScore() {
-        int currentPlayerId = game.getCurrentPlayerId();
-        System.out.println(game.getPlayerColor(currentPlayerId) + " player, your"
-                + " current score is " + game.getPlayerScore(currentPlayerId) + "!");
+        System.out.println(game.getCurrentPlayer().getColor() + " player, your"
+                + " current score is " + game.getCurrentPlayer().getScore() + "!");
     }
 
     /**
@@ -83,22 +83,19 @@ class Output {
      *
      * @param color is the color name of the square to print.
      */
-    void printFilledSquare(String color) {
+    void printFilledSquare(BlokusColor color) {
         switch (color) {
-            case "BLUE":
+            case BLUE:
                 System.out.print(" b ");
                 break;
-            case "YELLOW":
+            case YELLOW:
                 System.out.print(" y ");
                 break;
-            case "RED":
+            case RED:
                 System.out.print(" r ");
                 break;
-            case "GREEN":
-                System.out.print(" g ");
-                break;
             default:
-                throw new IllegalArgumentException("the color is not defined.");
+                System.out.print(" g ");
         }
     }
 
@@ -107,7 +104,7 @@ class Output {
      *
      * @param color is the color name of the square to print if filled.
      */
-    void printSquare(String color) {
+    void printSquare(BlokusColor color) {
         if (color == null) {
             printEmptySquare();
         } else {
@@ -134,7 +131,7 @@ class Output {
         for (int row = 0; row < 20; row++) {
             System.out.printf("%02d ", row);
             for (int column = 0; column < 20; column++) {
-                printSquare(game.getBoardColorAt(row, column));
+                printSquare(game.getBoard().getColorAt(row, column));
             }
             System.out.println(" ");
         }
@@ -143,12 +140,12 @@ class Output {
     /**
      * Prints the given piece.
      *
-     * @param shapeId is piece to print.
+     * @param piece is the piece to print.
      */
-    void printPiece(int shapeId) {
-        for (int i = 0; i < game.getShapeSize(shapeId); i++) {
-            for (int j = 0; j < game.getShapeSize(shapeId); j++) {
-                if (game.isInsideShape(shapeId, i, j)) {
+    void print(Piece piece) {
+        for (int i = 0; i < piece.getSize(); i++) {
+            for (int j = 0; j < piece.getSize(); j++) {
+                if (piece.contains(i, j)) {
                     System.out.print(" x ");
                 } else {
                     System.out.print("   ");
@@ -159,28 +156,25 @@ class Output {
     }
 
     /**
-     * Prints the stock of the current player.
+     * Prints current player stock.
      */
     void printCurrentPlayerStock() {
-        int currentPlayerId = game.getCurrentPlayerId();
-        for (int pieceId = 0; pieceId < 21; pieceId++) {
-            if (game.playerOwnsPieceOf(currentPlayerId, pieceId)) {
-                printPiece(pieceId);
-            }
-            System.out.println(" ");
+        for (Piece piece : game.getCurrentPlayer().getStock()) {
+            print(piece);
         }
+
     }
-    
+
     /**
      * Prints winners of the game.
      */
     void printWinners() {
-        game.getWinner().forEach((winnerId) -> {
-            System.out.print(game.getPlayerColor(winnerId) + " player, ");
+        game.getWinner().forEach(winner -> {
+            System.out.print(winner.getColor() + " player, ");
         });
         System.out.println("win the game.");
     }
-    
+
     /**
      * Prints end.
      */

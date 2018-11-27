@@ -39,21 +39,13 @@ public class Blokus extends Observable implements Game {
         this.board = new Board();
     }
 
-    Piece[][] getBoard() {
-        return board.getSquares();
+    @Override
+    public Board getBoard() {
+        return board;
     }
 
     Piece getCurrentPlayerPiece() {
         return currentPlayerPiece;
-    }
-
-    @Override
-    public String getBoardColorAt(int row, int column) {
-        if (isBoardEmptyAt(row, column)) {
-            return null;
-        } else {
-            return board.getSquares()[row][column].getColor().toString();
-        }
     }
 
     /**
@@ -66,11 +58,6 @@ public class Blokus extends Observable implements Game {
      */
     boolean isBoardEmptyAt(int row, int column) {
         return board.isEmptyAt(row, column);
-    }
-
-    @Override
-    public boolean isInsideShape(int shapeId, int row, int column) {
-        return Shape.values()[shapeId].contains(row, column);
     }
 
     @Override
@@ -87,28 +74,13 @@ public class Blokus extends Observable implements Game {
         return players.get(playerId);
     }
 
-    List<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 
     @Override
-    public int getCurrentPlayerId() {
-        return players.indexOf(currentPlayer);
-    }
-
-    @Override
-    public int getPlayerScore(int playerId) {
-        return getPlayer(playerId).getScore();
-    }
-
-    @Override
-    public String getPlayerColor(int playerId) {
-        return players.get(playerId).getColor().toString();
-    }
-
-    @Override
-    public boolean playerOwnsPieceOf(int playerId, int shapeId) {
-        return getPlayer(playerId).ownsPieceOf(shapeId);
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 
     /**
@@ -128,18 +100,16 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
-    public List<Integer> getWinner() {
+    public List<Player> getWinner() {
         int highestScore = getHighestScore();
         return players.stream()
-                      .filter(p -> p.getScore() == highestScore)
-                      .mapToInt(w -> players.indexOf(w))
-                      .boxed()
-                      .collect(Collectors.toList());
+                .filter(p -> p.getScore() == highestScore)
+                .collect(Collectors.toList());
     }
 
     @Override
     public boolean isOver() {
-          return players.stream().allMatch(p -> p.getStock().isEmpty());
+        return players.stream().allMatch(p -> p.getStock().isEmpty());
     }
 
     @Override

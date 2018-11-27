@@ -1,6 +1,8 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
+import blokus.model.Player;
+import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
 /**
@@ -11,10 +13,7 @@ import javafx.scene.layout.VBox;
  */
 public class PlayersDataPane extends VBox {
 
-    private final PlayerDataPane bluePlayerData;
-    private final PlayerDataPane yellowPlayerData;
-    private final PlayerDataPane redPlayerData;
-    private final PlayerDataPane greenPlayerData;
+    private final Game blokus;
 
     /**
      * Initializes this pane with the given game. The players data of this
@@ -23,10 +22,7 @@ public class PlayersDataPane extends VBox {
      * @param blokus is the game this pane will display player data for.
      */
     public PlayersDataPane(Game blokus) {
-        this.bluePlayerData = new PlayerDataPane(blokus, 0);
-        this.yellowPlayerData = new PlayerDataPane(blokus, 1);
-        this.redPlayerData = new PlayerDataPane(blokus, 2);
-        this.greenPlayerData = new PlayerDataPane(blokus, 3);
+        this.blokus = blokus;
         setContent();
         setStyle();
     }
@@ -35,18 +31,18 @@ public class PlayersDataPane extends VBox {
      * Updates this pane content.
      */
     void update() {
-        bluePlayerData.update();
-        yellowPlayerData.update();
-        redPlayerData.update();
-        greenPlayerData.update();
+        for (Node node : getChildren()) {
+            ((PlayerDataPane) node).update();
+        }
     }
-    
+
     /**
      * Sets this pane content.
      */
     final void setContent() {
-        this.getChildren().addAll(bluePlayerData, yellowPlayerData,
-                redPlayerData, greenPlayerData);
+        for (Player player : blokus.getPlayers()) {
+            getChildren().add(new PlayerDataPane(player));
+        }
     }
 
     final void setStyle() {

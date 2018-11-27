@@ -1,5 +1,6 @@
 package blokus.view.fx;
 
+import blokus.model.BlokusColor;
 import blokus.model.Game;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
@@ -27,27 +28,24 @@ public class BoardPane extends GridPane {
     }
 
     /**
-     * Converts the given name color to a color.
+     * Converts the given Blokus color to a color.
      *
      * @param color is the name of the color.
-     * @return a color carresponding to the given color name.
+     * @return a color corresponding to the given color name.
      */
-    Color toColor(String color) {
+    Color toColor(BlokusColor color) {
         if (color == null) {
-            return Color.GREY;
-        } else {
-            switch (color) {
-                case "BLUE":
-                    return Color.BLUE;
-                case "YELLOW":
-                    return Color.YELLOW;
-                case "RED":
-                    return Color.RED;
-                case "GREEN":
-                    return Color.GREEN;
-                default:
-                    return Color.GREY;
-            }
+            return Color.GRAY;
+        }
+        switch (color) {
+            case BLUE:
+                return Color.BLUE;
+            case YELLOW:
+                return Color.YELLOW;
+            case RED:
+                return Color.RED;
+            default:
+                return Color.GREEN;
         }
     }
 
@@ -84,7 +82,7 @@ public class BoardPane extends GridPane {
      * @param row is the row of the square to set.
      * @param column is the column of the square to set.
      */
-    void setSquare(String color, int row, int column) {
+    void setSquare(BlokusColor color, int row, int column) {
         if (color == null) {
             setEmptySquare(row, column);
         } else {
@@ -96,9 +94,9 @@ public class BoardPane extends GridPane {
      * Displays the current state of the game board.
      */
     final void setBoard() {
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                setSquare(blokus.getBoardColorAt(i, j), i, j);
+        for (int row = 0; row < 20; row++) {
+            for (int column = 0; column < 20; column++) {
+                setSquare(blokus.getBoard().getColorAt(row, column), row, column);
             }
         }
     }
@@ -124,10 +122,10 @@ public class BoardPane extends GridPane {
      * Updates this board pane.
      */
     void update() {
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
-                Color color = toColor(blokus.getBoardColorAt(i, j));
-                getSquare(i, j).setFill(color);
+        for (int row = 0; row < 20; row++) {
+            for (int column = 0; column < 20; column++) {
+                Color color = toColor(blokus.getBoard().getColorAt(row, column));
+                getSquare(row, column).setFill(color);
             }
         }
     }

@@ -1,5 +1,6 @@
 package blokus.model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-class Player {
+public class Player {
 
     private final BlokusColor color;
     private final Stock stock;
@@ -38,7 +39,7 @@ class Player {
      * @return this player stock.
      */
     public List<Piece> getStock() {
-        return stock.getPieces();
+        return Collections.unmodifiableList(stock.getPieces());
     }
 
     /**
@@ -51,22 +52,22 @@ class Player {
     }
 
     /**
+     * Tells if this player owns a piece of the given shape.
+     *
+     * @param shapeId is the id of the shape to look for.
+     * @return true if the given shape is this player stock.
+     */
+    public boolean owns(Piece piece) {
+        return stock.contains(piece);
+    }
+
+    /**
      * Makes this player lose the given piece.
      *
      * @param piece is the piece to lose.
      */
     void remove(Piece piece) {
         stock.remove(piece);
-    }
-
-    /**
-     * Tells if this player owns a piece of the given shape.
-     *
-     * @param shapeId is the id of the shape to look for.
-     * @return true if the given shape is this player stock.
-     */
-    boolean ownsPieceOf(int shapeId) {
-        return stock.contains(shapeId);
     }
 
     /**

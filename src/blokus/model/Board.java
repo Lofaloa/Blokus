@@ -7,7 +7,7 @@ import blokus.exception.ModelException;
  *
  * @author Logan Farci (47923)
  */
-class Board {
+public class Board {
 
     private final static int BOARD_SIZE = 20;
     private final Piece[][] squares;
@@ -17,6 +17,14 @@ class Board {
      */
     Board() {
         this.squares = new Piece[BOARD_SIZE][BOARD_SIZE];
+    }
+
+    public BlokusColor getColorAt(int row, int column) {
+        if (isEmptyAt(row, column)) {
+            return null;
+        } else {
+            return squares[row][column].getColor();
+        }
     }
 
     /**
@@ -102,6 +110,7 @@ class Board {
 
     /**
      * Adds a given piece square to the given position.
+     *
      * @param row is the row where to add the piece square.
      * @param column is the column where to add the piece square.
      * @param piece is the piece to add a square in this board for.

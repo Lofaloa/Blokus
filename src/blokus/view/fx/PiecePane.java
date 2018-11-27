@@ -1,6 +1,7 @@
 package blokus.view.fx;
 
-import blokus.model.Game;
+import blokus.model.BlokusColor;
+import blokus.model.Piece;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -12,23 +13,15 @@ import javafx.scene.shape.Rectangle;
  */
 public class PiecePane extends GridPane {
 
-    private final int SIZE;
-    private final Game game;
-    private final int shapeId;
-    private final Color color;
+    private final Piece piece;
 
     /**
      * Initializes this piece pane with the piece to represent.
      *
-     * @param game is the game of the piece to represent.
-     * @param shapeId is the shape id of the piece shape to represent.
-     * @param color is the color name of the piece to represent.
+     * @param piece is the piece to represent.
      */
-    public PiecePane(Game game, int shapeId, String color) {
-        this.shapeId = shapeId;
-        this.color = getColor(color);
-        this.game = game;
-        this.SIZE = game.getShapeSize(shapeId);
+    public PiecePane(Piece piece) {
+        this.piece = piece;
         setPiece();
     }
 
@@ -37,18 +30,16 @@ public class PiecePane extends GridPane {
      *
      * @return the color of this pane piece.
      */
-    final Color getColor(String color) {
+    final Color toColor(BlokusColor color) {
         switch (color) {
-            case "BLUE":
+            case BLUE:
                 return Color.BLUE;
-            case "YELLOW":
+            case YELLOW:
                 return Color.YELLOW;
-            case "RED":
+            case RED:
                 return Color.RED;
-            case "GREEN":
-                return Color.GREEN;
             default:
-                return Color.GREY;
+                return Color.GREEN;
         }
     }
 
@@ -73,10 +64,10 @@ public class PiecePane extends GridPane {
      * Displays the piece of this pane.
      */
     final void setPiece() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
-                if (game.isInsideShape(shapeId, i, j)) {
-                    setSquare(color, i, j, true);
+        for (int i = 0; i < piece.getSize(); i++) {
+            for (int j = 0; j < piece.getSize(); j++) {
+                if (piece.contains(i, j)) {
+                    setSquare(toColor(piece.getColor()), i, j, true);
                 } else {
                     setSquare(Color.TRANSPARENT, i, j, false);
                 }
