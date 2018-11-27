@@ -1,5 +1,6 @@
 package blokus.model;
 
+import blokus.exception.ModelException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -115,6 +116,7 @@ enum Shape {
     SHAPE_21(new Square(0, 1), new Square(1, 1), new Square(1, 0),
             new Square(1, 2), new Square(2, 1));
 
+    static final int MAX_SIZE = 5;
     private final List<Square> squares;
 
     /**
@@ -123,9 +125,9 @@ enum Shape {
      * @param squares is the set of Squares of this shape.
      */
     Shape(Square... squares) {
-//        if (squares.length == 0) {
-//            throw new ModelException("Trying to initialize an empty shape.");
-//        }
+        if (squares.length == 0) {
+            throw new ModelException("Trying to initialize an empty shape.");
+        }
         this.squares = new ArrayList<>(Arrays.asList(squares));
     }
 
@@ -157,7 +159,7 @@ enum Shape {
      * greater than 5.
      */
     boolean contains(int row, int column) {
-        if (row < 0 || 5 < row || column < 0 || 5 < column) {
+        if ((row < 0 || MAX_SIZE < row) || (column < 0 || MAX_SIZE < column)) {
             throw new IllegalArgumentException("Position " + row + ", " + column
                     + " is not a valid position.");
         }

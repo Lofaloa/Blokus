@@ -1,6 +1,6 @@
 package blokus.model;
 
-import blokus.exception.ModelException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -10,8 +10,9 @@ import java.util.Objects;
  */
 class Piece {
 
+    static final int MAX_SIZE = 5;
     private final Shape shape;
-    private final Color color;
+    private final BlokusColor color;
 
     /**
      * Initializes this piece with the given positions.
@@ -19,7 +20,7 @@ class Piece {
      * @param shape is the shape of this piece.
      * @param color is the color of this piece.
      */
-    Piece(Shape shape, Color color) {
+    Piece(Shape shape, BlokusColor color) {
         this.shape = shape;
         this.color = color;
     }
@@ -34,24 +35,48 @@ class Piece {
     }
 
     /**
+     * Gets the squares of this piece.
+     *
+     * @return the squares of this piece.
+     */
+    List<Square> getSquares() {
+        return shape.getSquares();
+    }
+
+    /**
      * Gets this shape color.
      *
      * @return this shape color.
      */
-    Color getColor() {
+    BlokusColor getColor() {
         return color;
+    }
+
+    /**
+     * Tells if this piece is the smallest of the game. The smallest being a
+     * piece of one square.
+     *
+     * @return true if this piece is smallest piece of the game.
+     */
+    boolean isSmallestPiece() {
+        return shape == Shape.SHAPE_01;
     }
 
     /**
      * Indicates if the given position is contained in this piece.
      *
-     * @param i is the vertical position.
-     * @param j is the horizontal position.
+     * @param row is the row of the square to look for.
+     * @param column is the column of the square to look for.
      * @return true if the given position in contained on this piece.
-     * @throws ModelException if the given row and column are not valid.
+     * @throws IllegalArgumentException if the given coordinates are negative or
+     * greater than 5.
      */
-    boolean contains(int i, int j) throws ModelException {
-        return shape.getSquares().contains(new Square(i, j));
+    boolean contains(int row, int column) {
+        if (row < 0 || MAX_SIZE < row || column < 0 || MAX_SIZE < column) {
+            throw new IllegalArgumentException("Position " + row + ", " + column
+                    + " is not a valid position.");
+        }
+        return shape.contains(row, column);
     }
 
     /**

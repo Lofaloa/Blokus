@@ -12,17 +12,17 @@ public class PlayerTest {
 
     @Test
     public void playerAfterInitializationShouldBeInExpectedState() {
-        Player p = new Player(Color.BLUE);
-        assertTrue(p.getColor() == Color.BLUE && !p.getStock().isEmpty()
+        Player p = new Player(BlokusColor.BLUE);
+        assertTrue(p.getColor() == BlokusColor.BLUE && !p.getStock().isEmpty()
                 && p.getScore() == -89);
     }
 
     @Test
     public void playerShouldBeAbleToGetAPieceOfStock() {
-        Player player = new Player(Color.BLUE);
+        Player player = new Player(BlokusColor.BLUE);
         Piece p1 = player.getPiece(0);
         System.out.println(p1.getShape());
-        assertTrue(p1.equals(new Piece(Shape.SHAPE_01, Color.BLUE)));
+        assertTrue(p1.equals(new Piece(Shape.SHAPE_01, BlokusColor.BLUE)));
     }
 
 }

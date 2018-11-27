@@ -12,12 +12,12 @@ public class ColorTest {
     
     @Test
     public void valuesShouldGetTheFourColors() {
-        assertEquals(4, Color.values().length);
+        assertEquals(4, BlokusColor.values().length);
     }
     
     @Test
     public void valueOfShouldGetTheExpectedColor() {
-        assertEquals(Color.BLUE, Color.valueOf("BLUE"));
+        assertEquals(BlokusColor.BLUE, BlokusColor.valueOf("BLUE"));
     }
     
 }

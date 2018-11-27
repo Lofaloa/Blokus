@@ -9,7 +9,7 @@ import java.util.List;
  */
 class Player {
 
-    private final Color color;
+    private final BlokusColor color;
     private final Stock stock;
 
     /**
@@ -18,7 +18,7 @@ class Player {
      *
      * @param color is the color of this player.
      */
-    Player(Color color) {
+    Player(BlokusColor color) {
         this.color = color;
         this.stock = new Stock(color);
     }
@@ -46,7 +46,7 @@ class Player {
      *
      * @return this player color.
      */
-    public Color getColor() {
+    public BlokusColor getColor() {
         return color;
     }
 
@@ -55,7 +55,7 @@ class Player {
      *
      * @param piece is the piece to lose.
      */
-    void take(Piece piece) {
+    void remove(Piece piece) {
         stock.remove(piece);
     }
 

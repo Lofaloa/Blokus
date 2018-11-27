@@ -25,7 +25,7 @@ public class BoardTest {
     @Test
     public void squareShouldNotBeFreeAfterBeingFilledWithPiece() {
         Board board = new Board();
-        Piece fillingPiece = new Piece(Shape.SHAPE_01, Color.BLUE);
+        Piece fillingPiece = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
         board.addPiece(fillingPiece, 0, 0);
         assertFalse(board.isEmptyAt(0, 0));
     }
@@ -39,7 +39,7 @@ public class BoardTest {
     @Test
     public void squareShouldNotBeValidWhenFilled() {
         Board board = new Board();
-        Piece fillingPiece = new Piece(Shape.SHAPE_01, Color.BLUE);
+        Piece fillingPiece = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
         board.addPiece(fillingPiece, 0, 0);
         assertFalse(board.isValid(0, 0));
     }
@@ -75,7 +75,7 @@ public class BoardTest {
     @Test(expected = ModelException.class)
     public void notValidSquareShouldCauseAnException() {
         Board board = new Board();
-        Piece fillingPiece = new Piece(Shape.SHAPE_01, Color.BLUE);
+        Piece fillingPiece = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
         board.addPiece(fillingPiece, 1, 1);
         board.requireValidSquare(1, 1);
     }
@@ -89,15 +89,15 @@ public class BoardTest {
     @Test(expected = ModelException.class)
     public void outOfBoundsPieceSquareShouldCauseExceptionWhenAdding() {
         Board b = new Board();
-        Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
         b.addPiece(p, 0, 19);
     }
 
     @Test(expected = ModelException.class)
     public void addingAnOverlappingPieceShouldCauseException() {
         Board b = new Board();
-        Piece piece = new Piece(Shape.SHAPE_04, Color.BLUE);
-        Piece overlappingPiece = new Piece(Shape.SHAPE_04, Color.RED);
+        Piece piece = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        Piece overlappingPiece = new Piece(Shape.SHAPE_04, BlokusColor.RED);
         b.addPiece(piece, 0, 0);
         b.addPiece(overlappingPiece, 0, 1);
     }
@@ -105,7 +105,7 @@ public class BoardTest {
     @Test
     public void addedPieceInBoardShouldBeFoundAtGivenPosition() {
         Board b = new Board();
-        Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
         b.addPiece(p, 0, 0);
         assertFalse(b.isEmptyAt(0, 0) && b.isEmptyAt(1, 0) && b.isEmptyAt(1, 1));
     }
@@ -113,7 +113,7 @@ public class BoardTest {
     @Test(expected = ModelException.class)
     public void addingPieceOutOfBoardBoundsShouldCauseException() {
         Board b = new Board();
-        Piece p = new Piece(Shape.SHAPE_04, Color.BLUE);
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
         b.addPiece(p, -1, 0);
     }
 

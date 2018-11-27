@@ -77,7 +77,7 @@ public class BlokusTest {
     public void secondPlayerShouldBeWinnerWithEmptyStock() {
         Blokus g = new Blokus();
         Player winner = g.getPlayer(1);
-        winner.take(new Piece(Shape.SHAPE_21, Color.YELLOW));
+        winner.remove(new Piece(Shape.SHAPE_21, BlokusColor.YELLOW));
         assertEquals(-84, g.getHighestScore());
         assertEquals(new Integer(1), g.getWinner().get(0));
     }
@@ -85,9 +85,9 @@ public class BlokusTest {
     @Test
     public void gameShouldGetExpectedPlayerScore() {
         Blokus g = new Blokus();
-        g.getPlayer(0).take(new Piece(Shape.SHAPE_01, Color.BLUE));
-        g.getPlayer(0).take(new Piece(Shape.SHAPE_02, Color.BLUE));
-        g.getPlayer(0).take(new Piece(Shape.SHAPE_03, Color.BLUE));
+        g.getPlayer(0).remove(new Piece(Shape.SHAPE_01, BlokusColor.BLUE));
+        g.getPlayer(0).remove(new Piece(Shape.SHAPE_02, BlokusColor.BLUE));
+        g.getPlayer(0).remove(new Piece(Shape.SHAPE_03, BlokusColor.BLUE));
         assertEquals(-83, g.getPlayerScore(0));
     }
 

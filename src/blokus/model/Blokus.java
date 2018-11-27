@@ -29,10 +29,10 @@ public class Blokus extends Observable implements Game {
      */
     public Blokus() {
         this.players = new ArrayList<>(Arrays.asList(
-                new Player(Color.BLUE),
-                new Player(Color.YELLOW),
-                new Player(Color.RED),
-                new Player(Color.GREEN)));
+                new Player(BlokusColor.BLUE),
+                new Player(BlokusColor.YELLOW),
+                new Player(BlokusColor.RED),
+                new Player(BlokusColor.GREEN)));
         this.playerIterator = players.listIterator();
         this.currentPlayer = playerIterator.next();
         this.currentPlayerPiece = null;
@@ -154,7 +154,7 @@ public class Blokus extends Observable implements Game {
     @Override
     public void placePiece(int row, int column) throws ModelException {
         board.requireValidSquare(row, column);
-        currentPlayer.take(currentPlayerPiece);
+        currentPlayer.remove(currentPlayerPiece);
         board.addPiece(currentPlayerPiece, row, column);
         setChanged();
         notifyObservers();
@@ -162,7 +162,7 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public void nextPlayer() {
-        if (currentPlayer.getColor() == Color.GREEN) {
+        if (currentPlayer.getColor() == BlokusColor.GREEN) {
             playerIterator = players.listIterator(0);
             currentPlayer = playerIterator.next();
         } else {

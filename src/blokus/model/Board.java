@@ -29,18 +29,6 @@ class Board {
     }
 
     /**
-     * Tells if the given square is free. A free square does not contains a
-     * piece.
-     *
-     * @param row is the row of the square to test.
-     * @param column is the column of the square to test.
-     * @return true if the given position is an empty square.
-     */
-    boolean isEmptyAt(int row, int column) {
-        return squares[row][column] == null;
-    }
-
-    /**
      * Tells if the given square is in this board bounds.
      *
      * @param row is the row of the square to test.
@@ -49,6 +37,22 @@ class Board {
      */
     boolean contains(int row, int column) {
         return 0 <= row && row < BOARD_SIZE && 0 <= column && column < BOARD_SIZE;
+    }
+
+    /**
+     * Tells if the given square is free. A free square does not contains a
+     * piece.
+     *
+     * @param row is the row of the square to test.
+     * @param column is the column of the square to test.
+     * @return true if the given position is an empty square.
+     */
+    boolean isEmptyAt(int row, int column) {
+        if (!contains(row, column)) {
+            throw new IllegalArgumentException("Position " + row + ", " + column
+                    + " is not in the board.");
+        }
+        return squares[row][column] == null;
     }
 
     /**
@@ -96,7 +100,13 @@ class Board {
                 .allMatch(s -> isValid(s.getRow(), s.getColumn()));
     }
 
-    void addSquare(Piece piece, int row, int column) {
+    /**
+     * Adds a given piece square to the given position.
+     * @param row is the row where to add the piece square.
+     * @param column is the column where to add the piece square.
+     * @param piece is the piece to add a square in this board for.
+     */
+    void addAt(int row, int column, Piece piece) {
         squares[row][column] = piece;
     }
 
@@ -107,14 +117,15 @@ class Board {
      * @param row is the row of the square of destination in this board.
      * @param column is the column of the square of destination in this board.
      */
-    void addPiece(Piece piece, int row, int column) throws ModelException {
+    void addPiece(Piece piece, int row, int column) {
+        requireValidSquare(row, column);
         if (!hasSpaceFor(piece, row, column)) {
             throw new ModelException("the given piece cannot be place at row "
                     + row + ", column " + column + ".");
         }
-        for (Square pieceSquare : piece.getShape().getSquares()) {
-            Square boardSquare = pieceSquare.move(row, column);
-            addSquare(piece, boardSquare.getRow(), boardSquare.getColumn());
+        for (Square square : piece.getSquares()) {
+            Square boardSquare = square.move(row, column);
+            addAt(boardSquare.getRow(), boardSquare.getColumn(), piece);
         }
     }
 

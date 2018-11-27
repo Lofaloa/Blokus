@@ -18,7 +18,7 @@ class Stock {
      *
      * @param color is the color of this stock.
      */
-    Stock(Color color) {
+    Stock(BlokusColor color) {
         this.pieces = buildPiecesOf(color);
     }
 
@@ -66,8 +66,7 @@ class Stock {
         int score = 0;
         if (isEmpty()) {
             score += 15;
-            if (lastTakenPiece.getShape() == Shape.SHAPE_01) {
-                System.out.println("test");
+            if (lastTakenPiece.isSmallestPiece()) {
                 score += 5;
             }
         } else {
@@ -119,7 +118,7 @@ class Stock {
      * @param color is the color of this stock.
      * @return the newly built pieces.
      */
-    final List<Piece> buildPiecesOf(Color color) {
+    final List<Piece> buildPiecesOf(BlokusColor color) {
         List<Piece> builtPieces = new ArrayList<>();
         for (Shape shape : Shape.values()) {
             builtPieces.add(new Piece(shape, color));
