@@ -1,5 +1,6 @@
 package blokus.model;
 
+import blokus.exception.ModelException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -120,10 +121,13 @@ enum Shape {
     /**
      * Initializes this shape with a set of Squares.
      *
-     * @param Squares is the set of Squares of this shape.
+     * @param squares is the set of Squares of this shape.
      */
-    Shape(Square... Squares) {
-        this.squares = new ArrayList<>(Arrays.asList(Squares));
+    Shape(Square... squares) {
+        if (squares.length == 0) {
+            throw new ModelException("Trying to initialize an empty shape.");
+        }
+        this.squares = new ArrayList<>(Arrays.asList(squares));
     }
 
     /**
@@ -152,6 +156,10 @@ enum Shape {
      * @return true if the square is in the shape.
      */
     boolean contains(int row, int column) {
+        if (row < 0 || column < 0) {
+            throw new IllegalArgumentException("Position " + row + ", " + column
+                    + " is not a valid position.");
+        }
         return squares.contains(new Square(row, column));
     }
 
