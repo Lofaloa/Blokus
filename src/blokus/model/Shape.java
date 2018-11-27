@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.ModelException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -124,9 +123,9 @@ enum Shape {
      * @param squares is the set of Squares of this shape.
      */
     Shape(Square... squares) {
-        if (squares.length == 0) {
-            throw new ModelException("Trying to initialize an empty shape.");
-        }
+//        if (squares.length == 0) {
+//            throw new ModelException("Trying to initialize an empty shape.");
+//        }
         this.squares = new ArrayList<>(Arrays.asList(squares));
     }
 
@@ -147,20 +146,23 @@ enum Shape {
     int getSize() {
         return squares.size();
     }
-    
+
     /**
      * Tells if the given square is in this shape.
-     * 
+     *
      * @param row is the row of the square.
      * @param column is the column of the square.
      * @return true if the square is in the shape.
+     * @throws IllegalArgumentException if the given coordinates are negative or
+     * greater than 5.
      */
     boolean contains(int row, int column) {
-        if (row < 0 || column < 0) {
+        if (row < 0 || 5 < row || column < 0 || 5 < column) {
             throw new IllegalArgumentException("Position " + row + ", " + column
                     + " is not a valid position.");
         }
-        return squares.contains(new Square(row, column));
+        return squares.stream().anyMatch(s -> s.getRow() == row
+                && s.getColumn() == column);
     }
 
 }

@@ -21,10 +21,8 @@ class Input {
      * @return the tokens of the read command.
      */
     String[] readCommand() {
-//        display.printPrompt();
         String line = in.nextLine();
         while (line.length() == 0) {
-//            display.printPrompt();
             line = in.nextLine();
         }
         return line.split("\\s+");
