@@ -48,32 +48,7 @@ public class Blokus extends Observable implements Game {
         return currentPlayerPiece;
     }
 
-    /**
-     * Tells if the given square located at the given position in the board is
-     * empty.
-     *
-     * @param row is the row of the given square.
-     * @param column is the column of the given square.
-     * @return true if the given square is empty.
-     */
-    boolean isBoardEmptyAt(int row, int column) {
-        return board.isEmptyAt(row, column);
-    }
-
     @Override
-    public int getShapeSize(int shapeId) {
-        return Shape.values()[shapeId].getSize();
-    }
-
-    /**
-     * Gets the players matching the given id.
-     *
-     * @return the player matching the given id.
-     */
-    Player getPlayer(int playerId) {
-        return players.get(playerId);
-    }
-
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
     }

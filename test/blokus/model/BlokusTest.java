@@ -22,50 +22,36 @@ public class BlokusTest {
         Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(3);
         g.placePiece(0, 0);
-        assertEquals("BLUE", g.getBoard().getColorAt(0, 0));
-    }
-
-    @Test
-    public void gameShouldTellIfBoardIsEmptyAtGivenPosition() {
-        Blokus g = new Blokus();
-        assertTrue(g.isBoardEmptyAt(0, 0));
-    }
-
-    @Test
-    public void gameShouldGetExpectedShapeSize() {
-        Blokus g = new Blokus();
-        assertEquals(5, g.getShapeSize(20));
+        assertEquals(BlokusColor.BLUE, g.getBoard().getColorAt(0, 0));
     }
 
     @Test
     public void winnerShouldBeThePlayerWithTheHighestScore() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(3);
+        g.selectCurrentPlayerPiece(20);
         g.placePiece(0, 0);
-        assertEquals(-86, g.getHighestScore());
-        assertEquals(new Integer(0), g.getWinner().get(0));
+        assertEquals(-84, g.getWinner().get(0).getScore());
     }
 
     @Test
     public void secondPlayerShouldBeWinnerWithEmptyStock() {
         Blokus g = new Blokus();
-        Player winner = g.getPlayer(1);
-        winner.remove(new Piece(Shape.SHAPE_21, BlokusColor.YELLOW));
-        assertEquals(-84, g.getHighestScore());
-        assertEquals(new Integer(1), g.getWinner().get(0));
+        Player winner = g.getCurrentPlayer();
+        winner.clearStock();
+        assertEquals(winner, g.getWinner().get(0));
     }
 
     @Test
     public void playersWithSameHighestScoreShouldBeBothWinners() {
         Blokus g = new Blokus();
+        Player w1 = g.getCurrentPlayer();
         g.selectCurrentPlayerPiece(3);
         g.placePiece(0, 0);
         g.nextPlayer();
+        Player w2 = g.getCurrentPlayer();
         g.selectCurrentPlayerPiece(3);
         g.placePiece(5, 5);
-        assertEquals(-86, g.getHighestScore());
-        assertEquals(new Integer(0), g.getWinner().get(0));
-        assertEquals(new Integer(1), g.getWinner().get(1));
+        assertTrue(g.getWinner().contains(w1) && g.getWinner().contains(w2));
     }
 
     @Test(expected = ModelException.class)
@@ -90,14 +76,14 @@ public class BlokusTest {
     @Test
     public void currentPlayerIsBluePlayerAfterInitialization() {
         Blokus g = new Blokus();
-        assertEquals("BLUE", g.getCurrentPlayer().getColor());
+        assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
     }
 
     @Test
     public void yellowPlayerShouldFollowBluePlayer() {
         Blokus g = new Blokus();
         g.nextPlayer();
-        assertEquals("YELLOW", g.getCurrentPlayer().getColor());
+        assertEquals(BlokusColor.YELLOW, g.getCurrentPlayer().getColor());
     }
 
     @Test
@@ -105,7 +91,7 @@ public class BlokusTest {
         Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals("RED", g.getCurrentPlayer().getColor());
+        assertEquals(BlokusColor.RED, g.getCurrentPlayer().getColor());
     }
 
     @Test
@@ -114,7 +100,7 @@ public class BlokusTest {
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals("GREEN", g.getCurrentPlayer().getColor());
+        assertEquals(BlokusColor.GREEN, g.getCurrentPlayer().getColor());
     }
 
     @Test
@@ -124,25 +110,24 @@ public class BlokusTest {
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
-        assertEquals("BLUE", g.getCurrentPlayer().getColor());
+        assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
     }
 
     @Test
     public void blokusShouldBeOverWhenAllPlayersHaveAnEmptyStock() {
         Blokus g = new Blokus();
-        g.getPlayer(0).clearStock();
-        g.getPlayer(1).clearStock();
-        g.getPlayer(2).clearStock();
-        g.getPlayer(3).clearStock();
+        for (Player player : g.getPlayers()) {
+            player.clearStock();
+        }
         assertTrue(g.isOver());
     }
 
     @Test
     public void blokusShouldNotBeOverWhenOneOfThePlayerHasNotAnEmptyStock() {
         Blokus g = new Blokus();
-        g.getPlayer(0).clearStock();
-        g.getPlayer(1).clearStock();
-        g.getPlayer(3).clearStock();
+        for (int i = 0; i < 3; i++) {
+            g.getPlayers().get(i).clearStock();
+        }
         assertFalse(g.isOver());
     }
 

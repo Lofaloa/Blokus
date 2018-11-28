@@ -18,14 +18,6 @@ public interface Game {
     public Board getBoard();
 
     /**
-     * Gets the size of the given shape.
-     *
-     * @param shapeId is the shape id of the shape to get the size for.
-     * @return the size of the given shape.
-     */
-    public int getShapeSize(int shapeId);
-
-    /**
      * Gets the players of the game.
      *
      * @return the players of the game.

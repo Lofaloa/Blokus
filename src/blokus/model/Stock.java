@@ -130,6 +130,7 @@ public class Stock {
      * Clears this stock.
      */
     void clear() {
+        lastTakenPiece = pieces.get(NB_OF_PIECES - 1);
         pieces.clear();
     }
 
