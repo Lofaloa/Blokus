@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * @author Logan Farci (47923)
  */
 public class Blokus extends Observable implements Game {
-    
+
     private final List<Player> players;
     private ListIterator<Player> playerIterator;
     private final Board board;
@@ -100,7 +100,7 @@ public class Blokus extends Observable implements Game {
     public void placePiece(int row, int column) throws ModelException {
         if (currentPlayerPiece == null) {
             throw new IllegalStateException("No piece selected by the current player.");
-        } 
+        }
         board.requireValidSquare(row, column);
         currentPlayer.remove(currentPlayerPiece);
         board.addPiece(currentPlayerPiece, row, column);

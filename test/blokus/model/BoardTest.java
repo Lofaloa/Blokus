@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -12,46 +11,25 @@ import org.junit.Test;
  */
 public class BoardTest {
 
+    /**
+     * Checks the state of a board after initialization. A board should be empty
+     * initially.
+     */
     @Test
-    public void boardShouldBeEmptyAfterInitialization() {
-        Board b = new Board();
-        for (Piece[] pieces : b.getSquares()) {
-            for (Piece piece : pieces) {
-                assertNull(piece);
+    public void initialization() {
+        Board board = new Board();
+        for (int row = 0; row < Board.SIZE; row++) {
+            for (int column = 0; column < Board.SIZE; column++) {
+                assertTrue(board.isEmptyAt(row, column));
             }
         }
     }
 
+    /**
+     * Out of bounds squares should not be contained in the board.
+     */
     @Test
-    public void squareShouldNotBeFreeAfterBeingFilledWithPiece() {
-        Board board = new Board();
-        Piece fillingPiece = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
-        board.addPiece(fillingPiece, 0, 0);
-        assertFalse(board.isEmptyAt(0, 0));
-    }
-
-    @Test
-    public void squareShouldBeFreeWhenNotFilledWithPiece() {
-        Board board = new Board();
-        assertTrue(board.isEmptyAt(0, 0));
-    }
-
-    @Test
-    public void squareShouldNotBeValidWhenFilled() {
-        Board board = new Board();
-        Piece fillingPiece = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
-        board.addPiece(fillingPiece, 0, 0);
-        assertFalse(board.isValid(0, 0));
-    }
-
-    @Test
-    public void squareShouldNBeValidWhenNotFilledWithPiece() {
-        Board board = new Board();
-        assertTrue(board.isValid(0, 0));
-    }
-
-    @Test
-    public void outOfBoundsSquarenShouldNotBeContainedInBoard() {
+    public void contains_cases_x() {
         Board board = new Board();
         assertFalse(board.contains(-1, -1));
         assertFalse(board.contains(-1, 1));
@@ -61,8 +39,41 @@ public class BoardTest {
         assertFalse(board.contains(20, 20));
     }
 
+    /**
+     * Filled square should not be empty.
+     */
     @Test
-    public void squareShouldNotBeValidWhenOutOfBounds() {
+    public void isEmptyAt_case_1() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        board.addPiece(p, 0, 0);
+        assertFalse(board.isEmptyAt(0, 0));
+    }
+
+    /**
+     * Asking if the board is empty at out of bounds location should cause an
+     * exception.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void isEmptyAt_case_2() {
+        Board board = new Board();
+        board.isEmptyAt(-1, 23);
+    }
+
+    /**
+     * Square should be valid when not filled and in the board.
+     */
+    @Test
+    public void isValid_case_1() {
+        Board board = new Board();
+        assertTrue(board.isValid(0, 0));
+    }
+
+    /**
+     * Square should not be valid when out of bounds.
+     */
+    @Test
+    public void isValid_cases_2_x() {
         Board board = new Board();
         assertFalse(board.isValid(-1, -1));
         assertFalse(board.isValid(-1, 1));
@@ -72,29 +83,65 @@ public class BoardTest {
         assertFalse(board.isValid(20, 20));
     }
 
+    /**
+     * Filled square should cause an exception when valid square is required.
+     */
     @Test(expected = ModelException.class)
-    public void notValidSquareShouldCauseAnException() {
+    public void requireValidSquare_case_1() {
         Board board = new Board();
         Piece fillingPiece = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
         board.addPiece(fillingPiece, 1, 1);
         board.requireValidSquare(1, 1);
     }
-    
+
+    /**
+     * Out of bounds square should cause an exception when valid square is
+     * required.
+     */
     @Test(expected = ModelException.class)
-    public void outOfBoundsSquareShouldCauseAnException() {
+    public void requireValidSquare_case_2() {
         Board board = new Board();
-        board.requireValidSquare(1, -1);
+        board.requireValidSquare(-1, 23);
     }
 
+    /**
+     * Square should not be free after being filled with piece.
+     */
+    @Test
+    public void addPiece_case_1() {
+        Board board = new Board();
+        Piece fillingPiece = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addPiece(fillingPiece, 0, 0);
+        assertFalse(board.isEmptyAt(0, 0));
+    }
+
+    /**
+     * Square should not be valid when filled.
+     */
+    @Test
+    public void addPiece_case_2() {
+        Board board = new Board();
+        Piece fillingPiece = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addPiece(fillingPiece, 0, 0);
+        assertFalse(board.isValid(0, 0));
+    }
+
+    /**
+     * Adding a piece with squares getting out of bounds should cause an
+     * exception.
+     */
     @Test(expected = ModelException.class)
-    public void outOfBoundsPieceSquareShouldCauseExceptionWhenAdding() {
+    public void addPiece_case_3() {
         Board b = new Board();
         Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
         b.addPiece(p, 0, 19);
     }
 
+    /**
+     * Adding a piece on an other should cause an exception.
+     */
     @Test(expected = ModelException.class)
-    public void addingAnOverlappingPieceShouldCauseException() {
+    public void addPiece_case_4() {
         Board b = new Board();
         Piece piece = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
         Piece overlappingPiece = new Piece(Shape.SHAPE_04, BlokusColor.RED);
@@ -102,19 +149,25 @@ public class BoardTest {
         b.addPiece(overlappingPiece, 0, 1);
     }
 
+    /**
+     * Adding a piece out of bounds should cause an exception.
+     */
+    @Test(expected = ModelException.class)
+    public void addPiece_case_5() {
+        Board b = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        b.addPiece(p, -1, 0);
+    }
+
+    /**
+     * A piece should be on the board after being added.
+     */
     @Test
-    public void addedPieceInBoardShouldBeFoundAtGivenPosition() {
+    public void addPiece_case_6() {
         Board b = new Board();
         Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
         b.addPiece(p, 0, 0);
         assertFalse(b.isEmptyAt(0, 0) && b.isEmptyAt(1, 0) && b.isEmptyAt(1, 1));
-    }
-
-    @Test(expected = ModelException.class)
-    public void addingPieceOutOfBoardBoundsShouldCauseException() {
-        Board b = new Board();
-        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
-        b.addPiece(p, -1, 0);
     }
 
 }

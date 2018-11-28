@@ -11,8 +11,9 @@ import java.util.Objects;
  */
 public class Stock {
 
-    public static final int NB_OF_PIECES = 21;
+    public static final int CAPACITY = 21;
     private final List<Piece> pieces;
+    private final BlokusColor color;
     private Piece lastTakenPiece;
 
     /**
@@ -22,6 +23,7 @@ public class Stock {
      */
     Stock(BlokusColor color) {
         this.pieces = buildPiecesOf(color);
+        this.color = color;
     }
 
     /**
@@ -47,14 +49,14 @@ public class Stock {
      *
      * @return the number of unit squares contained in this stock.
      */
-    int getNumberOfSquares() {
+    int getNbOfSquares() {
         if (isEmpty()) {
             return 0;
         } else {
             int nbOfSquare = 0;
             nbOfSquare = pieces.stream()
-                               .map(piece -> piece.getShape().getSize())
-                               .reduce(nbOfSquare, Integer::sum);
+                    .map(piece -> piece.getShape().getSize())
+                    .reduce(nbOfSquare, Integer::sum);
             return nbOfSquare;
         }
     }
@@ -72,7 +74,7 @@ public class Stock {
                 score += 5;
             }
         } else {
-            score -= getNumberOfSquares();
+            score -= getNbOfSquares();
         }
         return score;
     }
@@ -100,6 +102,15 @@ public class Stock {
      * @param piece the piece to remove.
      */
     void remove(Piece piece) {
+        Objects.requireNonNull(piece);
+        if (piece.getColor() != color) {
+            throw new IllegalArgumentException("The given piece does not match "
+                    + "this stock color, " + color + " is expected but was "
+                    + piece.getColor() + ".");
+        }
+        if (isEmpty()) {
+            throw new IllegalStateException("This stock is empty, no pieces to remove.");
+        }
         lastTakenPiece = piece;
         pieces.remove(piece);
     }
@@ -111,7 +122,24 @@ public class Stock {
      * @return true if a piece of given shape is in this stock.
      */
     boolean contains(Piece piece) {
+        Objects.requireNonNull(piece);
+        if (piece.getColor() != color) {
+            throw new IllegalArgumentException("The given piece does not match "
+                    + "this stock color, " + color + " is expected but was "
+                    + piece.getColor() + ".");
+        }
         return pieces.contains(piece);
+    }
+
+    /**
+     * Clears this stock.
+     */
+    void clear() {
+        if (isEmpty()) {
+            throw new IllegalStateException("This stock is empty, nothing to clear.");
+        }
+        lastTakenPiece = pieces.get(CAPACITY - 1);
+        pieces.clear();
     }
 
     /**
@@ -126,14 +154,6 @@ public class Stock {
             builtPieces.add(new Piece(shape, color));
         }
         return builtPieces;
-    }
-
-    /**
-     * Clears this stock.
-     */
-    void clear() {
-        lastTakenPiece = pieces.get(NB_OF_PIECES - 1);
-        pieces.clear();
     }
 
 }

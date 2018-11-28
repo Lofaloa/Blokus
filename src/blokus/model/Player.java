@@ -70,6 +70,9 @@ public class Player {
      */
     void remove(Piece piece) {
         Objects.requireNonNull(piece, "No given piece.");
+        if (stock.isEmpty()) {
+            throw new IllegalStateException("This player stock is empty, no pieces to remove.");
+        }
         stock.remove(piece);
     }
 
@@ -80,6 +83,9 @@ public class Player {
      * @return the selected piece.
      */
     Piece getPiece(int pieceId) {
+        if (stock.isEmpty()) {
+            throw new IllegalStateException("This player stock is empty, no more pieces.");
+        }
         return stock.getPiece(Shape.values()[pieceId]);
     }
 
@@ -87,7 +93,23 @@ public class Player {
      * Clears this player stock.
      */
     void clearStock() {
+        if (stock.isEmpty()) {
+            throw new IllegalStateException("This player stock is empty, nothing to clear");
+        }
         stock.clear();
+    }
+
+    /**
+     * Clears this player stock.
+     */
+    void clearStockSmallestPieceAtEnd() {
+        if (stock.isEmpty()) {
+            throw new IllegalStateException("This player stock is empty, nothing to clear");
+        }
+        for (int i = 1; i < Stock.CAPACITY; i++) {
+            remove(stock.getPieces().get(1));
+        }
+        remove(getStock().get(0));
     }
 
 }
