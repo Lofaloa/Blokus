@@ -2,6 +2,7 @@ package blokus.model;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a player.
@@ -58,6 +59,7 @@ public class Player {
      * @return true if the given shape is this player stock.
      */
     public boolean owns(Piece piece) {
+        Objects.requireNonNull(piece, "No given piece.");
         return stock.contains(piece);
     }
 
@@ -67,6 +69,7 @@ public class Player {
      * @param piece is the piece to lose.
      */
     void remove(Piece piece) {
+        Objects.requireNonNull(piece, "No given piece.");
         stock.remove(piece);
     }
 

@@ -2,6 +2,7 @@ package blokus.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a stock of 21 pieces.
@@ -84,6 +85,7 @@ public class Stock {
      * <code>null</code> is returned.
      */
     Piece getPiece(Shape shape) {
+        Objects.requireNonNull(shape, "No given shape.");
         for (Piece piece : pieces) {
             if (shape == piece.getShape()) {
                 return piece;

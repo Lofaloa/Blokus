@@ -128,6 +128,9 @@ public class Board {
      */
     void addPiece(Piece piece, int row, int column) {
         requireValidSquare(row, column);
+        if (piece == null) {
+            throw new IllegalArgumentException("No Piece to place.");
+        }
         if (!hasSpaceFor(piece, row, column)) {
             throw new ModelException("the given piece cannot be place at row "
                     + row + ", column " + column + ".");

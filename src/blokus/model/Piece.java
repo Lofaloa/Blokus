@@ -21,6 +21,8 @@ public class Piece {
      * @param color is the color of this piece.
      */
     Piece(Shape shape, BlokusColor color) {
+        Objects.requireNonNull(shape, "No initializing shape given for this piece");
+        Objects.requireNonNull(color, "No initializing color given for this piece");
         this.shape = shape;
         this.color = color;
     }

@@ -28,8 +28,7 @@ public class Blokus extends Observable implements Game {
      * empty board.
      */
     public Blokus() {
-        this.players = new ArrayList<>(Arrays.asList(
-                new Player(BlokusColor.BLUE),
+        this.players = new ArrayList<>(Arrays.asList(new Player(BlokusColor.BLUE),
                 new Player(BlokusColor.YELLOW),
                 new Player(BlokusColor.RED),
                 new Player(BlokusColor.GREEN)));
@@ -94,10 +93,14 @@ public class Blokus extends Observable implements Game {
                     + "are 21 pieces.");
         }
         currentPlayerPiece = currentPlayer.getPiece(pieceId);
+        System.out.println("current piece is " + currentPlayerPiece);
     }
 
     @Override
     public void placePiece(int row, int column) throws ModelException {
+        if (currentPlayerPiece == null) {
+            throw new IllegalStateException("No piece selected by the current player.");
+        } 
         board.requireValidSquare(row, column);
         currentPlayer.remove(currentPlayerPiece);
         board.addPiece(currentPlayerPiece, row, column);
