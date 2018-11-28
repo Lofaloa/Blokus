@@ -21,12 +21,23 @@ class Square {
      * not valid.
      */
     Square(int row, int column) {
-        if (row < 0 || 19 < row || column < 0 || 19 < column) {
+        requireValidCoordinates(row, column);
+        this.row = row;
+        this.column = column;
+    }
+
+    /**
+     * Throws an exception if the given coordinates are not valid. Not valid
+     * coordinates are out of board bounds.
+     *
+     * @param row is the row of the coordinate.
+     * @param column is the column of the coordinate.
+     */
+    final void requireValidCoordinates(int row, int column) {
+        if (row < 0 || Board.SIZE - 1 < row || column < 0 || Board.SIZE - 1 < column) {
             throw new ModelException("Square at position (" + row + "; "
                     + column + ") is not valid, the board has 20 row and columns.");
         }
-        this.row = row;
-        this.column = column;
     }
 
     /**
@@ -53,10 +64,9 @@ class Square {
      * @param rowOffset is the offset to apply to this square row.
      * @param columnOffset is the offset to apply to this square column.
      * @return a new position based on this position and the given offsets.
-     * @throws blokus.exception.ModelException if the new position of the square
-     * is not valid.
      */
-    Square move(int rowOffset, int columnOffset) throws ModelException {
+    Square move(int rowOffset, int columnOffset) {
+        requireValidCoordinates(row + rowOffset, column + columnOffset);
         return new Square(row + rowOffset, column + columnOffset);
     }
 

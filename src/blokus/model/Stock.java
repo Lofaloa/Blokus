@@ -11,7 +11,11 @@ import java.util.Objects;
  */
 public class Stock {
 
+    /**
+     * Is the number of pieces that can fit in a stock.
+     */
     public static final int CAPACITY = 21;
+
     private final List<Piece> pieces;
     private final BlokusColor color;
     private Piece lastTakenPiece;
@@ -97,20 +101,36 @@ public class Stock {
     }
 
     /**
+     * Throws an exception if this stock is empty.
+     */
+    void requireNonEmpty() {
+        if (isEmpty()) {
+            throw new IllegalStateException("This stock is empty, no pieces to remove.");
+        }
+    }
+
+    /**
+     * Throws an exception if the given color does not match this stock color.
+     *
+     * @param color is the color to test.
+     */
+    void requireMatchingColor(BlokusColor color) {
+        if (color != this.color) {
+            throw new IllegalArgumentException("The given piece does not match "
+                    + "this stock color, " + this.color + " is expected but was "
+                    + color + ".");
+        }
+    }
+
+    /**
      * Removes the given piece.
      *
      * @param piece the piece to remove.
      */
     void remove(Piece piece) {
         Objects.requireNonNull(piece);
-        if (piece.getColor() != color) {
-            throw new IllegalArgumentException("The given piece does not match "
-                    + "this stock color, " + color + " is expected but was "
-                    + piece.getColor() + ".");
-        }
-        if (isEmpty()) {
-            throw new IllegalStateException("This stock is empty, no pieces to remove.");
-        }
+        requireMatchingColor(piece.getColor());
+        requireNonEmpty();
         lastTakenPiece = piece;
         pieces.remove(piece);
     }
@@ -123,11 +143,7 @@ public class Stock {
      */
     boolean contains(Piece piece) {
         Objects.requireNonNull(piece);
-        if (piece.getColor() != color) {
-            throw new IllegalArgumentException("The given piece does not match "
-                    + "this stock color, " + color + " is expected but was "
-                    + piece.getColor() + ".");
-        }
+        requireMatchingColor(piece.getColor());
         return pieces.contains(piece);
     }
 
@@ -135,9 +151,7 @@ public class Stock {
      * Clears this stock.
      */
     void clear() {
-        if (isEmpty()) {
-            throw new IllegalStateException("This stock is empty, nothing to clear.");
-        }
+        requireNonEmpty();
         lastTakenPiece = pieces.get(CAPACITY - 1);
         pieces.clear();
     }

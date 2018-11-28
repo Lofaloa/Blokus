@@ -53,9 +53,16 @@ public class Player {
     }
 
     /**
+     * Throws an exception if the stock is empty.
+     */
+    void requireNonEmptyStock() {
+        stock.requireNonEmpty();
+    }
+
+    /**
      * Tells if this player owns a piece of the given shape.
      *
-     * @param shapeId is the id of the shape to look for.
+     * @param piece is the piece to look for.
      * @return true if the given shape is this player stock.
      */
     public boolean owns(Piece piece) {
@@ -70,9 +77,7 @@ public class Player {
      */
     void remove(Piece piece) {
         Objects.requireNonNull(piece, "No given piece.");
-        if (stock.isEmpty()) {
-            throw new IllegalStateException("This player stock is empty, no pieces to remove.");
-        }
+        requireNonEmptyStock();
         stock.remove(piece);
     }
 
@@ -83,9 +88,7 @@ public class Player {
      * @return the selected piece.
      */
     Piece getPiece(int pieceId) {
-        if (stock.isEmpty()) {
-            throw new IllegalStateException("This player stock is empty, no more pieces.");
-        }
+        requireNonEmptyStock();
         return stock.getPiece(Shape.values()[pieceId]);
     }
 
@@ -93,9 +96,7 @@ public class Player {
      * Clears this player stock.
      */
     void clearStock() {
-        if (stock.isEmpty()) {
-            throw new IllegalStateException("This player stock is empty, nothing to clear");
-        }
+        requireNonEmptyStock();
         stock.clear();
     }
 
@@ -103,9 +104,7 @@ public class Player {
      * Clears this player stock.
      */
     void clearStockSmallestPieceAtEnd() {
-        if (stock.isEmpty()) {
-            throw new IllegalStateException("This player stock is empty, nothing to clear");
-        }
+        requireNonEmptyStock();
         for (int i = 1; i < Stock.CAPACITY; i++) {
             remove(stock.getPieces().get(1));
         }

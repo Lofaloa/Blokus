@@ -9,7 +9,11 @@ import blokus.exception.ModelException;
  */
 public class Board {
 
+    /**
+     * Is the size of a board.
+     */
     public static final int SIZE = 20;
+
     private final Piece[][] squares;
 
     /**
@@ -19,6 +23,14 @@ public class Board {
         this.squares = new Piece[SIZE][SIZE];
     }
 
+    /**
+     * Gets the color of this board at the given position.
+     *
+     * @param row is the row of the square.
+     * @param column is the column of the square.
+     * @return the color of this board at the given position. <code>null</code>
+     * is returned if the board is empty at thee given position.
+     */
     public BlokusColor getColorAt(int row, int column) {
         if (isEmptyAt(row, column)) {
             return null;
