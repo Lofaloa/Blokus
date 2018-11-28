@@ -38,7 +38,7 @@ public class SquareTest {
     }
 
     @Test
-    public void moveAPosition() {
+    public void moveASquare() {
         Square pos = new Square(2, 3);
         Square movedPos = pos.move(2, 3);
         assertTrue(movedPos.getRow() == 4 && movedPos.getColumn() == 6);

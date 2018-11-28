@@ -9,14 +9,14 @@ import blokus.exception.ModelException;
  */
 public class Board {
 
-    private final static int BOARD_SIZE = 20;
+    public static final int SIZE = 20;
     private final Piece[][] squares;
 
     /**
      * Initializes this board with a 20 by 20 empty grid of squares.
      */
     Board() {
-        this.squares = new Piece[BOARD_SIZE][BOARD_SIZE];
+        this.squares = new Piece[SIZE][SIZE];
     }
 
     public BlokusColor getColorAt(int row, int column) {
@@ -44,7 +44,7 @@ public class Board {
      * @return true if the given square is in the board bounds.
      */
     boolean contains(int row, int column) {
-        return 0 <= row && row < BOARD_SIZE && 0 <= column && column < BOARD_SIZE;
+        return 0 <= row && row < SIZE && 0 <= column && column < SIZE;
     }
 
     /**

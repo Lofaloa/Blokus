@@ -1,7 +1,7 @@
 package blokus.view.fx;
 
 import blokus.model.BlokusColor;
-import blokus.model.Game;
+import blokus.model.Board;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.GridPane;
@@ -14,15 +14,15 @@ import javafx.scene.paint.Color;
  */
 public class BoardPane extends GridPane {
 
-    private final Game blokus;
+    private final Board board;
 
     /**
      * Initializes this board pane with the given game.
      *
-     * @param blokus is the game for which represent the board.
+     * @param board is the board to represent.
      */
-    public BoardPane(Game blokus) {
-        this.blokus = blokus;
+    public BoardPane(Board board) {
+        this.board = board;
         setBoard();
         setStyle();
     }
@@ -94,9 +94,9 @@ public class BoardPane extends GridPane {
      * Displays the current state of the game board.
      */
     final void setBoard() {
-        for (int row = 0; row < 20; row++) {
-            for (int column = 0; column < 20; column++) {
-                setSquare(blokus.getBoard().getColorAt(row, column), row, column);
+        for (int row = 0; row < Board.SIZE; row++) {
+            for (int column = 0; column < Board.SIZE; column++) {
+                setSquare(board.getColorAt(row, column), row, column);
             }
         }
     }
@@ -122,9 +122,9 @@ public class BoardPane extends GridPane {
      * Updates this board pane.
      */
     void update() {
-        for (int row = 0; row < 20; row++) {
-            for (int column = 0; column < 20; column++) {
-                Color color = toColor(blokus.getBoard().getColorAt(row, column));
+        for (int row = 0; row < Board.SIZE; row++) {
+            for (int column = 0; column < Board.SIZE; column++) {
+                Color color = toColor(board.getColorAt(row, column));
                 getSquare(row, column).setFill(color);
             }
         }

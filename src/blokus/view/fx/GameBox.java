@@ -15,8 +15,8 @@ public class GameBox extends HBox {
     private final BoardPane board;
 
     GameBox(Game blokus) {
-        this.playersData = new PlayersDataPane(blokus);
-        this.board = new BoardPane(blokus);
+        this.playersData = new PlayersDataPane(blokus.getPlayers());
+        this.board = new BoardPane(blokus.getBoard());
         setContent();
         setStyle();
     }

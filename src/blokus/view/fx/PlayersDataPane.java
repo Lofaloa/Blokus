@@ -1,7 +1,7 @@
 package blokus.view.fx;
 
-import blokus.model.Game;
 import blokus.model.Player;
+import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
@@ -13,16 +13,16 @@ import javafx.scene.layout.VBox;
  */
 public class PlayersDataPane extends VBox {
 
-    private final Game blokus;
+    private final List<Player> players;
 
     /**
      * Initializes this pane with the given game. The players data of this
      * display the given players data information of the given game.
      *
-     * @param blokus is the game this pane will display player data for.
+     * @param players are the players to represent.
      */
-    public PlayersDataPane(Game blokus) {
-        this.blokus = blokus;
+    public PlayersDataPane(List<Player> players) {
+        this.players = players;
         setContent();
         setStyle();
     }
@@ -31,18 +31,18 @@ public class PlayersDataPane extends VBox {
      * Updates this pane content.
      */
     void update() {
-        for (Node node : getChildren()) {
+        getChildren().forEach((node) -> {
             ((PlayerDataPane) node).update();
-        }
+        });
     }
 
     /**
      * Sets this pane content.
      */
     final void setContent() {
-        for (Player player : blokus.getPlayers()) {
+        players.forEach((player) -> {
             getChildren().add(new PlayerDataPane(player));
-        }
+        });
     }
 
     final void setStyle() {
