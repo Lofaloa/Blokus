@@ -25,25 +25,6 @@ public class BlokusTest {
         assertTrue(g.getBoard().isEmpty());
     }
 
-    @Test(expected = ModelException.class)
-    public void tooSmallPieceIdShouldCauseExceptionWhenSelectingPiece() {
-        Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(-1);
-    }
-
-    @Test(expected = ModelException.class)
-    public void tooBigPieceIdShouldCauseExceptionWhenSelectingPiece() {
-        Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(22);
-    }
-
-    @Test
-    public void currentPlayerPieceShouldBeTheOneSelected() {
-        Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(1);
-        assertEquals(Shape.SHAPE_02, g.getCurrentPlayerPiece().getShape());
-    }
-
     @Test
     public void blokusShouldBeOverWhenAllPlayersHaveAnEmptyStock() {
         Blokus g = new Blokus();

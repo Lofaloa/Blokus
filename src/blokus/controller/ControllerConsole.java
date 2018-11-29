@@ -7,6 +7,7 @@ import blokus.view.console.BlokusView;
 import blokus.view.console.View;
 import static java.lang.Integer.parseInt;
 import java.util.Arrays;
+import blokus.model.Shape;
 import java.util.Locale;
 
 /**
@@ -41,7 +42,7 @@ public class ControllerConsole {
      * @param column is the column of the board.
      */
     void play(int pieceId, int row, int column) {
-        game.selectCurrentPlayerPiece(--pieceId);
+        game.getCurrentPlayer().selectPiece(Shape.values()[--pieceId]);
         game.placePiece(row, column);
         game.nextPlayer();
     }
@@ -113,8 +114,11 @@ public class ControllerConsole {
             try {
                 view.printCurrentPlayer();
                 executeCommand(view.readCommand());
-            } catch (ModelException | IllegalActionException
-                    | IllegalArgumentException e) {
+            } catch (ModelException 
+                    | IllegalActionException
+                    | IllegalArgumentException
+                    | NullPointerException 
+                    | IllegalStateException e) {
                 view.printExceptionMessage(e);
             }
         }

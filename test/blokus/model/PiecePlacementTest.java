@@ -25,10 +25,10 @@ public class PiecePlacementTest {
      * During a game, placing piece without selecting a piece causes an
      * exception.
      */
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = NullPointerException.class)
     public void placePiece_case_2() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(0);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
         g.placePiece(0, 0);
         g.nextPlayer();
         g.placePiece(0, 0);
@@ -40,7 +40,7 @@ public class PiecePlacementTest {
     @Test(expected = ModelException.class)
     public void placePiece_case_3() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(0);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
         g.placePiece(-1, 0);
     }
 
@@ -50,10 +50,10 @@ public class PiecePlacementTest {
     @Test(expected = ModelException.class)
     public void placePiece_case_4() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(0);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
         g.placePiece(0, 0);
         g.nextPlayer();
-        g.selectCurrentPlayerPiece(0);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
         g.placePiece(0, 0);
     }
 
@@ -64,7 +64,7 @@ public class PiecePlacementTest {
     @Test(expected = ModelException.class)
     public void placePiece_case_5() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(20);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_21);
         g.placePiece(18, 0);
     }
 
@@ -74,7 +74,7 @@ public class PiecePlacementTest {
     @Test
     public void placePiece_case_6() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(3);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_04);
         g.placePiece(0, 0);
         assertEquals(BlokusColor.BLUE, g.getBoard().getColorAt(0, 0));
     }

@@ -50,10 +50,10 @@ public interface Game {
     /**
      * Selects the piece of the current player.
      *
-     * @param id is the piece id;
+     * @param shape is the shape of the piece to select.
      * @throws ModelException if the given id is not valid.
      */
-    public void selectCurrentPlayerPiece(int id) throws ModelException;
+    public void selectCurrentPlayerPiece(Shape shape) throws ModelException;
 
     /**
      * Places the current player piece on the board at the given position.

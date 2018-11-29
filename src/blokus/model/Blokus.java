@@ -21,7 +21,6 @@ public class Blokus extends Observable implements Game {
     private ListIterator<Player> playerIterator;
     private final Board board;
     private Player currentPlayer;
-    private Piece currentPlayerPiece;
 
     /**
      * Initializes this game with four players of different colors: blue,
@@ -35,17 +34,12 @@ public class Blokus extends Observable implements Game {
                 new Player(BlokusColor.GREEN)));
         this.playerIterator = players.listIterator();
         this.currentPlayer = playerIterator.next();
-        this.currentPlayerPiece = null;
         this.board = new Board();
     }
 
     @Override
     public Board getBoard() {
         return board;
-    }
-
-    Piece getCurrentPlayerPiece() {
-        return currentPlayerPiece;
     }
 
     @Override
@@ -83,21 +77,10 @@ public class Blokus extends Observable implements Game {
     }
 
     /**
-     * Requires a valid current piece.
-     */
-    void requireValidCurrentPiece() {
-        Objects.requireNonNull(currentPlayerPiece, "No current piece.");
-        if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {
-            throw new IllegalStateException("No piece selected by the "
-                    + "current player.");
-        }
-    }
-
-    /**
      * Requires a valid square in the board.
      */
     void requireValidSquareInBoard(int row, int column) {
-        if (!board.hasSpaceFor(currentPlayerPiece, row, column)) {
+        if (!board.hasSpaceFor(currentPlayer.getCurrentPiece(), row, column)) {
             throw new ModelException("The current piece cannot be place at row "
                     + row + ", column " + column + " of the board.");
         }
@@ -109,21 +92,16 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
-    public void selectCurrentPlayerPiece(int pieceId) throws ModelException {
-        if (pieceId < 0 || 20 < pieceId) {
-            throw new ModelException(pieceId + " is not a valid piece id, there "
-                    + "are 21 pieces.");
-        }
-        currentPlayerPiece = currentPlayer.getPiece(pieceId);
-        System.out.println("current piece is " + currentPlayerPiece);
+    public void selectCurrentPlayerPiece(Shape shape) {
+        currentPlayer.selectPiece(shape);
     }
 
     @Override
     public void placePiece(int row, int column) {
-        requireValidCurrentPiece();
         requireValidSquareInBoard(row, column);
-        currentPlayer.remove(currentPlayerPiece);
-        board.addPiece(currentPlayerPiece, row, column);
+        Objects.requireNonNull(currentPlayer.getCurrentPiece(), "The current "
+                + "player has not selected a piece.");
+        board.addPiece(currentPlayer.takeCurrentPiece(), row, column);
         setChanged();
         notifyObservers();
     }

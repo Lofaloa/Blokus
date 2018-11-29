@@ -17,7 +17,7 @@ public class PlayersManagementTest {
     @Test
     public void getWinner_case_1() {
         Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(20);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_21);
         g.placePiece(0, 0);
         assertEquals(-84, g.getWinner().get(0).getScore());
     }
@@ -41,11 +41,11 @@ public class PlayersManagementTest {
     public void getWinner_case_3() {
         Blokus g = new Blokus();
         Player w1 = g.getCurrentPlayer();
-        g.selectCurrentPlayerPiece(3);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_04);
         g.placePiece(0, 0);
         g.nextPlayer();
         Player w2 = g.getCurrentPlayer();
-        g.selectCurrentPlayerPiece(3);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_04);
         g.placePiece(5, 5);
         assertTrue(g.getWinner().contains(w1) && g.getWinner().contains(w2));
     }

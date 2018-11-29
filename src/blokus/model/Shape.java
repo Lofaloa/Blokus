@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Logan Farci (47923)
  */
-enum Shape {
+public enum Shape {
 
     /**
      * Represents the shape of piece 01.

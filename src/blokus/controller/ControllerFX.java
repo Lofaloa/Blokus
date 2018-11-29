@@ -1,6 +1,7 @@
 package blokus.controller;
 
 import blokus.model.Blokus;
+import blokus.model.Shape;
 
 /**
  * Manages the logic of the first turn of a game.
@@ -24,18 +25,17 @@ public class ControllerFX {
      * Emulates the first turn of a game.
      */
     public void start() {
-        game.selectCurrentPlayerPiece(14);
+        game.getCurrentPlayer().selectPiece(Shape.SHAPE_04);
         game.placePiece(0, 0);
         game.nextPlayer();
-        game.selectCurrentPlayerPiece(10);
+        game.selectCurrentPlayerPiece(Shape.SHAPE_10);
         game.placePiece(16, 0);
         game.nextPlayer();
-        game.selectCurrentPlayerPiece(9);
+        game.selectCurrentPlayerPiece(Shape.SHAPE_09);
         game.placePiece(0, 19);
         game.nextPlayer();
-        game.selectCurrentPlayerPiece(8);
+        game.selectCurrentPlayerPiece(Shape.SHAPE_08);
         game.placePiece(18, 17);
-
     }
 
 }

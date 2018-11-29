@@ -1,6 +1,7 @@
 package blokus.model;
 
 import blokus.exception.ModelException;
+import java.util.Objects;
 
 /**
  * Represents the board of <i>Blokus</i>.
@@ -129,6 +130,8 @@ public class Board {
      * @return true if the given piece can placed at the given position.
      */
     boolean hasSpaceFor(Piece piece, int row, int column) {
+        Objects.requireNonNull(piece, "No given piece.");
+        requireValidSquare(row, column);
         return piece.getShape().getSquares().stream()
                 .map(s -> s.move(row, column))
                 .allMatch(s -> isValid(s.getRow(), s.getColumn()));

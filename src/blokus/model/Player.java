@@ -13,6 +13,7 @@ public class Player {
 
     private final BlokusColor color;
     private final Stock stock;
+    private Piece currentPiece;
 
     /**
      * Initializes this player of the given color and a stock of 21 distinct
@@ -23,6 +24,7 @@ public class Player {
     Player(BlokusColor color) {
         this.color = color;
         this.stock = new Stock(color);
+        this.currentPiece = null;
     }
 
     /**
@@ -51,6 +53,15 @@ public class Player {
     public BlokusColor getColor() {
         return color;
     }
+    
+    /**
+     * Gets the current piece of this player.
+     * 
+     * @return the current piece of this player.
+     */
+    Piece getCurrentPiece() {
+        return currentPiece;
+    }
 
     /**
      * Throws an exception if the stock is empty.
@@ -71,25 +82,38 @@ public class Player {
     }
 
     /**
+     * Makes this player take the current piece.
+     *
+     * @param piece is the piece to lose.
+     * @return the current piece.
+     */
+    Piece takeCurrentPiece() {
+        requireNonEmptyStock();
+        Objects.requireNonNull(currentPiece, "This player has not selected a piece.");
+        stock.remove(currentPiece);
+        return currentPiece;
+    }
+    
+    /**
      * Makes this player lose the given piece.
      *
      * @param piece is the piece to lose.
      */
     void remove(Piece piece) {
-        Objects.requireNonNull(piece, "No given piece.");
         requireNonEmptyStock();
+        Objects.requireNonNull(piece);
         stock.remove(piece);
     }
 
     /**
-     * Gets one of the piece of this player stock.
+     * Selects one of the piece of this player stock.
      *
-     * @param pieceId is the id of the piece to select.
+     * @param shape is the shape of the piece to select.
      * @return the selected piece.
      */
-    Piece getPiece(int pieceId) {
+    public void selectPiece(Shape shape) {
         requireNonEmptyStock();
-        return stock.getPiece(Shape.values()[pieceId]);
+        currentPiece = stock.getPiece(shape);
     }
 
     /**

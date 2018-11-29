@@ -119,8 +119,8 @@ public class PlayerTest {
     @Test
     public void getPiece() {
         Player p = new Player(BlokusColor.BLUE);
-        Piece p1 = p.getPiece(0);
-        assertTrue(p1.equals(new Piece(Shape.SHAPE_01, BlokusColor.BLUE)));
+        p.selectPiece(Shape.SHAPE_01);
+        assertTrue(p.getCurrentPiece().equals(new Piece(Shape.SHAPE_01, BlokusColor.BLUE)));
     }
 
 }
