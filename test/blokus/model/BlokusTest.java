@@ -1,57 +1,28 @@
 package blokus.model;
 
 import blokus.exception.ModelException;
+import java.util.Collections;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Tests the game.
+ * Tests the integrity of <i>Blokus</i>.
  *
  * @author g47923
  */
 public class BlokusTest {
 
+    /**
+     * Game after initialization should have an empty board and four players of
+     * different colors.
+     */
     @Test
-    public void initializedGameShouldHaveFourPlayersAndAnEmptyBoard() {
-        Blokus g = new Blokus();
-        assertTrue(g.getPlayers().size() == 4);
-    }
-
-    @Test
-    public void gameShouldGetTheExpectedColorInBoardAtGivenPosition() {
-        Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(3);
-        g.placePiece(0, 0);
-        assertEquals(BlokusColor.BLUE, g.getBoard().getColorAt(0, 0));
-    }
-
-    @Test
-    public void winnerShouldBeThePlayerWithTheHighestScore() {
-        Blokus g = new Blokus();
-        g.selectCurrentPlayerPiece(20);
-        g.placePiece(0, 0);
-        assertEquals(-84, g.getWinner().get(0).getScore());
-    }
-
-    @Test
-    public void secondPlayerShouldBeWinnerWithEmptyStock() {
-        Blokus g = new Blokus();
-        Player winner = g.getCurrentPlayer();
-        winner.clearStock();
-        assertEquals(winner, g.getWinner().get(0));
-    }
-
-    @Test
-    public void playersWithSameHighestScoreShouldBeBothWinners() {
-        Blokus g = new Blokus();
-        Player w1 = g.getCurrentPlayer();
-        g.selectCurrentPlayerPiece(3);
-        g.placePiece(0, 0);
-        g.nextPlayer();
-        Player w2 = g.getCurrentPlayer();
-        g.selectCurrentPlayerPiece(3);
-        g.placePiece(5, 5);
-        assertTrue(g.getWinner().contains(w1) && g.getWinner().contains(w2));
+    public void initialization() {
+        Game g = new Blokus();
+        g.getPlayers().forEach((player) -> {
+            assertEquals(1, Collections.frequency(g.getPlayers(), player));
+        });
+        assertTrue(g.getBoard().isEmpty());
     }
 
     @Test(expected = ModelException.class)
@@ -71,46 +42,6 @@ public class BlokusTest {
         Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(1);
         assertEquals(Shape.SHAPE_02, g.getCurrentPlayerPiece().getShape());
-    }
-
-    @Test
-    public void currentPlayerIsBluePlayerAfterInitialization() {
-        Blokus g = new Blokus();
-        assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
-    }
-
-    @Test
-    public void yellowPlayerShouldFollowBluePlayer() {
-        Blokus g = new Blokus();
-        g.nextPlayer();
-        assertEquals(BlokusColor.YELLOW, g.getCurrentPlayer().getColor());
-    }
-
-    @Test
-    public void redPlayerShouldFollowYellowPlayer() {
-        Blokus g = new Blokus();
-        g.nextPlayer();
-        g.nextPlayer();
-        assertEquals(BlokusColor.RED, g.getCurrentPlayer().getColor());
-    }
-
-    @Test
-    public void greenPlayerShouldFollowRedPlayer() {
-        Blokus g = new Blokus();
-        g.nextPlayer();
-        g.nextPlayer();
-        g.nextPlayer();
-        assertEquals(BlokusColor.GREEN, g.getCurrentPlayer().getColor());
-    }
-
-    @Test
-    public void bluePlayerShouldFollowGreenPlayer() {
-        Blokus g = new Blokus();
-        g.nextPlayer();
-        g.nextPlayer();
-        g.nextPlayer();
-        g.nextPlayer();
-        assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
     }
 
     @Test

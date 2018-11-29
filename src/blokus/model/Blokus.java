@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.stream.Collectors;
 
@@ -81,6 +82,27 @@ public class Blokus extends Observable implements Game {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Requires a valid current piece.
+     */
+    void requireValidCurrentPiece() {
+        Objects.requireNonNull(currentPlayerPiece, "No current piece.");
+        if (currentPlayerPiece.getColor() != currentPlayer.getColor()) {
+            throw new IllegalStateException("No piece selected by the "
+                    + "current player.");
+        }
+    }
+
+    /**
+     * Requires a valid square in the board.
+     */
+    void requireValidSquareInBoard(int row, int column) {
+        if (!board.hasSpaceFor(currentPlayerPiece, row, column)) {
+            throw new ModelException("The current piece cannot be place at row "
+                    + row + ", column " + column + " of the board.");
+        }
+    }
+
     @Override
     public boolean isOver() {
         return players.stream().allMatch(p -> p.getStock().isEmpty());
@@ -97,11 +119,9 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
-    public void placePiece(int row, int column) throws ModelException {
-        if (currentPlayerPiece == null) {
-            throw new IllegalStateException("No piece selected by the current player.");
-        }
-        board.requireValidSquare(row, column);
+    public void placePiece(int row, int column) {
+        requireValidCurrentPiece();
+        requireValidSquareInBoard(row, column);
         currentPlayer.remove(currentPlayerPiece);
         board.addPiece(currentPlayerPiece, row, column);
         setChanged();

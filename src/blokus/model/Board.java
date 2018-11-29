@@ -74,6 +74,20 @@ public class Board {
         }
         return squares[row][column] == null;
     }
+    
+    /**
+     * Tells if this board is empty. 
+     * 
+     * @return true if this board does not contain a piece.
+     */
+    boolean isEmpty() {
+        for (int row = 0; row < SIZE; row++) {
+            for (int column = 0; column < SIZE; column++) {
+                if (!isEmptyAt(row, column)) return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Tells if the given square is valid. A valid square is in this board
