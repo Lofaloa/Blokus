@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Objects;
 import java.util.Observable;
 import java.util.stream.Collectors;
 
@@ -25,8 +24,8 @@ public class Blokus extends Observable implements Game {
 
     /**
      * Initializes this game with four players of different colors: blue,
-     * yellow, red and green (the players play in this order). The game has an
-     * empty board.
+     * yellow, red and green (the players play in this order). The game has
+     * initially an empty board.
      */
     public Blokus() {
         this.players = new ArrayList<>(Arrays.asList(new Player(BlokusColor.BLUE),
@@ -60,14 +59,7 @@ public class Blokus extends Observable implements Game {
      * @return the highest score of this game players.
      */
     int getHighestScore() {
-        int highestScore = players.get(0).getScore();
-        for (int i = 1; i < players.size(); i++) {
-            Player currentPlayer = players.get(i);
-            if (highestScore < currentPlayer.getScore()) {
-                highestScore = currentPlayer.getScore();
-            }
-        }
-        return highestScore;
+        return players.stream().mapToInt(p -> p.getScore()).max().getAsInt();
     }
 
     @Override
@@ -88,13 +80,6 @@ public class Blokus extends Observable implements Game {
     }
 
     /**
-     * Ends the first round.
-     */
-    void endFirstRound() {
-        this.state = BlokusState.PLAYING;
-    }
-
-    /**
      * Tells if this game is at first round.
      *
      * @return true if this game is at first round.
@@ -103,21 +88,55 @@ public class Blokus extends Observable implements Game {
         return state == BlokusState.FIRST_ROUND;
     }
 
+    @Override
+    public boolean isOver() {
+        state = BlokusState.OVER;
+        return players.stream().allMatch(p -> p.getStock().isEmpty());
+    }
+
     /**
      * Tells if the first round of this game is over.
      *
      * @return true if the first round of the game is over.
      */
     boolean isFirstRoundOver() {
-        return currentPlayer.is(BlokusColor.GREEN) && currentPlayer.hasPlacedFirstPiece();
+        return currentPlayer.is(BlokusColor.GREEN)
+                && currentPlayer.hasPlacedFirstPiece();
     }
 
     /**
-     * Requires a valid square in the board.
+     * Ends the first round.
      */
-    void requireValidSquareInBoard(int row, int column) {
-        Objects.requireNonNull(currentPlayer.getCurrentPiece(), "No given piece "
-                + "when trying to know if it is placable.");
+    void endFirstRound() {
+        this.state = BlokusState.PLAYING;
+    }
+
+    /**
+     * Requires a placable piece in the board. A placable piece can be placed at
+     * the given position in the board.
+     *
+     * @throws ModelException if the board has not enough place for the piece
+     * the current player selected.
+     */
+    void requirePlacablePiece(int row, int column) {
+        if (!board.hasSpaceFor(currentPlayer.getCurrentPiece(), row, column)) {
+            throw new ModelException("The current piece cannot be place at row "
+                    + row + ", column " + column + " of the board.");
+        }
+    }
+
+    /**
+     * Requires a placable corner piece in the board. A placable corner piece
+     * can be placed at the given position in the board. It must be in a corner.
+     *
+     * @throws ModelException if the board has not enough place for the piece
+     * the current player selected or if the piece is not in a corner.
+     */
+    void requirePlacableCornerPiece(int row, int column) {
+        if (!board.isInCorner(currentPlayer.getCurrentPiece(), row, column)) {
+            throw new ModelException("The current piece should be placed in a "
+                    + "one of the corner of the board.");
+        }
         if (!board.hasSpaceFor(currentPlayer.getCurrentPiece(), row, column)) {
             throw new ModelException("The current piece cannot be place at row "
                     + row + ", column " + column + " of the board.");
@@ -125,27 +144,22 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
-    public boolean isOver() {
-        return players.stream().allMatch(p -> p.getStock().isEmpty());
-    }
-
-    @Override
     public void selectCurrentPlayerPiece(Shape shape) {
+        currentPlayer.requireNonEmptyStock();
         currentPlayer.selectPiece(shape);
     }
 
     @Override
     public void placePiece(int row, int column) {
-        Objects.requireNonNull(currentPlayer.getCurrentPiece(), "The current "
-                + "player has not selected a piece.");
-        requireValidSquareInBoard(row, column);
-
+        if (currentPlayer.getCurrentPiece() == null) {
+            throw new IllegalStateException("The current player has not selected"
+                    + " a piece.");
+        }
         if (isFirstRound()) {
-            board.requireCornerPiece(currentPlayer.getCurrentPiece(), row, column);
-            board.requirePlacablePiece(currentPlayer.getCurrentPiece(), row, column);
+            requirePlacableCornerPiece(row, column);
             board.addCornerPiece(currentPlayer.takeCurrentPiece(), row, column);
         } else {
-            board.requirePlacablePiece(currentPlayer.getCurrentPiece(), row, column);
+            requirePlacablePiece(row, column);
             board.addPiece(currentPlayer.takeCurrentPiece(), row, column);
         }
         if (isFirstRoundOver()) {

@@ -17,7 +17,7 @@ public class PiecePlacementTest {
      * At first round, placing piece without selecting a piece causes an
      * exception.
      */
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalStateException.class)
     public void placePiece_case_1() {
         Blokus g = new Blokus();
         g.placePiece(0, 0);
@@ -27,7 +27,7 @@ public class PiecePlacementTest {
      * During a game, placing piece without selecting a piece causes an
      * exception.
      */
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalStateException.class)
     public void placePiece_case_2() {
         Blokus g = new Blokus();
         g.selectCurrentPlayerPiece(Shape.SHAPE_01);

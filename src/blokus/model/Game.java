@@ -32,16 +32,17 @@ public interface Game {
     public Player getCurrentPlayer();
 
     /**
-     * Gets the id of the winner of the game. The winner has the highest score. If two
-     * players happen to have the same highest score, they both win the game.
+     * Gets the winner of the game. The winner has the highest score. If
+     * multiple players happen to have the same highest score, they all win the
+     * game.
      *
-     * @return the winner(s) id.
+     * @return the winner(s).
      */
     public List<Player> getWinner();
 
     /**
-     * Indicates the end of the game. The game is over either when all players have
-     * placed all of their pieces.
+     * Indicates the end of the game. The game is over when all players
+     * have placed all of their pieces.
      *
      * @return true if the game is over.
      */
@@ -51,18 +52,21 @@ public interface Game {
      * Selects the piece of the current player.
      *
      * @param shape is the shape of the piece to select.
-     * @throws ModelException if the given id is not valid.
+     * @throws IllegalStateException if the current player stock is empty.
      */
-    public void selectCurrentPlayerPiece(Shape shape) throws ModelException;
+    public void selectCurrentPlayerPiece(Shape shape);
 
     /**
      * Places the current player piece on the board at the given position.
      *
-     * @param row is a row of the board.
-     * @param column is a column of the board.
-     * @throws ModelException if the given row and column are not valid.
+     * @param row is a row of the board where to place the piece.
+     * @param column is a column of the board where to place the piece.
+     * @throws IllegalStateException if the current player has not selected a
+     * piece.
+     * @throws ModelException if is the piece the current selected cannot be
+     * placed at the given position.
      */
-    public void placePiece(int row, int column) throws ModelException;
+    public void placePiece(int row, int column);
 
     /**
      * Passes to the next player.

@@ -9,14 +9,14 @@ import java.util.Objects;
  *
  * @author Logan Farci (47923)
  */
-public class Player {
+public class Player implements Comparable {
 
     private final BlokusColor color;
     private final Stock stock;
     private Piece currentPiece;
 
     /**
-     * Initializes this player of the given color and a stock of 21 distinct
+     * Initializes this player with the given color and a stock of 21 distinct
      * piece.
      *
      * @param color is the color of this player.
@@ -81,9 +81,8 @@ public class Player {
     boolean hasPlacedFirstPiece() {
         return stock.getPieces().size() == 20;
     }
-
     /**
-     * Throws an exception if the stock is empty.
+     * Requires a non empty stock.
      */
     void requireNonEmptyStock() {
         stock.requireNonEmpty();
@@ -154,6 +153,20 @@ public class Player {
             remove(stock.getPieces().get(1));
         }
         remove(getStock().get(0));
+    }
+
+    /**
+     * Compares this player to an other one bases on his/ her score.
+     *
+     * @param o is the object to compare this player to.
+     * @return a negative integer, zero, or a positive integer as this player
+     * has a smaller score, same score, or greater score than the specified
+     * object.
+     */
+    @Override
+    public int compareTo(Object o) {
+        Player other = (Player) Objects.requireNonNull(o);
+        return this.getScore() - other.getScore();
     }
 
 }
