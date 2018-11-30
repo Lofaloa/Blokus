@@ -29,13 +29,13 @@ public class ControllerFX {
         game.placePiece(0, 0);
         game.nextPlayer();
         game.selectCurrentPlayerPiece(Shape.SHAPE_10);
-        game.placePiece(16, 0);
+        game.placePiece(15, 0);
         game.nextPlayer();
         game.selectCurrentPlayerPiece(Shape.SHAPE_09);
-        game.placePiece(0, 19);
+        game.placePiece(0, 17);
         game.nextPlayer();
         game.selectCurrentPlayerPiece(Shape.SHAPE_08);
-        game.placePiece(18, 17);
+        game.placePiece(18, 18);
     }
 
 }
