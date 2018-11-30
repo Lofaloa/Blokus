@@ -1,7 +1,7 @@
 package blokus.model;
 
 import blokus.exception.ModelException;
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents the board of <i>Blokus</i>.
@@ -115,11 +115,26 @@ public class Board {
      * @return true if the given piece can placed at the given position.
      */
     boolean hasSpaceFor(Piece piece, int row, int column) {
-        Objects.requireNonNull(piece, "no given piece.");
+        requireNonNull(piece, "no given piece.");
         requireValidSquare(row, column);
         return piece.getShape().getSquares().stream()
                 .map(s -> s.move(row, column))
                 .allMatch(s -> isValid(s.getRow(), s.getColumn()));
+    }
+
+    /**
+     *
+     * @param piece
+     * @param row
+     * @param column
+     * @return
+     */
+    boolean isInCorner(Piece piece, int row, int column) {
+        requireNonNull(piece, "no piece when determining if it is in a corner");
+        requireValidSquare(row, column);
+        return piece.getShape().getSquares().stream()
+                .map(s -> s.move(row, column))
+                .anyMatch(s -> isCorner(s.getRow(), s.getColumn()));
     }
 
     /**
@@ -177,11 +192,24 @@ public class Board {
      * @param column is the column where to place the piece.
      */
     void requirePlacablePiece(Piece piece, int row, int column) {
-//      if (first round not done) exception
         if (!hasSpaceFor(piece, row, column)) {
             throw new ModelException("piece " + piece.getColor() + " of shape "
                     + piece.getShape() + "cannot be place at row " + row
                     + ", column " + column + ".");
+        }
+    }
+
+    /**
+     * Requires a pieces in a corner.
+     *
+     * @param piece the piece that should be in a corner.
+     * @param row the row of the piece.
+     * @param column the column of the piece.
+     */
+    void requireCornerPiece(Piece piece, int row, int column) {
+        if (!isInCorner(piece, row, column)) {
+            throw new ModelException("piece " + piece.getColor() + " of shape "
+                    + piece.getShape() + " should be placed in a board corner");
         }
     }
 
@@ -204,8 +232,27 @@ public class Board {
      * @param column is the column of the square of destination in this board.
      */
     void addPiece(Piece piece, int row, int column) {
+        requireNonNull(piece, "no piece to add.");
         requireValidSquare(row, column);
-        Objects.requireNonNull(piece, "no piece to add.");
+        requirePlacablePiece(piece, row, column);
+        for (Square square : piece.getSquares()) {
+            Square boardSquare = square.move(row, column);
+            addAt(boardSquare.getRow(), boardSquare.getColumn(), piece);
+        }
+    }
+
+    /**
+     * Adds a piece to this board requiring it to be placed in a corner of this
+     * board.
+     *
+     * @param piece is the piece to add in a corner of this board.
+     * @param row is the row of the piece to add.
+     * @param column is the column of the piece to add.
+     */
+    void addCornerPiece(Piece piece, int row, int column) {
+        requireNonNull(piece, "no piece to add.");
+        requireValidSquare(row, column);
+        requireCornerPiece(piece, row, column);
         requirePlacablePiece(piece, row, column);
         for (Square square : piece.getSquares()) {
             Square boardSquare = square.move(row, column);

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Board.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.model</a> &gt; <span class="el_source">Board.java</span></div><h1>Board.java</h1><pre class="source lang-java linenums">package blokus.model;
 
-import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
 
 /**
@@ -8,17 +7,37 @@ import blokus.exception.ModelException;
  *
  * @author Logan Farci (47923)
  */
-class Board {
+public class Board {
 
-    private final static int BOARD_SIZE = 20;
+    /**
+     * Is the size of a board.
+     */
+    public static final int SIZE = 20;
+
     private final Piece[][] squares;
 
     /**
      * Initializes this board with a 20 by 20 empty grid of squares.
      */
-<span class="fc" id="L19">    Board() {</span>
-<span class="fc" id="L20">        this.squares = new Piece[BOARD_SIZE][BOARD_SIZE];</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L22">    Board() {</span>
+<span class="fc" id="L23">        this.squares = new Piece[SIZE][SIZE];</span>
+<span class="fc" id="L24">    }</span>
+
+    /**
+     * Gets the color of this board at the given position.
+     *
+     * @param row is the row of the square.
+     * @param column is the column of the square.
+     * @return the color of this board at the given position. &lt;code&gt;null&lt;/code&gt;
+     * is returned if the board is empty at thee given position.
+     */
+    public BlokusColor getColorAt(int row, int column) {
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (isEmptyAt(row, column)) {</span>
+<span class="nc" id="L36">            return null;</span>
+        } else {
+<span class="fc" id="L38">            return squares[row][column].getColor();</span>
+        }
+    }
 
     /**
      * Gets the squares of this board.
@@ -26,7 +45,18 @@ class Board {
      * @return the squares of this board.
      */
     Piece[][] getSquares() {
-<span class="fc" id="L29">        return squares;</span>
+<span class="nc" id="L48">        return squares;</span>
+    }
+
+    /**
+     * Tells if the given square is in this board bounds.
+     *
+     * @param row is the row of the square to test.
+     * @param column is the column of the square to test.
+     * @return true if the given square is in the board bounds.
+     */
+    boolean contains(int row, int column) {
+<span class="fc bfc" id="L59" title="All 8 branches covered.">        return 0 &lt;= row &amp;&amp; row &lt; SIZE &amp;&amp; 0 &lt;= column &amp;&amp; column &lt; SIZE;</span>
     }
 
     /**
@@ -38,18 +68,11 @@ class Board {
      * @return true if the given position is an empty square.
      */
     boolean isEmptyAt(int row, int column) {
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        return squares[row][column] == null;</span>
-    }
-
-    /**
-     * Tells if the given square is in this board bounds.
-     *
-     * @param row is the row of the square to test.
-     * @param column is the column of the square to test.
-     * @return true if the given square is in the board bounds.
-     */
-    boolean contains(int row, int column) {
-<span class="fc bfc" id="L52" title="All 8 branches covered.">        return 0 &lt;= row &amp;&amp; row &lt; BOARD_SIZE &amp;&amp; 0 &lt;= column &amp;&amp; column &lt; BOARD_SIZE;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (!contains(row, column)) {</span>
+<span class="fc" id="L72">            throw new IllegalArgumentException(&quot;Position &quot; + row + &quot;, &quot; + column</span>
+                    + &quot; is not in the board.&quot;);
+        }
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        return squares[row][column] == null;</span>
     }
 
     /**
@@ -61,7 +84,7 @@ class Board {
      * @return true if the given square is in the board bounds and free.
      */
     boolean isValid(int row, int column) {
-<span class="fc bfc" id="L64" title="All 4 branches covered.">        return contains(row, column) &amp;&amp; isEmptyAt(row, column);</span>
+<span class="fc bfc" id="L87" title="All 4 branches covered.">        return contains(row, column) &amp;&amp; isEmptyAt(row, column);</span>
     }
 
     /**
@@ -72,52 +95,63 @@ class Board {
      * @return a valid square.
      */
     void requireValidSquare(int row, int column) throws ModelException {
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (!contains(row, column)) {</span>
-<span class="fc" id="L76">            throw new ModelException(&quot;Square at position row &quot;</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (!contains(row, column)) {</span>
+<span class="fc" id="L99">            throw new ModelException(&quot;Square at position row &quot;</span>
                     + row + &quot;, &quot; + column + &quot; is out of the board bounds.&quot;);
         }
-<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (!isEmptyAt(row, column)) {</span>
-<span class="fc" id="L80">            throw new ModelException(&quot;not a free position at row &quot; + row + &quot;, &quot;</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if (!isEmptyAt(row, column)) {</span>
+<span class="fc" id="L103">            throw new ModelException(&quot;not a free position at row &quot; + row + &quot;, &quot;</span>
                     + &quot;column &quot; + column + &quot; is occupied by &quot;
-<span class="fc" id="L82">                    + squares[row][column].getColor() + &quot; player.&quot;);</span>
+<span class="fc" id="L105">                    + squares[row][column].getColor() + &quot; player.&quot;);</span>
         }
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L107">    }</span>
 
     /**
      * Tells if the given piece can be placed at the given position.
-     * 
+     *
      * @param piece is the piece to check the placement for.
      * @param row is the row where the piece is to be placed.
      * @param column is the column where the piece is to be placed.
      * @return true if the given piece can placed at the given position.
      */
     boolean hasSpaceFor(Piece piece, int row, int column) {
-<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (Square square : piece.getShape().getSquares()) {</span>
-<span class="fc" id="L96">            Square boardSquare = square.move(row, column);</span>
-<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (!isValid(boardSquare.getRow(), boardSquare.getColumn())) {</span>
-<span class="fc" id="L98">                return false;</span>
-            }
-<span class="fc" id="L100">        }</span>
-<span class="fc" id="L101">        return true;</span>
+<span class="fc" id="L118">        return piece.getShape().getSquares().stream()</span>
+<span class="fc" id="L119">                .map(s -&gt; s.move(row, column))</span>
+<span class="fc" id="L120">                .allMatch(s -&gt; isValid(s.getRow(), s.getColumn()));</span>
     }
+
+    /**
+     * Adds a given piece square to the given position.
+     *
+     * @param row is the row where to add the piece square.
+     * @param column is the column where to add the piece square.
+     * @param piece is the piece to add a square in this board for.
+     */
+    void addAt(int row, int column, Piece piece) {
+<span class="fc" id="L131">        squares[row][column] = piece;</span>
+<span class="fc" id="L132">    }</span>
 
     /**
      * Adds the given piece at the given row and column.
      *
-     * @param piece is the piece to add to this board.
+     * @param piece is the piece to addPiece to this board.
      * @param row is the row of the square of destination in this board.
      * @param column is the column of the square of destination in this board.
      */
-    void add(Piece piece, int row, int column) throws ModelException {
-<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (!hasSpaceFor(piece, row, column)) {</span>
-<span class="fc" id="L113">            throw new ModelException(&quot;the given piece cannot be place at row &quot; </span>
+    void addPiece(Piece piece, int row, int column) {
+<span class="fc" id="L142">        requireValidSquare(row, column);</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (piece == null) {</span>
+<span class="nc" id="L144">            throw new IllegalArgumentException(&quot;No Piece to place.&quot;);</span>
+        }
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (!hasSpaceFor(piece, row, column)) {</span>
+<span class="fc" id="L147">            throw new ModelException(&quot;the given piece cannot be place at row &quot;</span>
                     + row + &quot;, column &quot; + column + &quot;.&quot;);
         }
-<span class="fc bfc" id="L116" title="All 2 branches covered.">        for (Square pieceSquare : piece.getShape().getSquares()) {</span>
-<span class="fc" id="L117">            Square boardSquare = pieceSquare.move(row, column);</span>
-<span class="fc" id="L118">            squares[boardSquare.getRow()][boardSquare.getColumn()] = piece;</span>
-<span class="fc" id="L119">        }</span>
-<span class="fc" id="L120">    }</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        for (Square square : piece.getSquares()) {</span>
+<span class="fc" id="L151">            Square boardSquare = square.move(row, column);</span>
+<span class="fc" id="L152">            addAt(boardSquare.getRow(), boardSquare.getColumn(), piece);</span>
+<span class="fc" id="L153">        }</span>
+<span class="fc" id="L154">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

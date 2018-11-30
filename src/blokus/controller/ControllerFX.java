@@ -25,7 +25,7 @@ public class ControllerFX {
      * Emulates the first turn of a game.
      */
     public void start() {
-        game.getCurrentPlayer().selectPiece(Shape.SHAPE_04);
+        game.selectCurrentPlayerPiece(Shape.SHAPE_04);
         game.placePiece(0, 0);
         game.nextPlayer();
         game.selectCurrentPlayerPiece(Shape.SHAPE_10);

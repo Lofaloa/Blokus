@@ -20,14 +20,25 @@ class Square {
      * @throws blokus.exception.ModelException if the given row and column are
      * not valid.
      */
-<span class="fc" id="L23">    Square(int row, int column) throws ModelException {</span>
-<span class="fc bfc" id="L24" title="All 8 branches covered.">        if (row &lt; 0 || 19 &lt; row || column &lt; 0 || 19 &lt; column) {</span>
-<span class="fc" id="L25">            throw new ModelException(&quot;Square at position (&quot; + row + &quot;; &quot;</span>
+<span class="fc" id="L23">    Square(int row, int column) {</span>
+<span class="fc" id="L24">        requireValidCoordinates(row, column);</span>
+<span class="fc" id="L25">        this.row = row;</span>
+<span class="fc" id="L26">        this.column = column;</span>
+<span class="fc" id="L27">    }</span>
+
+    /**
+     * Throws an exception if the given coordinates are not valid. Not valid
+     * coordinates are out of board bounds.
+     *
+     * @param row is the row of the coordinate.
+     * @param column is the column of the coordinate.
+     */
+    final void requireValidCoordinates(int row, int column) {
+<span class="fc bfc" id="L37" title="All 8 branches covered.">        if (row &lt; 0 || Board.SIZE - 1 &lt; row || column &lt; 0 || Board.SIZE - 1 &lt; column) {</span>
+<span class="fc" id="L38">            throw new ModelException(&quot;Square at position (&quot; + row + &quot;; &quot;</span>
                     + column + &quot;) is not valid, the board has 20 row and columns.&quot;);
         }
-<span class="fc" id="L28">        this.row = row;</span>
-<span class="fc" id="L29">        this.column = column;</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L41">    }</span>
 
     /**
      * Gets the row of this square.
@@ -35,7 +46,7 @@ class Square {
      * @return the row of this square.
      */
     int getRow() {
-<span class="fc" id="L38">        return row;</span>
+<span class="fc" id="L49">        return row;</span>
     }
 
     /**
@@ -44,7 +55,7 @@ class Square {
      * @return the column of this square.
      */
     int getColumn() {
-<span class="fc" id="L47">        return column;</span>
+<span class="fc" id="L58">        return column;</span>
     }
 
     /**
@@ -53,38 +64,37 @@ class Square {
      * @param rowOffset is the offset to apply to this square row.
      * @param columnOffset is the offset to apply to this square column.
      * @return a new position based on this position and the given offsets.
-     * @throws blokus.exception.ModelException if the new position of the square
-     * is not valid.
      */
-    Square move(int rowOffset, int columnOffset) throws ModelException {
-<span class="fc" id="L60">        return new Square(row + rowOffset, column + columnOffset);</span>
+    Square move(int rowOffset, int columnOffset) {
+<span class="fc" id="L69">        requireValidCoordinates(row + rowOffset, column + columnOffset);</span>
+<span class="fc" id="L70">        return new Square(row + rowOffset, column + columnOffset);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L65">        int hash = 5;</span>
-<span class="fc" id="L66">        return hash;</span>
+<span class="fc" id="L75">        int hash = 5;</span>
+<span class="fc" id="L76">        return hash;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L72">            return true;</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L82">            return true;</span>
         }
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (obj == null) {</span>
-<span class="fc" id="L75">            return false;</span>
-        }
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (getClass() != obj.getClass()) {</span>
-<span class="fc" id="L78">            return false;</span>
-        }
-<span class="fc" id="L80">        final Square other = (Square) obj;</span>
-<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (this.row != other.row) {</span>
-<span class="fc" id="L82">            return false;</span>
-        }
-<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (this.column != other.column) {</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (obj == null) {</span>
 <span class="fc" id="L85">            return false;</span>
         }
-<span class="fc" id="L87">        return true;</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (getClass() != obj.getClass()) {</span>
+<span class="fc" id="L88">            return false;</span>
+        }
+<span class="fc" id="L90">        final Square other = (Square) obj;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        if (this.row != other.row) {</span>
+<span class="fc" id="L92">            return false;</span>
+        }
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (this.column != other.column) {</span>
+<span class="fc" id="L95">            return false;</span>
+        }
+<span class="fc" id="L97">        return true;</span>
     }
 
 }

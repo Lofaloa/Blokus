@@ -17,6 +17,8 @@ public class PlayersManagementTest {
     @Test
     public void getWinner_case_1() {
         Blokus g = new Blokus();
+        //Players are free to place a piece wherever they like on the board
+        g.endFirstRound();
         g.selectCurrentPlayerPiece(Shape.SHAPE_21);
         g.placePiece(0, 0);
         assertEquals(-84, g.getWinner().get(0).getScore());
@@ -29,6 +31,8 @@ public class PlayersManagementTest {
     @Test
     public void getWinner_case_2() {
         Blokus g = new Blokus();
+        //Players are free to place a piece wherever they like on the board
+        g.endFirstRound();
         Player winner = g.getCurrentPlayer();
         winner.clearStock();
         assertTrue(g.getWinner().contains(winner));
@@ -41,6 +45,8 @@ public class PlayersManagementTest {
     public void getWinner_case_3() {
         Blokus g = new Blokus();
         Player w1 = g.getCurrentPlayer();
+        //Players are free to place a piece wherever they like on the board
+        g.endFirstRound();
         g.selectCurrentPlayerPiece(Shape.SHAPE_04);
         g.placePiece(0, 0);
         g.nextPlayer();

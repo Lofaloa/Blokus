@@ -12,30 +12,55 @@ public class View implements BlokusView {
     private final Input in;
     private final Output out;
 
-<span class="nc" id="L15">    public View(Blokus game) {</span>
-<span class="nc" id="L16">        this.in = new Input(game);</span>
-<span class="nc" id="L17">        this.out = new Output(game);</span>
-<span class="nc" id="L18">    }</span>
+    /**
+     * Initializes this view with the game to represent.
+     * 
+     * @param game is the game to represent.
+     */
+<span class="nc" id="L20">    public View(Blokus game) {</span>
+<span class="nc" id="L21">        this.in = new Input();</span>
+<span class="nc" id="L22">        this.out = new Output(game);</span>
+<span class="nc" id="L23">    }</span>
 
     @Override
     public void printStart() {
-<span class="nc" id="L22">        out.printTitle();</span>
-<span class="nc" id="L23">        out.printHelp();</span>
-<span class="nc" id="L24">    }</span>
-
-    @Override
-    public void printCurrentPlayer() {
-<span class="nc" id="L28">        out.printCurrentPlayer();</span>
+<span class="nc" id="L27">        out.printTitle();</span>
+<span class="nc" id="L28">        out.printHelp();</span>
 <span class="nc" id="L29">    }</span>
 
     @Override
-    public void executeCommand() {
-<span class="nc" id="L33">        in.executeCommand(in.readCommand());</span>
-<span class="nc" id="L34">    }</span>
+    public void printBoard() {
+<span class="nc" id="L33">        out.printBoard();</span>
+<span class="nc" id="L34">    }   </span>
+
+    @Override
+    public void printCurrentPlayer() {
+<span class="nc" id="L38">        out.printCurrentPlayer();</span>
+<span class="nc" id="L39">    }</span>
+
+    @Override
+    public void printCurrentPlayerStock() {
+<span class="nc" id="L43">        out.printCurrentPlayerStock();</span>
+<span class="nc" id="L44">    }</span>
+
+    @Override
+    public void printCurrentPlayerScore() {
+<span class="nc" id="L48">        out.printCurrentPlayerScore();</span>
+<span class="nc" id="L49">    }</span>
+
+    @Override
+    public void printExceptionMessage(Exception exception) {
+<span class="nc" id="L53">        out.printExceptionMessage(exception);</span>
+<span class="nc" id="L54">    }</span>
+
+    @Override
+    public String[] readCommand() {
+<span class="nc" id="L58">        return in.readCommand();</span>
+    }
 
     @Override
     public void printEnd() {
-<span class="nc" id="L38">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;);</span>
+<span class="nc" id="L63">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;);</span>
     }
 
 }

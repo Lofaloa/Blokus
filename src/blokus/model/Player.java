@@ -53,14 +53,33 @@ public class Player {
     public BlokusColor getColor() {
         return color;
     }
-    
+
     /**
      * Gets the current piece of this player.
-     * 
+     *
      * @return the current piece of this player.
      */
     Piece getCurrentPiece() {
         return currentPiece;
+    }
+
+    /**
+     * Tells if this player is of the given color.
+     *
+     * @param color the color of the player.
+     * @return true if the player is of the given color.
+     */
+    boolean is(BlokusColor color) {
+        return this.color == color;
+    }
+
+    /**
+     * Tells if this player has placed his/ her first piece.
+     *
+     * @return true if this player has placed his/ her first piece.
+     */
+    boolean hasPlacedFirstPiece() {
+        return stock.getPieces().size() == 20;
     }
 
     /**
@@ -93,7 +112,7 @@ public class Player {
         stock.remove(currentPiece);
         return currentPiece;
     }
-    
+
     /**
      * Makes this player lose the given piece.
      *
@@ -111,9 +130,11 @@ public class Player {
      * @param shape is the shape of the piece to select.
      * @return the selected piece.
      */
-    public void selectPiece(Shape shape) {
+    void selectPiece(Shape shape) {
         requireNonEmptyStock();
-        currentPiece = stock.getPiece(shape);
+        Piece piece = Objects.requireNonNull(stock.getPiece(shape), "Selected "
+                + "piece has not been found.");
+        currentPiece = piece;
     }
 
     /**

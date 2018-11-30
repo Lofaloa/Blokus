@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>BoardPane.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.view.fx</a> &gt; <span class="el_source">BoardPane.java</span></div><h1>BoardPane.java</h1><pre class="source lang-java linenums">package blokus.view.fx;
 
-import blokus.model.Game;
+import blokus.model.BlokusColor;
+import blokus.model.Board;
 import javafx.scene.Node;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.GridPane;
@@ -13,41 +14,38 @@ import javafx.scene.paint.Color;
  */
 public class BoardPane extends GridPane {
 
-    private final Game blokus;
+    private final Board board;
 
     /**
      * Initializes this board pane with the given game.
      *
-     * @param blokus is the game for which represent the board.
+     * @param board is the board to represent.
      */
-<span class="nc" id="L23">    public BoardPane(Game blokus) {</span>
-<span class="nc" id="L24">        this.blokus = blokus;</span>
-<span class="nc" id="L25">        setBoard();</span>
-<span class="nc" id="L26">        setProperties();</span>
-<span class="nc" id="L27">    }</span>
+<span class="nc" id="L24">    public BoardPane(Board board) {</span>
+<span class="nc" id="L25">        this.board = board;</span>
+<span class="nc" id="L26">        setBoard();</span>
+<span class="nc" id="L27">        setStyle();</span>
+<span class="nc" id="L28">    }</span>
 
     /**
-     * Converts the given name color to a color.
+     * Converts the given Blokus color to a color.
      *
      * @param color is the name of the color.
-     * @return a color carresponding to the given color name.
+     * @return a color corresponding to the given color name.
      */
-    Color toColor(String color) {
-<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (color == null) {</span>
-<span class="nc" id="L37">            return Color.GREY;</span>
-        } else {
-<span class="nc bnc" id="L39" title="All 18 branches missed.">            switch (color) {</span>
-                case &quot;BLUE&quot;:
-<span class="nc" id="L41">                    return Color.BLUE;</span>
-                case &quot;YELLOW&quot;:
-<span class="nc" id="L43">                    return Color.YELLOW;</span>
-                case &quot;RED&quot;:
-<span class="nc" id="L45">                    return Color.RED;</span>
-                case &quot;GREEN&quot;:
-<span class="nc" id="L47">                    return Color.GREEN;</span>
-                default:
-<span class="nc" id="L49">                    return Color.GREY;</span>
-            }
+    Color toColor(BlokusColor color) {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">        if (color == null) {</span>
+<span class="nc" id="L38">            return Color.GRAY;</span>
+        }
+<span class="nc bnc" id="L40" title="All 4 branches missed.">        switch (color) {</span>
+            case BLUE:
+<span class="nc" id="L42">                return Color.BLUE;</span>
+            case YELLOW:
+<span class="nc" id="L44">                return Color.YELLOW;</span>
+            case RED:
+<span class="nc" id="L46">                return Color.RED;</span>
+            default:
+<span class="nc" id="L48">                return Color.GREEN;</span>
         }
     }
 
@@ -59,10 +57,10 @@ public class BoardPane extends GridPane {
      * @param column is the column of the square to set.
      */
     void setEmptySquare(int row, int column) {
-<span class="nc" id="L62">        Rectangle r = new Rectangle(30, 30);</span>
-<span class="nc" id="L63">        r.setFill(Color.GREY);</span>
-<span class="nc" id="L64">        this.add(r, column, row);</span>
-<span class="nc" id="L65">    }</span>
+<span class="nc" id="L60">        Rectangle r = new Rectangle(30, 30);</span>
+<span class="nc" id="L61">        r.setFill(Color.GREY);</span>
+<span class="nc" id="L62">        this.add(r, column, row);</span>
+<span class="nc" id="L63">    }</span>
 
     /**
      * Sets a filled square in the board at the given position.
@@ -72,10 +70,10 @@ public class BoardPane extends GridPane {
      * @param column is the column of the filled square to set.
      */
     void setFilledSquare(Color squareColor, int row, int column) {
-<span class="nc" id="L75">        Rectangle r = new Rectangle(30, 30);</span>
-<span class="nc" id="L76">        r.setFill(squareColor);</span>
-<span class="nc" id="L77">        this.add(r, column, row);</span>
-<span class="nc" id="L78">    }</span>
+<span class="nc" id="L73">        Rectangle r = new Rectangle(30, 30);</span>
+<span class="nc" id="L74">        r.setFill(squareColor);</span>
+<span class="nc" id="L75">        this.add(r, column, row);</span>
+<span class="nc" id="L76">    }</span>
 
     /**
      * Sets a square in the board at the given position.
@@ -84,50 +82,60 @@ public class BoardPane extends GridPane {
      * @param row is the row of the square to set.
      * @param column is the column of the square to set.
      */
-    void setSquare(String color, int row, int column) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (color == null) {</span>
-<span class="nc" id="L89">            setEmptySquare(row, column);</span>
+    void setSquare(BlokusColor color, int row, int column) {
+<span class="nc bnc" id="L86" title="All 2 branches missed.">        if (color == null) {</span>
+<span class="nc" id="L87">            setEmptySquare(row, column);</span>
         } else {
-<span class="nc" id="L91">            setFilledSquare(toColor(color), row, column);</span>
+<span class="nc" id="L89">            setFilledSquare(toColor(color), row, column);</span>
         }
-<span class="nc" id="L93">    }</span>
+<span class="nc" id="L91">    }</span>
 
     /**
      * Displays the current state of the game board.
      */
     final void setBoard() {
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
-<span class="nc bnc" id="L100" title="All 2 branches missed.">            for (int j = 0; j &lt; 20; j++) {</span>
-<span class="nc" id="L101">                setSquare(blokus.getBoardColorAt(i, j), i, j);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        for (int row = 0; row &lt; Board.SIZE; row++) {</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            for (int column = 0; column &lt; Board.SIZE; column++) {</span>
+<span class="nc" id="L99">                setSquare(board.getColorAt(row, column), row, column);</span>
             }
         }
-<span class="nc" id="L104">    }</span>
+<span class="nc" id="L102">    }</span>
 
+    /**
+     * Gets the square located at the given position in this board pane.
+     *
+     * @param row is the row of the square to get.
+     * @param column is the column of the square to get.
+     * @return the square located at the given position.
+     */
     Rectangle getSquare(int row, int column) {
-<span class="nc bnc" id="L107" title="All 2 branches missed.">        for (Node children : getChildren()) {</span>
-<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (GridPane.getRowIndex(children) == row</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">                    &amp;&amp; GridPane.getColumnIndex(children) == column) {</span>
-<span class="nc" id="L110">                return (Rectangle) children;</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        for (Node children : getChildren()) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            if (GridPane.getRowIndex(children) == row</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">                    &amp;&amp; GridPane.getColumnIndex(children) == column) {</span>
+<span class="nc" id="L115">                return (Rectangle) children;</span>
             }
-<span class="nc" id="L112">        }</span>
-<span class="nc" id="L113">        return null;</span>
+<span class="nc" id="L117">        }</span>
+<span class="nc" id="L118">        return null;</span>
     }
 
+    /**
+     * Updates this board pane.
+     */
     void update() {
-<span class="nc bnc" id="L117" title="All 2 branches missed.">        for (int i = 0; i &lt; 20; i++) {</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">            for (int j = 0; j &lt; 20; j++) {</span>
-<span class="nc" id="L119">                Color color = toColor(blokus.getBoardColorAt(i, j));</span>
-<span class="nc" id="L120">                getSquare(i, j).setFill(color);</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        for (int row = 0; row &lt; Board.SIZE; row++) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            for (int column = 0; column &lt; Board.SIZE; column++) {</span>
+<span class="nc" id="L127">                Color color = toColor(board.getColorAt(row, column));</span>
+<span class="nc" id="L128">                getSquare(row, column).setFill(color);</span>
             }
         }
-<span class="nc" id="L123">    }</span>
+<span class="nc" id="L131">    }</span>
 
     /**
      * Set the properties of this pane content.
      */
-    final void setProperties() {
-<span class="nc" id="L129">        this.setGridLinesVisible(true);</span>
-<span class="nc" id="L130">    }</span>
+    final void setStyle() {
+<span class="nc" id="L137">        this.setGridLinesVisible(true);</span>
+<span class="nc" id="L138">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

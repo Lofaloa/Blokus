@@ -8,14 +8,14 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.layout.VBox;
 
 /**
- * Represents GUI view of &lt;i&gt;Blokus&lt;/i&gt;.
+ * Represents main box of &lt;i&gt;Blokus&lt;/i&gt;.
  *
  * @author Logan Farci (47923)
  */
 public class MainBox extends VBox implements Observer {
 
     private final MenuBar menu;
-    private final GamePane game;
+    private final GameBox game;
     private final ControlPane control;
 
     /**
@@ -25,17 +25,37 @@ public class MainBox extends VBox implements Observer {
      * @param game is the game to represent.
      */
 <span class="nc" id="L27">    public MainBox(Game game) {</span>
-<span class="nc" id="L28">        this.game = new GamePane(game);</span>
+<span class="nc" id="L28">        this.game = new GameBox(game);</span>
 <span class="nc" id="L29">        this.menu = new MenuBar(new Menu(&quot;File&quot;), new Menu(&quot;Options&quot;), new Menu(&quot;Help&quot;));</span>
 <span class="nc" id="L30">        this.control = new ControlPane();</span>
-<span class="nc" id="L31">        this.getChildren().addAll(menu, this.game, control);</span>
-<span class="nc" id="L32">        this.setSpacing(20);</span>
+<span class="nc" id="L31">        setContent();</span>
+<span class="nc" id="L32">        setStyle();</span>
 <span class="nc" id="L33">    }</span>
 
+    /**
+     * Sets this box content.
+     */
+    final void setContent() {
+<span class="nc" id="L39">        this.getChildren().addAll(menu, this.game, control);</span>
+<span class="nc" id="L40">    }</span>
+
+    /**
+     * Sets this box style.
+     */
+    final void setStyle() {
+<span class="nc" id="L46">        this.setSpacing(20);</span>
+<span class="nc" id="L47">    }</span>
+
+    /**
+     * Updates the content of game box.
+     * 
+     * @param o the game.
+     * @param o1 nothing.
+     */
     @Override
     public void update(Observable o, Object o1) {
-<span class="nc" id="L37">        game.updateContent();</span>
-<span class="nc" id="L38">    }</span>
+<span class="nc" id="L57">        game.updateContent();</span>
+<span class="nc" id="L58">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

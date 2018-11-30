@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Piece.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.model</a> &gt; <span class="el_source">Piece.java</span></div><h1>Piece.java</h1><pre class="source lang-java linenums">package blokus.model;
 
-import blokus.exception.ModelException;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -8,10 +8,11 @@ import java.util.Objects;
  *
  * @author Logan Farci (47923)
  */
-class Piece {
+public class Piece {
 
+    static final int MAX_SIZE = 5;
     private final Shape shape;
-    private final Color color;
+    private final BlokusColor color;
 
     /**
      * Initializes this piece with the given positions.
@@ -19,18 +20,20 @@ class Piece {
      * @param shape is the shape of this piece.
      * @param color is the color of this piece.
      */
-<span class="fc" id="L22">    Piece(Shape shape, Color color) {</span>
-<span class="fc" id="L23">        this.shape = shape;</span>
-<span class="fc" id="L24">        this.color = color;</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L23">    Piece(Shape shape, BlokusColor color) {</span>
+<span class="fc" id="L24">        Objects.requireNonNull(shape, &quot;No initializing shape given for this piece&quot;);</span>
+<span class="fc" id="L25">        Objects.requireNonNull(color, &quot;No initializing color given for this piece&quot;);</span>
+<span class="fc" id="L26">        this.shape = shape;</span>
+<span class="fc" id="L27">        this.color = color;</span>
+<span class="fc" id="L28">    }</span>
 
     /**
-     * Gets this shape size.
+     * Gets the size of this piece.
      *
-     * @return this shape size.
+     * @return the size of this piece.
      */
-    Shape getShape() {
-<span class="fc" id="L33">        return shape;</span>
+    public int getSize() {
+<span class="nc" id="L36">        return shape.getSize();</span>
     }
 
     /**
@@ -38,20 +41,53 @@ class Piece {
      *
      * @return this shape color.
      */
-    Color getColor() {
-<span class="fc" id="L42">        return color;</span>
+    public BlokusColor getColor() {
+<span class="fc" id="L45">        return color;</span>
+    }
+
+    /**
+     * Gets this shape size.
+     *
+     * @return this shape size.
+     */
+    Shape getShape() {
+<span class="fc" id="L54">        return shape;</span>
+    }
+
+    /**
+     * Gets the squares of this piece.
+     *
+     * @return the squares of this piece.
+     */
+    List&lt;Square&gt; getSquares() {
+<span class="fc" id="L63">        return shape.getSquares();</span>
+    }
+
+    /**
+     * Tells if this piece is the smallest of the game. The smallest being a
+     * piece of one square.
+     *
+     * @return true if this piece is smallest piece of the game.
+     */
+    boolean isSmallestPiece() {
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        return shape == Shape.SHAPE_01;</span>
     }
 
     /**
      * Indicates if the given position is contained in this piece.
      *
-     * @param i is the vertical position.
-     * @param j is the horizontal position.
+     * @param row is the row of the square to look for.
+     * @param column is the column of the square to look for.
      * @return true if the given position in contained on this piece.
-     * @throws ModelException if the given row and column are not valid.
+     * @throws IllegalArgumentException if the given coordinates are negative or
+     * greater than 5.
      */
-    boolean contains(int i, int j) throws ModelException {
-<span class="fc" id="L54">        return shape.getSquares().contains(new Square(i, j));</span>
+    public boolean contains(int row, int column) {
+<span class="pc bpc" id="L86" title="3 of 8 branches missed.">        if (row &lt; 0 || MAX_SIZE &lt; row || column &lt; 0 || MAX_SIZE &lt; column) {</span>
+<span class="fc" id="L87">            throw new IllegalArgumentException(&quot;Position &quot; + row + &quot;, &quot; + column</span>
+                    + &quot; is not a valid position.&quot;);
+        }
+<span class="fc" id="L90">        return shape.contains(row, column);</span>
     }
 
     /**
@@ -61,7 +97,7 @@ class Piece {
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L64">        return Objects.hash(shape, color);</span>
+<span class="fc" id="L100">        return Objects.hash(shape, color);</span>
     }
 
     /**
@@ -73,23 +109,23 @@ class Piece {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L77">            return true;</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L113">            return true;</span>
         }
-<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (obj == null) {</span>
-<span class="fc" id="L80">            return false;</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L116">            return false;</span>
         }
-<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (getClass() != obj.getClass()) {</span>
-<span class="fc" id="L83">            return false;</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (getClass() != obj.getClass()) {</span>
+<span class="fc" id="L119">            return false;</span>
         }
-<span class="fc" id="L85">        final Piece other = (Piece) obj;</span>
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        if (this.shape != other.shape) {</span>
-<span class="fc" id="L87">            return false;</span>
+<span class="fc" id="L121">        final Piece other = (Piece) obj;</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (this.shape != other.shape) {</span>
+<span class="fc" id="L123">            return false;</span>
         }
-<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (this.color != other.color) {</span>
-<span class="fc" id="L90">            return false;</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (this.color != other.color) {</span>
+<span class="fc" id="L126">            return false;</span>
         }
-<span class="fc" id="L92">        return true;</span>
+<span class="fc" id="L128">        return true;</span>
     }
 
 }

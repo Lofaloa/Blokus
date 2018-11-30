@@ -20,7 +20,7 @@ public class ControllerConsole {
     private final Blokus game;
     private final BlokusView view;
     private final String[] commandsNames;
-     
+
 
     /**
      * Initializes this controller with the given view and game.
@@ -42,7 +42,11 @@ public class ControllerConsole {
      * @param column is the column of the board.
      */
     void play(int pieceId, int row, int column) {
-        game.getCurrentPlayer().selectPiece(Shape.values()[--pieceId]);
+        if (pieceId < 1 || 21 < pieceId) {
+            throw new IllegalArgumentException(pieceId + " is not a valid piece "
+                    + "number, it should be between 1 and 21.");
+        }
+        game.selectCurrentPlayerPiece(Shape.values()[--pieceId]);
         game.placePiece(row, column);
         game.nextPlayer();
     }
@@ -114,10 +118,10 @@ public class ControllerConsole {
             try {
                 view.printCurrentPlayer();
                 executeCommand(view.readCommand());
-            } catch (ModelException 
+            } catch (ModelException
                     | IllegalActionException
                     | IllegalArgumentException
-                    | NullPointerException 
+                    | NullPointerException
                     | IllegalStateException e) {
                 view.printExceptionMessage(e);
             }

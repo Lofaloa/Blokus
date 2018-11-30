@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PlayerDataPane.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.view.fx</a> &gt; <span class="el_source">PlayerDataPane.java</span></div><h1>PlayerDataPane.java</h1><pre class="source lang-java linenums">package blokus.view.fx;
 
-import blokus.model.Game;
+import blokus.model.Player;
 import javafx.scene.layout.VBox;
 
 /**
@@ -20,9 +20,9 @@ public class PlayerDataPane extends VBox {
      * @param blokus is the game.
      * @param playerId is the player id  of the player this pane display data for.
      */
-<span class="nc" id="L23">    public PlayerDataPane(Game blokus, int playerId) {</span>
-<span class="nc" id="L24">        this.header = new HeaderBox(blokus, playerId);</span>
-<span class="nc" id="L25">        this.stock = new StockPane(blokus, playerId);</span>
+<span class="nc" id="L23">    public PlayerDataPane(Player owner) {</span>
+<span class="nc" id="L24">        this.header = new HeaderBox(owner);</span>
+<span class="nc" id="L25">        this.stock = new StockPane(owner);</span>
 <span class="nc" id="L26">        setContent();</span>
 <span class="nc" id="L27">        setStyle();</span>
 <span class="nc" id="L28">    }</span>
@@ -34,7 +34,7 @@ public class PlayerDataPane extends VBox {
     final void setContent() {
 <span class="nc" id="L35">        this.getChildren().addAll(header, stock);</span>
 <span class="nc" id="L36">    }</span>
-    
+
     /**
      * Updates this player data pane.
      */

@@ -115,16 +115,17 @@ import java.util.List;
 <span class="fc" id="L115">    SHAPE_21(new Square(0, 1), new Square(1, 1), new Square(1, 0),</span>
             new Square(1, 2), new Square(2, 1));
 
+    static final int MAX_SIZE = 5;
     private final List&lt;Square&gt; squares;
 
     /**
      * Initializes this shape with a set of Squares.
      *
-     * @param Squares is the set of Squares of this shape.
+     * @param squares is the set of Squares of this shape.
      */
-<span class="fc" id="L125">    Shape(Square... Squares) {</span>
-<span class="fc" id="L126">        this.squares = new ArrayList&lt;&gt;(Arrays.asList(Squares));</span>
-<span class="fc" id="L127">    }</span>
+<span class="fc" id="L126">    Shape(Square... squares) {</span>
+<span class="fc" id="L127">        this.squares = new ArrayList&lt;&gt;(Arrays.asList(squares));</span>
+<span class="fc" id="L128">    }</span>
 
     /**
      * Gets the Squares of this shape.
@@ -132,7 +133,7 @@ import java.util.List;
      * @return the Squares of this shape.
      */
     List&lt;Square&gt; getSquares() {
-<span class="fc" id="L135">        return squares;</span>
+<span class="fc" id="L136">        return squares;</span>
     }
 
     /**
@@ -141,18 +142,25 @@ import java.util.List;
      * @return the size of this shape.
      */
     int getSize() {
-<span class="fc" id="L144">        return squares.size();</span>
+<span class="fc" id="L145">        return squares.size();</span>
     }
-    
+
     /**
      * Tells if the given square is in this shape.
-     * 
+     *
      * @param row is the row of the square.
      * @param column is the column of the square.
      * @return true if the square is in the shape.
+     * @throws IllegalArgumentException if the given coordinates are negative or
+     * greater than 5.
      */
     boolean contains(int row, int column) {
-<span class="fc" id="L155">        return squares.contains(new Square(row, column));</span>
+<span class="fc bfc" id="L158" title="All 8 branches covered.">        if ((row &lt; 0 || MAX_SIZE &lt; row) || (column &lt; 0 || MAX_SIZE &lt; column)) {</span>
+<span class="fc" id="L159">            throw new IllegalArgumentException(&quot;Position &quot; + row + &quot;, &quot; + column</span>
+                    + &quot; is not a valid position.&quot;);
+        }
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        return squares.stream().anyMatch(s -&gt; s.getRow() == row</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">                &amp;&amp; s.getColumn() == column);</span>
     }
 
 }

@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.ModelException;
 import java.util.Collections;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -18,11 +17,11 @@ public class BlokusTest {
      */
     @Test
     public void initialization() {
-        Game g = new Blokus();
+        Blokus g = new Blokus();
         g.getPlayers().forEach((player) -> {
             assertEquals(1, Collections.frequency(g.getPlayers(), player));
         });
-        assertTrue(g.getBoard().isEmpty());
+        assertTrue(g.getBoard().isEmpty() && g.getState() == BlokusState.FIRST_ROUND);
     }
 
     @Test

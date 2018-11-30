@@ -3,6 +3,7 @@ package blokus.view.console;
 import blokus.model.Blokus;
 import blokus.model.BlokusColor;
 import blokus.model.Piece;
+import blokus.model.Stock;
 
 /**
  * Manages the display of the game.
@@ -159,10 +160,13 @@ class Output {
      * Prints current player stock.
      */
     void printCurrentPlayerStock() {
-        for (Piece piece : game.getCurrentPlayer().getStock()) {
-            print(piece);
+        for (int i = 0; i < Stock.CAPACITY; i++) {
+            Piece piece = game.getCurrentPlayer().getStock().get(i);
+            if (game.getCurrentPlayer().owns(piece)) {
+                print(piece);
+                System.out.println(" ");
+            }
         }
-
     }
 
     /**

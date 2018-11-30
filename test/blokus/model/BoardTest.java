@@ -48,7 +48,7 @@ public class BoardTest {
         Board board = new Board();
         board.isCorner(-34, 5);
     }
-    
+
     /**
      * Board corners should return true.
      */
@@ -60,13 +60,35 @@ public class BoardTest {
         assertTrue(board.isCorner(19, 0));
         assertTrue(board.isCorner(19, 19));
     }
-    
+
     /**
      * Squares in the middle of the board should not be corners.
      */
     public void isCorner_case_3() {
         Board board = new Board();
         assertFalse(board.isCorner(3, 5));
+    }
+
+    /**
+     * Shape 04 should be in corner when right location is given.
+     */
+    public void isInCorner_case_1x() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        assertTrue(board.isInCorner(p, 18, 18));
+        assertTrue(board.isInCorner(p, 0, 0));
+        assertTrue(board.isInCorner(p, 18, 0));
+    }
+
+    /**
+     * Piece should not be in corner when placed in the middle.
+     */
+    public void isInCorner_case_2x() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        assertFalse(board.isInCorner(p, 1, 1));
+        assertFalse(board.isInCorner(p, 17, 17));
+        assertFalse(board.isInCorner(p, 17, 0));
     }
 
     /**
@@ -198,6 +220,59 @@ public class BoardTest {
         Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
         b.addPiece(p, 0, 0);
         assertFalse(b.isEmptyAt(0, 0) && b.isEmptyAt(1, 0) && b.isEmptyAt(1, 1));
+    }
+
+    /**
+     * Adding a <code>null</code> value corner piece should cause an exception.
+     */
+    @Test(expected = NullPointerException.class)
+    public void addCornerPiece_case_1() {
+        Board b = new Board();
+        b.addCornerPiece(null, 0, 0);
+    }
+
+    /**
+     * Adding a piece at out of bounds location should cause an exception.
+     */
+    @Test(expected = ModelException.class)
+    public void addCornerPiece_case_2() {
+        Board b = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        b.addCornerPiece(p, -3, -2);
+    }
+
+    /**
+     * Adding a piece on another one should cause an exception.
+     */
+    @Test(expected = ModelException.class)
+    public void addCornerPiece_case_3() {
+        Board b = new Board();
+        Piece p01 = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        Piece p04 = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        b.addCornerPiece(p01, 0, 0);
+        b.addCornerPiece(p04, 0, 0);
+    }
+
+    /**
+     * Adding a piece in the middle of the board should cause an exception at
+     * first round.
+     */
+    @Test(expected = ModelException.class)
+    public void addCornerPiece_case_4() {
+        Board b = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        b.addCornerPiece(p, 1, 1);
+    }
+
+    /**
+     * Adding a piece in the corner of the board.
+     */
+    @Test
+    public void addCornerPiece_case_5() {
+        Board b = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        b.addCornerPiece(p, 0, 0);
+        assertTrue(b.getPieceAt(0, 0).equals(p));
     }
 
 }

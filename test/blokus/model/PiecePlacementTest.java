@@ -2,6 +2,8 @@ package blokus.model;
 
 import blokus.exception.ModelException;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -77,6 +79,90 @@ public class PiecePlacementTest {
         g.selectCurrentPlayerPiece(Shape.SHAPE_04);
         g.placePiece(0, 0);
         assertEquals(BlokusColor.BLUE, g.getBoard().getColorAt(0, 0));
+    }
+
+    /**
+     * At first round, not placing a piece in a corner of the board game should
+     * cause an exception.
+     */
+    @Test(expected = ModelException.class)
+    public void placePiece_case_7() {
+        Blokus g = new Blokus();
+        g.selectCurrentPlayerPiece(Shape.SHAPE_04);
+        g.placePiece(1, 1);
+    }
+
+    /**
+     * When all four players have placed their first pieces in a corner of the
+     * board, the first round should be over.
+     */
+    @Test
+    public void placePiece_case_8() {
+        Blokus g = new Blokus();
+        assertTrue(g.isFirstRound());
+        placePiece01(g, 0, 0);
+        placePiece01(g, 19, 0);
+        placePiece01(g, 0, 19);
+        placePiece01(g, 19, 19);
+        assertFalse(g.isFirstRound());
+    }
+
+    /**
+     * Placing a piece at a out of bounds position should cause an exception.
+     * When caught the piece should not be removed from the current player
+     * stock.
+     */
+    @Test
+    public void placePiece_case_9() {
+        Blokus g = new Blokus();
+        g.endFirstRound();
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        try {
+            g.placePiece(0, -1);
+        } catch (ModelException e) {
+            assertFalse(g.getCurrentPlayer().hasPlacedFirstPiece());
+        }
+    }
+
+    /**
+     * During first round, placing a piece outside one of the corners should
+     * cause an exception. When caught the piece should not be removed from the
+     * current player stock.
+     */
+    @Test
+    public void placePiece_case_10() {
+        Blokus g = new Blokus();
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        try {
+            g.placePiece(1, 1);
+        } catch (ModelException e) {
+            assertFalse(g.getCurrentPlayer().hasPlacedFirstPiece());
+        }
+    }
+
+    /**
+     * Placing a piece on another one should cause an exception. When caught the
+     * piece should not be removed from the current player stock.
+     */
+    @Test
+    public void placePiece_case_11() {
+        Blokus g = new Blokus();
+        g.endFirstRound();
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        g.placePiece(1, 1);
+        g.nextPlayer();
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        try {
+            g.placePiece(1, 1);
+        } catch (ModelException e) {
+            assertFalse(g.getCurrentPlayer().hasPlacedFirstPiece());
+        }
+    }
+
+    void placePiece01(Blokus g, int row, int column) {
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        g.placePiece(row, column);
+        g.nextPlayer();
     }
 
 }

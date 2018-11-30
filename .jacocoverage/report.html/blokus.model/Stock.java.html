@@ -2,15 +2,22 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a stock of 21 pieces.
  *
  * @author Logan Farci (47923)
  */
-class Stock {
+public class Stock {
+
+    /**
+     * Is the number of pieces that can fit in a stock.
+     */
+    public static final int CAPACITY = 21;
 
     private final List&lt;Piece&gt; pieces;
+    private final BlokusColor color;
     private Piece lastTakenPiece;
 
     /**
@@ -18,9 +25,10 @@ class Stock {
      *
      * @param color is the color of this stock.
      */
-<span class="fc" id="L21">    Stock(Color color) {</span>
-<span class="fc" id="L22">        this.pieces = buildPiecesOf(color);</span>
-<span class="fc" id="L23">    }</span>
+<span class="fc" id="L28">    Stock(BlokusColor color) {</span>
+<span class="fc" id="L29">        this.pieces = buildPiecesOf(color);</span>
+<span class="fc" id="L30">        this.color = color;</span>
+<span class="fc" id="L31">    }</span>
 
     /**
      * Indicates that this stock is empty.
@@ -28,7 +36,7 @@ class Stock {
      * @return true if this stock is empty.
      */
     boolean isEmpty() {
-<span class="fc" id="L31">        return pieces.isEmpty();</span>
+<span class="fc" id="L39">        return pieces.isEmpty();</span>
     }
 
     /**
@@ -37,7 +45,7 @@ class Stock {
      * @return this stock pieces.
      */
     List&lt;Piece&gt; getPieces() {
-<span class="fc" id="L40">        return pieces;</span>
+<span class="fc" id="L48">        return pieces;</span>
     }
 
     /**
@@ -45,15 +53,15 @@ class Stock {
      *
      * @return the number of unit squares contained in this stock.
      */
-    int getNumberOfSquares() {
-<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (isEmpty()) {</span>
-<span class="fc" id="L50">            return 0;</span>
+    int getNbOfSquares() {
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        if (isEmpty()) {</span>
+<span class="fc" id="L58">            return 0;</span>
         } else {
-<span class="fc" id="L52">            int nbOfSquare = 0;</span>
-<span class="fc bfc" id="L53" title="All 2 branches covered.">            for (Piece piece : pieces) {</span>
-<span class="fc" id="L54">                nbOfSquare += piece.getShape().getSize();</span>
-<span class="fc" id="L55">            }</span>
-<span class="fc" id="L56">            return nbOfSquare;</span>
+<span class="fc" id="L60">            int nbOfSquare = 0;</span>
+<span class="fc" id="L61">            nbOfSquare = pieces.stream()</span>
+<span class="fc" id="L62">                    .map(piece -&gt; piece.getShape().getSize())</span>
+<span class="fc" id="L63">                    .reduce(nbOfSquare, Integer::sum);</span>
+<span class="fc" id="L64">            return nbOfSquare;</span>
         }
     }
 
@@ -63,17 +71,16 @@ class Stock {
      * @return the score of this stock.
      */
     int getScore() {
-<span class="fc" id="L66">        int score = 0;</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (isEmpty()) {</span>
-<span class="fc" id="L68">            score += 15;</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (lastTakenPiece.getShape() == Shape.SHAPE_01) {</span>
-<span class="fc" id="L70">                System.out.println(&quot;test&quot;);</span>
-<span class="fc" id="L71">                score += 5;</span>
+<span class="fc" id="L74">        int score = 0;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (isEmpty()) {</span>
+<span class="fc" id="L76">            score += 15;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (lastTakenPiece.isSmallestPiece()) {</span>
+<span class="fc" id="L78">                score += 5;</span>
             }
         } else {
-<span class="fc" id="L74">            score -= getNumberOfSquares();</span>
+<span class="fc" id="L81">            score -= getNbOfSquares();</span>
         }
-<span class="fc" id="L76">        return score;</span>
+<span class="fc" id="L83">        return score;</span>
     }
 
     /**
@@ -84,13 +91,36 @@ class Stock {
      * &lt;code&gt;null&lt;/code&gt; is returned.
      */
     Piece getPiece(Shape shape) {
-<span class="fc bfc" id="L87" title="All 2 branches covered.">        for (Piece piece : pieces) {</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (shape == piece.getShape()) {</span>
-<span class="fc" id="L89">                return piece;</span>
+<span class="fc" id="L94">        Objects.requireNonNull(shape, &quot;No given shape.&quot;);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        for (Piece piece : pieces) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if (shape == piece.getShape()) {</span>
+<span class="fc" id="L97">                return piece;</span>
             }
-<span class="fc" id="L91">        }</span>
-<span class="fc" id="L92">        return null;</span>
+<span class="fc" id="L99">        }</span>
+<span class="fc" id="L100">        return null;</span>
     }
+
+    /**
+     * Throws an exception if this stock is empty.
+     */
+    void requireNonEmpty() {
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (isEmpty()) {</span>
+<span class="fc" id="L108">            throw new IllegalStateException(&quot;This stock is empty, no pieces to remove.&quot;);</span>
+        }
+<span class="fc" id="L110">    }</span>
+
+    /**
+     * Throws an exception if the given color does not match this stock color.
+     *
+     * @param color is the color to test.
+     */
+    void requireMatchingColor(BlokusColor color) {
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (color != this.color) {</span>
+<span class="fc" id="L119">            throw new IllegalArgumentException(&quot;The given piece does not match &quot;</span>
+                    + &quot;this stock color, &quot; + this.color + &quot; is expected but was &quot;
+                    + color + &quot;.&quot;);
+        }
+<span class="fc" id="L123">    }</span>
 
     /**
      * Removes the given piece.
@@ -98,9 +128,12 @@ class Stock {
      * @param piece the piece to remove.
      */
     void remove(Piece piece) {
-<span class="fc" id="L101">        lastTakenPiece = piece;</span>
-<span class="fc" id="L102">        pieces.remove(piece);</span>
-<span class="fc" id="L103">    }</span>
+<span class="fc" id="L131">        Objects.requireNonNull(piece);</span>
+<span class="fc" id="L132">        requireMatchingColor(piece.getColor());</span>
+<span class="fc" id="L133">        requireNonEmpty();</span>
+<span class="fc" id="L134">        lastTakenPiece = piece;</span>
+<span class="fc" id="L135">        pieces.remove(piece);</span>
+<span class="fc" id="L136">    }</span>
 
     /**
      * Tells if this stock contains a piece of the given shape.
@@ -108,15 +141,20 @@ class Stock {
      * @param shapeId is the id of the shape to look for.
      * @return true if a piece of given shape is in this stock.
      */
-    boolean contains(int shapeId) {
-<span class="fc" id="L112">        Shape shape = Shape.values()[shapeId];</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">        for (Piece piece : pieces) {</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">            if (shape == piece.getShape()) {</span>
-<span class="fc" id="L115">                return true;</span>
-            }
-<span class="fc" id="L117">        }</span>
-<span class="fc" id="L118">        return false;</span>
+    boolean contains(Piece piece) {
+<span class="fc" id="L145">        Objects.requireNonNull(piece);</span>
+<span class="fc" id="L146">        requireMatchingColor(piece.getColor());</span>
+<span class="fc" id="L147">        return pieces.contains(piece);</span>
     }
+
+    /**
+     * Clears this stock.
+     */
+    void clear() {
+<span class="fc" id="L154">        requireNonEmpty();</span>
+<span class="fc" id="L155">        lastTakenPiece = pieces.get(CAPACITY - 1);</span>
+<span class="fc" id="L156">        pieces.clear();</span>
+<span class="fc" id="L157">    }</span>
 
     /**
      * Builds this stock pieces.
@@ -124,20 +162,13 @@ class Stock {
      * @param color is the color of this stock.
      * @return the newly built pieces.
      */
-    final List&lt;Piece&gt; buildPiecesOf(Color color) {
-<span class="fc" id="L128">        List&lt;Piece&gt; builtPieces = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">        for (Shape shape : Shape.values()) {</span>
-<span class="fc" id="L130">            builtPieces.add(new Piece(shape, color));</span>
+    final List&lt;Piece&gt; buildPiecesOf(BlokusColor color) {
+<span class="fc" id="L166">        List&lt;Piece&gt; builtPieces = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        for (Shape shape : Shape.values()) {</span>
+<span class="fc" id="L168">            builtPieces.add(new Piece(shape, color));</span>
         }
-<span class="fc" id="L132">        return builtPieces;</span>
+<span class="fc" id="L170">        return builtPieces;</span>
     }
-
-    /**
-     * Clears this stock.
-     */
-    void clear() {
-<span class="fc" id="L139">        pieces.clear();</span>
-<span class="fc" id="L140">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

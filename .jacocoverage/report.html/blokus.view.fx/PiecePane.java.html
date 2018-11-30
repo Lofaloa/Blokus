@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>PiecePane.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.view.fx</a> &gt; <span class="el_source">PiecePane.java</span></div><h1>PiecePane.java</h1><pre class="source lang-java linenums">package blokus.view.fx;
 
-import blokus.model.Blokus;
-import blokus.model.Game;
+import blokus.model.BlokusColor;
+import blokus.model.Piece;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -13,42 +13,33 @@ import javafx.scene.shape.Rectangle;
  */
 public class PiecePane extends GridPane {
 
-    private final int SIZE;
-    private final Game game;
-    private final int shapeId;
-    private final Color color;
+    private final Piece piece;
 
     /**
      * Initializes this piece pane with the piece to represent.
      *
-     * @param game is the game of the piece to represent.
      * @param piece is the piece to represent.
      */
-<span class="nc" id="L27">    public PiecePane(Game game, int shapeId, String color) {</span>
-<span class="nc" id="L28">        this.shapeId = shapeId;</span>
-<span class="nc" id="L29">        this.color = getColor(color);</span>
-<span class="nc" id="L30">        this.game = game;</span>
-<span class="nc" id="L31">        this.SIZE = game.getShapeSize(shapeId);</span>
-<span class="nc" id="L32">        setPiece();</span>
-<span class="nc" id="L33">    }</span>
+<span class="nc" id="L23">    public PiecePane(Piece piece) {</span>
+<span class="nc" id="L24">        this.piece = piece;</span>
+<span class="nc" id="L25">        setPiece();</span>
+<span class="nc" id="L26">    }</span>
 
     /**
      * Gets the color of this pane piece.
      *
      * @return the color of this pane piece.
      */
-    Color getColor(String color) {
-<span class="nc bnc" id="L41" title="All 18 branches missed.">        switch (color) {</span>
-            case &quot;BLUE&quot;:
-<span class="nc" id="L43">                return Color.BLUE;</span>
-            case &quot;YELLOW&quot;:
-<span class="nc" id="L45">                return Color.YELLOW;</span>
-            case &quot;RED&quot;:
-<span class="nc" id="L47">                return Color.RED;</span>
-            case &quot;GREEN&quot;:
-<span class="nc" id="L49">                return Color.GREEN;</span>
+    final Color toColor(BlokusColor color) {
+<span class="nc bnc" id="L34" title="All 4 branches missed.">        switch (color) {</span>
+            case BLUE:
+<span class="nc" id="L36">                return Color.BLUE;</span>
+            case YELLOW:
+<span class="nc" id="L38">                return Color.YELLOW;</span>
+            case RED:
+<span class="nc" id="L40">                return Color.RED;</span>
             default:
-<span class="nc" id="L51">                return Color.GREY;</span>
+<span class="nc" id="L42">                return Color.GREEN;</span>
         }
     }
 
@@ -61,28 +52,28 @@ public class PiecePane extends GridPane {
      * @param hasStroke if set to true the square will have a black stroke.
      */
     void setSquare(Color color, int row, int column, boolean hasStroke) {
-<span class="nc" id="L64">        Rectangle r = new Rectangle(7, 7);</span>
-<span class="nc" id="L65">        r.setFill(color);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (hasStroke) {</span>
-<span class="nc" id="L67">            r.setStroke(Color.BLACK);</span>
+<span class="nc" id="L55">        Rectangle r = new Rectangle(7, 7);</span>
+<span class="nc" id="L56">        r.setFill(color);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if (hasStroke) {</span>
+<span class="nc" id="L58">            r.setStroke(Color.BLACK);</span>
         }
-<span class="nc" id="L69">        this.add(r, column, row);</span>
-<span class="nc" id="L70">    }</span>
+<span class="nc" id="L60">        this.add(r, column, row);</span>
+<span class="nc" id="L61">    }</span>
 
     /**
      * Displays the piece of this pane.
      */
     final void setPiece() {
-<span class="nc bnc" id="L76" title="All 2 branches missed.">        for (int i = 0; i &lt; SIZE; i++) {</span>
-<span class="nc bnc" id="L77" title="All 2 branches missed.">            for (int j = 0; j &lt; SIZE; j++) {</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">                if (game.isInsideShape(shapeId, i, j)) {</span>
-<span class="nc" id="L79">                    setSquare(color, i, j, true);</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        for (int i = 0; i &lt; piece.getSize(); i++) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">            for (int j = 0; j &lt; piece.getSize(); j++) {</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                if (piece.contains(i, j)) {</span>
+<span class="nc" id="L70">                    setSquare(toColor(piece.getColor()), i, j, true);</span>
                 } else {
-<span class="nc" id="L81">                    setSquare(Color.TRANSPARENT, i, j, false);</span>
+<span class="nc" id="L72">                    setSquare(Color.TRANSPARENT, i, j, false);</span>
                 }
             }
         }
-<span class="nc" id="L85">    }</span>
+<span class="nc" id="L76">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

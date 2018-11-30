@@ -4,16 +4,16 @@ import blokus.model.Blokus;
 
 /**
  * Manages the logic of the first turn of a game.
- * 
+ *
  * @author Logan Farci (47923)
  */
 public class ControllerFX {
 
     private final Blokus game;
-    
+
     /**
      * Initializes this controller with the game to control.
-     * 
+     *
      * @param game is the game to control.
      */
 <span class="nc" id="L19">    public ControllerFX(Blokus game) {</span>
@@ -24,16 +24,16 @@ public class ControllerFX {
      * Emulates the first turn of a game.
      */
     public void start() {
-<span class="nc" id="L27">        game.selectCurrentPlayerPiece(15);</span>
+<span class="nc" id="L27">        game.selectCurrentPlayerPiece(14);</span>
 <span class="nc" id="L28">        game.placePiece(0, 0);</span>
 <span class="nc" id="L29">        game.nextPlayer();</span>
-<span class="nc" id="L30">        game.selectCurrentPlayerPiece(11);</span>
+<span class="nc" id="L30">        game.selectCurrentPlayerPiece(10);</span>
 <span class="nc" id="L31">        game.placePiece(16, 0);</span>
 <span class="nc" id="L32">        game.nextPlayer();</span>
-<span class="nc" id="L33">        game.selectCurrentPlayerPiece(10);</span>
+<span class="nc" id="L33">        game.selectCurrentPlayerPiece(9);</span>
 <span class="nc" id="L34">        game.placePiece(0, 19);</span>
 <span class="nc" id="L35">        game.nextPlayer();</span>
-<span class="nc" id="L36">        game.selectCurrentPlayerPiece(9);</span>
+<span class="nc" id="L36">        game.selectCurrentPlayerPiece(8);</span>
 <span class="nc" id="L37">        game.placePiece(18, 17);</span>
 
 <span class="nc" id="L39">    }</span>
