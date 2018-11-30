@@ -40,6 +40,36 @@ public class BoardTest {
     }
 
     /**
+     * Asking if an out of bounds position is a corner should cause an
+     * exception.
+     */
+    @Test(expected = ModelException.class)
+    public void isCorner_case_1() {
+        Board board = new Board();
+        board.isCorner(-34, 5);
+    }
+    
+    /**
+     * Board corners should return true.
+     */
+    @Test
+    public void isCorner_case_2x() {
+        Board board = new Board();
+        assertTrue(board.isCorner(0, 0));
+        assertTrue(board.isCorner(0, 19));
+        assertTrue(board.isCorner(19, 0));
+        assertTrue(board.isCorner(19, 19));
+    }
+    
+    /**
+     * Squares in the middle of the board should not be corners.
+     */
+    public void isCorner_case_3() {
+        Board board = new Board();
+        assertFalse(board.isCorner(3, 5));
+    }
+
+    /**
      * Filled square should not be empty.
      */
     @Test

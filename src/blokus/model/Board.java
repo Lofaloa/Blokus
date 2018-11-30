@@ -25,6 +25,30 @@ public class Board {
     }
 
     /**
+     * Gets the squares of this board.
+     *
+     * @return the squares of this board.
+     */
+    Piece[][] getSquares() {
+        return squares;
+    }
+
+    /**
+     * Gets the square at the given position.
+     *
+     * @param row is the row of the square.
+     * @param column is the column of the square.
+     * @return the square the given position.
+     */
+    Piece getPieceAt(int row, int column) {
+        if (!contains(row, column)) {
+            throw new ModelException("Square at position row "
+                    + row + ", " + column + " is out of the board bounds.");
+        }
+        return squares[row][column];
+    }
+
+    /**
      * Gets the color of this board at the given position.
      *
      * @param row is the row of the square.
@@ -36,17 +60,8 @@ public class Board {
         if (isEmptyAt(row, column)) {
             return null;
         } else {
-            return squares[row][column].getColor();
+            return getPieceAt(row, column).getColor();
         }
-    }
-
-    /**
-     * Gets the squares of this board.
-     *
-     * @return the squares of this board.
-     */
-    Piece[][] getSquares() {
-        return squares;
     }
 
     /**
@@ -58,6 +73,21 @@ public class Board {
      */
     boolean contains(int row, int column) {
         return 0 <= row && row < SIZE && 0 <= column && column < SIZE;
+    }
+
+    /**
+     * Tells if the given position is a corner of this board.
+     *
+     * @param row is the row of the position.
+     * @param column is the column of the position.
+     * @return true if the given position is a corner.
+     */
+    boolean isCorner(int row, int column) {
+        requireValidSquare(row, column);
+        return row == 0 && column == 0
+                || row == 0 && column == SIZE - 1
+                || row == SIZE - 1 && column == 0
+                || row == SIZE - 1 && column == SIZE - 1;
     }
 
     /**
@@ -73,18 +103,36 @@ public class Board {
             throw new IllegalArgumentException("Position " + row + ", " + column
                     + " is not in the board.");
         }
-        return squares[row][column] == null;
+        return getPieceAt(row, column) == null;
     }
-    
+
     /**
-     * Tells if this board is empty. 
-     * 
+     * Tells if the given piece can be placed at the given position.
+     *
+     * @param piece is the piece to check the placement for.
+     * @param row is the row where the piece is to be placed.
+     * @param column is the column where the piece is to be placed.
+     * @return true if the given piece can placed at the given position.
+     */
+    boolean hasSpaceFor(Piece piece, int row, int column) {
+        Objects.requireNonNull(piece, "no given piece.");
+        requireValidSquare(row, column);
+        return piece.getShape().getSquares().stream()
+                .map(s -> s.move(row, column))
+                .allMatch(s -> isValid(s.getRow(), s.getColumn()));
+    }
+
+    /**
+     * Tells if this board is empty.
+     *
      * @return true if this board does not contain a piece.
      */
     boolean isEmpty() {
         for (int row = 0; row < SIZE; row++) {
             for (int column = 0; column < SIZE; column++) {
-                if (!isEmptyAt(row, column)) return false;
+                if (!isEmptyAt(row, column)) {
+                    return false;
+                }
             }
         }
         return true;
@@ -117,24 +165,24 @@ public class Board {
         if (!isEmptyAt(row, column)) {
             throw new ModelException("not a free position at row " + row + ", "
                     + "column " + column + " is occupied by "
-                    + squares[row][column].getColor() + " player.");
+                    + getPieceAt(row, column).getColor() + " player.");
         }
     }
 
     /**
-     * Tells if the given piece can be placed at the given position.
+     * Requires a piece the can be placed at the given position.
      *
-     * @param piece is the piece to check the placement for.
-     * @param row is the row where the piece is to be placed.
-     * @param column is the column where the piece is to be placed.
-     * @return true if the given piece can placed at the given position.
+     * @param piece is the piece that should be placable.
+     * @param row is the row where to place the piece.
+     * @param column is the column where to place the piece.
      */
-    boolean hasSpaceFor(Piece piece, int row, int column) {
-        Objects.requireNonNull(piece, "No given piece.");
-        requireValidSquare(row, column);
-        return piece.getShape().getSquares().stream()
-                .map(s -> s.move(row, column))
-                .allMatch(s -> isValid(s.getRow(), s.getColumn()));
+    void requirePlacablePiece(Piece piece, int row, int column) {
+//      if (first round not done) exception
+        if (!hasSpaceFor(piece, row, column)) {
+            throw new ModelException("piece " + piece.getColor() + " of shape "
+                    + piece.getShape() + "cannot be place at row " + row
+                    + ", column " + column + ".");
+        }
     }
 
     /**
@@ -157,13 +205,8 @@ public class Board {
      */
     void addPiece(Piece piece, int row, int column) {
         requireValidSquare(row, column);
-        if (piece == null) {
-            throw new IllegalArgumentException("No Piece to place.");
-        }
-        if (!hasSpaceFor(piece, row, column)) {
-            throw new ModelException("the given piece cannot be place at row "
-                    + row + ", column " + column + ".");
-        }
+        Objects.requireNonNull(piece, "no piece to add.");
+        requirePlacablePiece(piece, row, column);
         for (Square square : piece.getSquares()) {
             Square boardSquare = square.move(row, column);
             addAt(boardSquare.getRow(), boardSquare.getColumn(), piece);
