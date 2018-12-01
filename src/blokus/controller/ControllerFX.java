@@ -25,17 +25,17 @@ public class ControllerFX {
      * Emulates the first turn of a game.
      */
     public void start() {
-        game.selectCurrentPlayerPiece(Shape.SHAPE_04);
+        game.selectCurrentPlayerPiece(Shape.SHAPE_01);
         game.placePiece(0, 0);
         game.nextPlayer();
-        game.selectCurrentPlayerPiece(Shape.SHAPE_10);
-        game.placePiece(15, 0);
+        game.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        game.placePiece(19, 0);
         game.nextPlayer();
-        game.selectCurrentPlayerPiece(Shape.SHAPE_09);
-        game.placePiece(0, 17);
+        game.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        game.placePiece(0, 19);
         game.nextPlayer();
-        game.selectCurrentPlayerPiece(Shape.SHAPE_08);
-        game.placePiece(18, 18);
+        game.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        game.placePiece(19, 19);
     }
 
 }
