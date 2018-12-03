@@ -166,6 +166,70 @@ public class Board {
     }
 
     /**
+     * Tells if the given square is touching another same color square at
+     * corner.
+     *
+     * @param square is the square.
+     * @param colorSquare is the color of the square.
+     * @return true if the given square is touching another same color square at
+     * corner.
+     */
+    boolean isSquareTouchingSameColorAtCorner(Square square, BlokusColor colorSquare) {
+        return colorSquare == getColorAt(square.getRow() - 1, square.getColumn() - 1)
+                || colorSquare == getColorAt(square.getRow() + 1, square.getColumn() - 1)
+                || colorSquare == getColorAt(square.getRow() - 1, square.getColumn() + 1)
+                || colorSquare == getColorAt(square.getRow() + 1, square.getColumn() + 1);
+    }
+
+    /**
+     * Tells if the given square is touching another same color square by side.
+     *
+     * @param square is the square.
+     * @param colorSquare is the color of the square.
+     * @return true if the given square is touching another same color square by
+     * side.
+     */
+    boolean isSquareTouchingSameColorBySide(Square square, BlokusColor colorSquare) {
+        return colorSquare == getColorAt(square.getRow(), square.getColumn() - 1)
+                || colorSquare == getColorAt(square.getRow(), square.getColumn() + 1)
+                || colorSquare == getColorAt(square.getRow() - 1, square.getColumn())
+                || colorSquare == getColorAt(square.getRow() + 1, square.getColumn());
+    }
+
+    /**
+     * Tells if the given square color restricted. A color restricted square
+     * touches another same color square at corner. And does not touch another
+     * same color square by side.
+     *
+     * @param square is the square.
+     * @param colorSquare is the color of the square.
+     * @return true if the given square is touching another same color square by
+     * side.
+     */
+    boolean isColorRestrictedSquare(Square square, BlokusColor colorSquare) {
+        return isSquareTouchingSameColorAtCorner(square, colorSquare)
+                && !isSquareTouchingSameColorBySide(square, colorSquare);
+    }
+
+    /**
+     * Tells if the given piece is color restricted. A color restricted piece
+     * touches another same color piece at corner. And does not touch another
+     * same color piece by side.
+     *
+     * @param piece is the piece.
+     * @param row is the row of the piece.
+     * @param column is the column of the piece.
+     *
+     * @return true if the given piece touches another same color piece at
+     * corner
+     */
+    boolean isColorRestrictedPiece(Piece piece, int row, int column) {
+        return piece.getSquares().stream()
+                .map(s -> s.move(row, column))
+                .anyMatch(s -> isColorRestrictedSquare(s, piece.getColor()));
+    }
+
+    /**
      * Makes sure the given square is valid. A valid square is free and is
      * inside the board.
      *

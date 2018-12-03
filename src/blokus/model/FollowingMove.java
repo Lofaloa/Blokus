@@ -54,9 +54,26 @@ public class FollowingMove implements Move {
         }
     }
 
+    /**
+     * Tells if the given piece is color restricted. A color restricted piece
+     * touches another same color piece at corner. And does not touch another
+     * same color piece by side.
+     * 
+     * @param piece
+     * @param row
+     * @param column
+     */
+    void requireColorRestrictedPiece(Piece piece, int row, int column) {
+        if (!board.isColorRestrictedPiece(piece, row, column)) {
+            throw new ModelException("piece " + piece.getColor() + " of shape "
+                    + piece.getShape() + " should touch a same color piece at corner.");
+        }
+    }
+
     @Override
     public void execute() {
         requirePlacablePiece(player.getCurrentPiece(), dest.getRow(), dest.getColumn());
+        requireColorRestrictedPiece(player.getCurrentPiece(), dest.getRow(), dest.getColumn());
         board.addPiece(player.takeCurrentPiece(), dest.getRow(), dest.getColumn());
     }
 
