@@ -92,7 +92,6 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public boolean isOver() {
-        state = BlokusState.OVER;
         return players.stream().allMatch(p -> p.getStock().isEmpty());
     }
 
