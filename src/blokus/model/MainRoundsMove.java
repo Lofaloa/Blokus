@@ -3,17 +3,24 @@ package blokus.model;
 import blokus.exception.ModelException;
 
 /**
- * Represents a move that follows the first move.
+ * Represents a move taking places during the main rounds.
  *
  * @author Logan Farci (47923)
  */
-public class FollowingMove implements Move {
+class MainRoundsMove implements Move {
 
     private final Player player;
     private final Board board;
     private final Square dest;
 
-    public FollowingMove(Player player, Board board, Square dest) {
+    /**
+     * Initializes this move with the given player board and destination.
+     *
+     * @param player is the player who makes this move.
+     * @param board is the board where this move take place.
+     * @param dest is the destination square of the piece selected by a player.
+     */
+    MainRoundsMove(Player player, Board board, Square dest) {
         this.player = player;
         this.board = board;
         requireValidSquare(dest.getRow(), dest.getColumn());
@@ -27,7 +34,7 @@ public class FollowingMove implements Move {
      * @param square is the square to check.
      * @return a valid square.
      */
-    final void requireValidSquare(int row, int column) throws ModelException {
+    final void requireValidSquare(int row, int column) {
         if (!board.contains(row, column)) {
             throw new ModelException("Square at position row "
                     + row + ", " + column + " is out of the board bounds.");
@@ -40,7 +47,7 @@ public class FollowingMove implements Move {
     }
 
     /**
-     * Requires a piece the can be placed at the given position.
+     * Requires a piece that can be placed at the given position.
      *
      * @param piece is the piece that should be placable.
      * @param row is the row where to place the piece.
@@ -55,18 +62,20 @@ public class FollowingMove implements Move {
     }
 
     /**
-     * Tells if the given piece is color restricted. A color restricted piece
-     * touches another same color piece at corner. And does not touch another
-     * same color piece by side.
-     * 
-     * @param piece
-     * @param row
-     * @param column
+     * Requires a color restricted piece. A color restricted piece touches
+     * another same color piece at corner. And does not touch another same color
+     * piece by side.
+     *
+     * @param piece is the piece that need to be color restricted.
+     * @param row is the row of the piece.
+     * @param column is the column of the piece.
      */
     void requireColorRestrictedPiece(Piece piece, int row, int column) {
-        if (!board.isColorRestrictedPiece(piece, row, column)) {
+        if (board.isPieceTouchingSameColorBySide(piece, row, column)
+                || !board.isPieceTouchingSameColorAtCorner(piece, row, column)) {
             throw new ModelException("piece " + piece.getColor() + " of shape "
-                    + piece.getShape() + " should touch a same color piece at corner.");
+                    + piece.getShape() + " should touch another same color piece"
+                    + " at corner and should not touch a same piece color by side.");
         }
     }
 

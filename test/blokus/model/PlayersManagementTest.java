@@ -17,11 +17,12 @@ public class PlayersManagementTest {
     @Test
     public void getWinner_case_1() {
         Blokus g = new Blokus();
+        g.getBoard().addAt(0, 0, new Piece(Shape.SHAPE_01, BlokusColor.BLUE));
         //Players are free to place a piece wherever they like on the board
         g.endFirstRound();
-        g.selectCurrentPlayerPiece(Shape.SHAPE_21);
-        g.placePiece(0, 0);
-        assertEquals(-84, g.getWinner().get(0).getScore());
+        g.selectCurrentPlayerPiece(Shape.SHAPE_02);
+        g.placePiece(1, 1);
+        assertEquals(-87, g.getWinner().get(0).getScore());
     }
 
     /**
@@ -44,15 +45,17 @@ public class PlayersManagementTest {
     @Test
     public void getWinner_case_3() {
         Blokus g = new Blokus();
+        g.getBoard().addAt(0, 0, new Piece(Shape.SHAPE_01, BlokusColor.BLUE));
+        g.getBoard().addAt(19, 0, new Piece(Shape.SHAPE_01, BlokusColor.YELLOW));
         Player w1 = g.getCurrentPlayer();
         //Players are free to place a piece wherever they like on the board
         g.endFirstRound();
-        g.selectCurrentPlayerPiece(Shape.SHAPE_04);
-        g.placePiece(0, 0);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_02);
+        g.placePiece(1, 1);
         g.nextPlayer();
         Player w2 = g.getCurrentPlayer();
-        g.selectCurrentPlayerPiece(Shape.SHAPE_04);
-        g.placePiece(5, 5);
+        g.selectCurrentPlayerPiece(Shape.SHAPE_02);
+        g.placePiece(17, 1);
         assertTrue(g.getWinner().contains(w1) && g.getWinner().contains(w2));
     }
 

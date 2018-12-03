@@ -7,13 +7,20 @@ import blokus.exception.ModelException;
  *
  * @author Logan Farci (47923)
  */
-public class FirstMove implements Move {
+class FirstMove implements Move {
 
     private final Player player;
     private final Board board;
     private final Square dest;
 
-    public FirstMove(Player player, Board board, Square dest) {
+    /**
+     * Initializes this move with the given player board and destination.
+     *
+     * @param player is the player who makes this move.
+     * @param board is the board where this move take place.
+     * @param dest is the destination square of the piece selected by a player.
+     */
+    FirstMove(Player player, Board board, Square dest) {
         this.player = player;
         this.board = board;
         requireValidSquare(dest.getRow(), dest.getColumn());

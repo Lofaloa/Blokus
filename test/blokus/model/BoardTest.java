@@ -70,28 +70,6 @@ public class BoardTest {
     }
 
     /**
-     * Shape 04 should be in corner when right location is given.
-     */
-    public void isInCorner_case_1x() {
-        Board board = new Board();
-        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
-        assertTrue(board.isPieceInCorner(p, 18, 18));
-        assertTrue(board.isPieceInCorner(p, 0, 0));
-        assertTrue(board.isPieceInCorner(p, 18, 0));
-    }
-
-    /**
-     * Piece should not be in corner when placed in the middle.
-     */
-    public void isInCorner_case_2x() {
-        Board board = new Board();
-        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
-        assertFalse(board.isPieceInCorner(p, 1, 1));
-        assertFalse(board.isPieceInCorner(p, 17, 17));
-        assertFalse(board.isPieceInCorner(p, 17, 0));
-    }
-
-    /**
      * Filled square should not be empty.
      */
     @Test
@@ -110,6 +88,28 @@ public class BoardTest {
     public void isEmptyAt_case_2() {
         Board board = new Board();
         board.isEmptyAt(-1, 23);
+    }
+
+    /**
+     * Shape 04 should be in corner when right location is given.
+     */
+    public void isPieceInCorner_case_1x() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        assertTrue(board.isPieceInCorner(p, 18, 18));
+        assertTrue(board.isPieceInCorner(p, 0, 0));
+        assertTrue(board.isPieceInCorner(p, 18, 0));
+    }
+
+    /**
+     * Piece should not be in corner when placed in the middle.
+     */
+    public void isPieceInCorner_case_2x() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_04, BlokusColor.BLUE);
+        assertFalse(board.isPieceInCorner(p, 1, 1));
+        assertFalse(board.isPieceInCorner(p, 17, 17));
+        assertFalse(board.isPieceInCorner(p, 17, 0));
     }
 
     /**
@@ -133,6 +133,165 @@ public class BoardTest {
         assertFalse(board.isValid(0, 20));
         assertFalse(board.isValid(20, 0));
         assertFalse(board.isValid(20, 20));
+    }
+
+    /**
+     * Asking if a <code>null</code> value square is touching same color square
+     * at corner should cause an exception.
+     */
+    @Test(expected = NullPointerException.class)
+    public void isSquareTouchingSameColorAtCorner_case_1() {
+        Board board = new Board();
+        board.isSquareTouchingSameColorAtCorner(null, BlokusColor.BLUE);
+    }
+
+    /**
+     * Asking if a square is touching same color square at corner without giving
+     * a color should cause an exception.
+     */
+    @Test(expected = NullPointerException.class)
+    public void isSquareTouchingSameColorAtCorner_case_2() {
+        Board board = new Board();
+        board.isSquareTouchingSameColorAtCorner(new Square(0, 0), null);
+    }
+
+    /**
+     * Square touching a same color square at top left corner.
+     */
+    @Test
+    public void isSquareTouchingSameColorAtCorner_case_3_1() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(3, 3, p);
+        assertTrue(board.isSquareTouchingSameColorAtCorner(new Square(4, 4),
+                p.getColor()));
+    }
+
+    /**
+     * Square touching a same color square at top right corner.
+     */
+    @Test
+    public void isSquareTouchingSameColorAtCorner_case_3_2() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(3, 5, p);
+        assertTrue(board.isSquareTouchingSameColorAtCorner(new Square(4, 4),
+                p.getColor()));
+    }
+
+    /**
+     * Square touching a same color square at bottom left corner.
+     */
+    @Test
+    public void isSquareTouchingSameColorAtCorner_case_3_3() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(5, 3, p);
+        assertTrue(board.isSquareTouchingSameColorAtCorner(new Square(4, 4),
+                p.getColor()));
+    }
+
+    /**
+     * Square touching a same color square at bottom right corner.
+     */
+    @Test
+    public void isSquareTouchingSameColorAtCorner_case_3_4() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(5, 5, p);
+        assertTrue(board.isSquareTouchingSameColorAtCorner(new Square(4, 4),
+                p.getColor()));
+    }
+
+    /**
+     * Square touching a different color at corner.
+     */
+    @Test
+    public void isSquareTouchingSameColorAtCorner_case_4() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(5, 5, p);
+        assertFalse(board.isSquareTouchingSameColorAtCorner(new Square(4, 4),
+                BlokusColor.GREEN));
+    }
+    /**
+     * Asking if a <code>null</code> value square is touching same color square
+     * by side should cause an exception.
+     */
+    @Test(expected = NullPointerException.class)
+    public void isSquareTouchingSameColorBySide_case_1() {
+        Board board = new Board();
+        board.isSquareTouchingSameColorBySide(null, BlokusColor.BLUE);
+    }
+
+    /**
+     * Asking if a square is touching same color square by side without giving
+     * a color should cause an exception.
+     */
+    @Test(expected = NullPointerException.class)
+    public void isSquareTouchingSameColorBySide_case_2() {
+        Board board = new Board();
+        board.isSquareTouchingSameColorBySide(new Square(0, 0), null);
+    }
+
+    /**
+     * Square touching a same color square by left side.
+     */
+    @Test
+    public void isSquareTouchingSameColorBySide_case_3_1() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(3, 2, p);
+        assertTrue(board.isSquareTouchingSameColorBySide(new Square(3, 3),
+                p.getColor()));
+    }
+
+    /**
+     * Square touching a same color square by top side.
+     */
+    @Test
+    public void isSquareTouchingSameColorBySide_case_3_2() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(2, 5, p);
+        assertTrue(board.isSquareTouchingSameColorBySide(new Square(3, 5),
+                p.getColor()));
+    }
+
+    /**
+     * Square touching a same color square by right side.
+     */
+    @Test
+    public void isSquareTouchingSameColorBySide_case_3_3() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(5, 4, p);
+        assertTrue(board.isSquareTouchingSameColorBySide(new Square(5, 3),
+                p.getColor()));
+    }
+
+    /**
+     * Square touching a same color square by bottom side.
+     */
+    @Test
+    public void isSquareTouchingSameColorBySide_case_3_4() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(6, 5, p);
+        assertTrue(board.isSquareTouchingSameColorBySide(new Square(5, 5),
+                p.getColor()));
+    }
+
+    /**
+     * Square touching a different color by side.
+     */
+    @Test
+    public void isSquareTouchingSameColorBySide_case_4() {
+        Board board = new Board();
+        Piece p = new Piece(Shape.SHAPE_01, BlokusColor.BLUE);
+        board.addAt(4, 3, p);
+        assertFalse(board.isSquareTouchingSameColorBySide(new Square(4, 4),
+                BlokusColor.GREEN));
     }
 
     /**

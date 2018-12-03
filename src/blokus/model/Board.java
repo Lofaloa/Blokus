@@ -57,6 +57,10 @@ public class Board {
      * is returned if the board is empty at thee given position.
      */
     public BlokusColor getColorAt(int row, int column) {
+        if (!contains(row, column)) {
+            throw new IllegalArgumentException("Square at position row "
+                    + row + ", " + column + " is out of the board bounds.");
+        }
         if (isEmptyAt(row, column)) {
             return null;
         } else {
@@ -123,11 +127,12 @@ public class Board {
     }
 
     /**
+     * This if the piece is in a corner of this board
      *
-     * @param piece
-     * @param row
-     * @param column
-     * @return
+     * @param piece the piece
+     * @param row the row of the piece
+     * @param column the column of the piece
+     * @return true if the piece is in o corner of this board
      */
     boolean isPieceInCorner(Piece piece, int row, int column) {
         requireNonNull(piece, "no piece when determining if it is in a corner");
@@ -165,6 +170,10 @@ public class Board {
         return contains(row, column) && isEmptyAt(row, column);
     }
 
+    int getInBounds(int coordinate) {
+        return coordinate < 0 ? 0 : coordinate;
+    }
+
     /**
      * Tells if the given square is touching another same color square at
      * corner.
@@ -175,10 +184,31 @@ public class Board {
      * corner.
      */
     boolean isSquareTouchingSameColorAtCorner(Square square, BlokusColor colorSquare) {
-        return colorSquare == getColorAt(square.getRow() - 1, square.getColumn() - 1)
-                || colorSquare == getColorAt(square.getRow() + 1, square.getColumn() - 1)
-                || colorSquare == getColorAt(square.getRow() - 1, square.getColumn() + 1)
-                || colorSquare == getColorAt(square.getRow() + 1, square.getColumn() + 1);
+        requireNonNull(square, "isSquareTouchingSameColorAtCorner - no square given");
+        requireNonNull(colorSquare, "isSquareTouchingSameColorAtCorner - no color given");
+        return colorSquare == getColorAt(getInBounds(square.getRow() - 1),
+                getInBounds(square.getColumn() - 1))
+                || colorSquare == getColorAt(getInBounds(square.getRow() - 1),
+                        getInBounds(square.getColumn() + 1))
+                || colorSquare == getColorAt(getInBounds(square.getRow() + 1),
+                        getInBounds(square.getColumn() - 1))
+                || colorSquare == getColorAt(getInBounds(square.getRow() + 1),
+                        getInBounds(square.getColumn() + 1));
+    }
+
+    /**
+     * Tells if the given piece is touching another same color piece at corner.
+     *
+     * @param piece is the piece.
+     * @return true if the given square is touching another same color square at
+     * corner.
+     */
+    boolean isPieceTouchingSameColorAtCorner(Piece piece, int row, int column) {
+        requireValidSquare(row, column);
+        requireNonNull(piece, "isSquareTouchingSameColorAtCorner - no piece given");
+        return piece.getSquares().stream()
+                .map(s -> s.move(row, column))
+                .anyMatch(s -> isSquareTouchingSameColorAtCorner(s, piece.getColor()));
     }
 
     /**
@@ -190,43 +220,27 @@ public class Board {
      * side.
      */
     boolean isSquareTouchingSameColorBySide(Square square, BlokusColor colorSquare) {
-        return colorSquare == getColorAt(square.getRow(), square.getColumn() - 1)
-                || colorSquare == getColorAt(square.getRow(), square.getColumn() + 1)
-                || colorSquare == getColorAt(square.getRow() - 1, square.getColumn())
-                || colorSquare == getColorAt(square.getRow() + 1, square.getColumn());
+        requireNonNull(square, "isSquareTouchingSameColorBySide - no square given");
+        requireNonNull(colorSquare, "isSquareTouchingSameColorBySide - no color given");
+        return colorSquare == getColorAt(getInBounds(square.getRow() - 1), square.getColumn())
+                || colorSquare == getColorAt(getInBounds(square.getRow() + 1), square.getColumn())
+                || colorSquare == getColorAt(square.getRow(), getInBounds(square.getColumn() + 1))
+                || colorSquare == getColorAt(square.getRow(), getInBounds(square.getColumn() + -1));
     }
 
     /**
-     * Tells if the given square color restricted. A color restricted square
-     * touches another same color square at corner. And does not touch another
-     * same color square by side.
+     * Tells if the given piece is touching another same color piece by side.
      *
-     * @param square is the square.
-     * @param colorSquare is the color of the square.
+     * @param piece is the piece.
      * @return true if the given square is touching another same color square by
      * side.
      */
-    boolean isColorRestrictedSquare(Square square, BlokusColor colorSquare) {
-        return isSquareTouchingSameColorAtCorner(square, colorSquare)
-                && !isSquareTouchingSameColorBySide(square, colorSquare);
-    }
-
-    /**
-     * Tells if the given piece is color restricted. A color restricted piece
-     * touches another same color piece at corner. And does not touch another
-     * same color piece by side.
-     *
-     * @param piece is the piece.
-     * @param row is the row of the piece.
-     * @param column is the column of the piece.
-     *
-     * @return true if the given piece touches another same color piece at
-     * corner
-     */
-    boolean isColorRestrictedPiece(Piece piece, int row, int column) {
+    boolean isPieceTouchingSameColorBySide(Piece piece, int row, int column) {
+        requireValidSquare(row, column);
+        requireNonNull(piece, "isSquareTouchingSameColorAtCorner - no piece given");
         return piece.getSquares().stream()
                 .map(s -> s.move(row, column))
-                .anyMatch(s -> isColorRestrictedSquare(s, piece.getColor()));
+                .anyMatch(s -> isSquareTouchingSameColorBySide(s, piece.getColor()));
     }
 
     /**

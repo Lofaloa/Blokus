@@ -34,8 +34,8 @@ public class PiecePlacementTest {
     }
 
     /**
-     * At first round, placing a piece outside one of the corners should
-     * cause an exception. When caught the piece should not be removed from the
+     * At first round, placing a piece outside one of the corners should cause
+     * an exception. When caught the piece should not be removed from the
      * current player stock.
      */
     @Test
@@ -56,11 +56,13 @@ public class PiecePlacementTest {
     @Test(expected = IllegalStateException.class)
     public void placePiece_case_1() {
         Blokus g = new Blokus();
+        g.getBoard().addAt(0, 0, new Piece(Shape.SHAPE_01, BlokusColor.BLUE));
+        g.getBoard().addAt(19, 0, new Piece(Shape.SHAPE_01, BlokusColor.YELLOW));
         g.endFirstRound();
         g.selectCurrentPlayerPiece(Shape.SHAPE_01);
-        g.placePiece(0, 0);
+        g.placePiece(1, 1);
         g.nextPlayer();
-        g.placePiece(0, 0);
+        g.placePiece(18, 1);
     }
 
     /**
@@ -106,9 +108,10 @@ public class PiecePlacementTest {
     @Test
     public void placePiece_case_5() {
         Blokus g = new Blokus();
+        g.getBoard().addAt(0, 0, new Piece(Shape.SHAPE_01, BlokusColor.BLUE));
         g.endFirstRound();
         g.selectCurrentPlayerPiece(Shape.SHAPE_04);
-        g.placePiece(0, 0);
+        g.placePiece(1, 1);
         assertEquals(BlokusColor.BLUE, g.getBoard().getColorAt(0, 0));
     }
 
@@ -136,16 +139,42 @@ public class PiecePlacementTest {
     @Test
     public void placePiece_case_7() {
         Blokus g = new Blokus();
-        g.endFirstRound();
         g.selectCurrentPlayerPiece(Shape.SHAPE_01);
-        g.placePiece(1, 1);
+        g.placePiece(0, 0);
         g.nextPlayer();
         g.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        g.endFirstRound();
         try {
-            g.placePiece(1, 1);
+            g.placePiece(0, 0);
         } catch (ModelException e) {
             assertFalse(g.getCurrentPlayer().hasPlacedFirstPiece());
         }
+    }
+
+    /**
+     * During the game, placing a piece that does not touch another same color
+     * piece at corner should cause an exception.
+     */
+    @Test(expected = ModelException.class)
+    public void placePiece_case_8() {
+        Blokus g = new Blokus();
+        g.getBoard().addAt(0, 0, new Piece(Shape.SHAPE_01, BlokusColor.BLUE));
+        g.endFirstRound();
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        g.placePiece(2, 2);
+    }
+
+    /**
+     * During the game, placing a piece side by side with another same color
+     * piece cause an exception.
+     */
+    @Test(expected = ModelException.class)
+    public void placePiece_case_9() {
+        Blokus g = new Blokus();
+        g.getBoard().addAt(0, 0, new Piece(Shape.SHAPE_01, BlokusColor.BLUE));
+        g.endFirstRound();
+        g.selectCurrentPlayerPiece(Shape.SHAPE_02);
+        g.placePiece(0, 1);
     }
 
     void placePiece01(Blokus g, int row, int column) {

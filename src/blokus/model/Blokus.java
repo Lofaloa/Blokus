@@ -160,7 +160,7 @@ public class Blokus extends Observable implements Game {
             currentMove = new FirstMove(currentPlayer, board, new Square(row, column));
             currentMove.execute();
         } else {
-            currentMove = new FollowingMove(currentPlayer, board, new Square(row, column));
+            currentMove = new MainRoundsMove(currentPlayer, board, new Square(row, column));
             currentMove.execute();
         }
         if (isFirstRoundOver()) {
