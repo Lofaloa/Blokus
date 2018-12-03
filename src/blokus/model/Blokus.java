@@ -20,6 +20,7 @@ public class Blokus extends Observable implements Game {
     private ListIterator<Player> playerIterator;
     private final Board board;
     private Player currentPlayer;
+    private Move currentMove;
     private BlokusState state;
 
     /**
@@ -34,6 +35,7 @@ public class Blokus extends Observable implements Game {
                 new Player(BlokusColor.GREEN)));
         this.playerIterator = players.listIterator();
         this.currentPlayer = playerIterator.next();
+        this.currentMove = null;
         this.board = new Board();
         this.state = BlokusState.FIRST_ROUND;
     }
@@ -133,7 +135,7 @@ public class Blokus extends Observable implements Game {
      * the current player selected or if the piece is not in a corner.
      */
     void requirePlacableCornerPiece(int row, int column) {
-        if (!board.isInCorner(currentPlayer.getCurrentPiece(), row, column)) {
+        if (!board.isPieceInCorner(currentPlayer.getCurrentPiece(), row, column)) {
             throw new ModelException("The current piece should be placed in a "
                     + "one of the corner of the board.");
         }
@@ -156,11 +158,11 @@ public class Blokus extends Observable implements Game {
                     + " a piece.");
         }
         if (isFirstRound()) {
-            requirePlacableCornerPiece(row, column);
-            board.addCornerPiece(currentPlayer.takeCurrentPiece(), row, column);
+            currentMove = new FirstMove(currentPlayer, board, new Square(row, column));
+            currentMove.execute();
         } else {
-            requirePlacablePiece(row, column);
-            board.addPiece(currentPlayer.takeCurrentPiece(), row, column);
+            currentMove = new FollowingMove(currentPlayer, board, new Square(row, column));
+            currentMove.execute();
         }
         if (isFirstRoundOver()) {
             endFirstRound();

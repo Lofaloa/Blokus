@@ -129,7 +129,7 @@ public class Board {
      * @param column
      * @return
      */
-    boolean isInCorner(Piece piece, int row, int column) {
+    boolean isPieceInCorner(Piece piece, int row, int column) {
         requireNonNull(piece, "no piece when determining if it is in a corner");
         requireValidSquare(row, column);
         return piece.getShape().getSquares().stream()
@@ -200,20 +200,6 @@ public class Board {
     }
 
     /**
-     * Requires a pieces in a corner.
-     *
-     * @param piece the piece that should be in a corner.
-     * @param row the row of the piece.
-     * @param column the column of the piece.
-     */
-    void requireCornerPiece(Piece piece, int row, int column) {
-        if (!isInCorner(piece, row, column)) {
-            throw new ModelException("piece " + piece.getColor() + " of shape "
-                    + piece.getShape() + " should be placed in a board corner");
-        }
-    }
-
-    /**
      * Adds a given piece square to the given position.
      *
      * @param row is the row where to add the piece square.
@@ -234,25 +220,6 @@ public class Board {
     void addPiece(Piece piece, int row, int column) {
         requireNonNull(piece, "no piece to add.");
         requireValidSquare(row, column);
-        requirePlacablePiece(piece, row, column);
-        for (Square square : piece.getSquares()) {
-            Square boardSquare = square.move(row, column);
-            addAt(boardSquare.getRow(), boardSquare.getColumn(), piece);
-        }
-    }
-
-    /**
-     * Adds a piece to this board requiring it to be placed in a corner of this
-     * board.
-     *
-     * @param piece is the piece to add in a corner of this board.
-     * @param row is the row of the piece to add.
-     * @param column is the column of the piece to add.
-     */
-    void addCornerPiece(Piece piece, int row, int column) {
-        requireNonNull(piece, "no piece to add.");
-        requireValidSquare(row, column);
-        requireCornerPiece(piece, row, column);
         requirePlacablePiece(piece, row, column);
         for (Square square : piece.getSquares()) {
             Square boardSquare = square.move(row, column);
