@@ -2,6 +2,8 @@ package blokus.view.fx;
 
 import blokus.model.BlokusColor;
 import blokus.model.Piece;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -14,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 public class PiecePane extends GridPane {
 
     private final Piece piece;
+    private boolean isSelected;
 
     /**
      * Initializes this piece pane with the piece to represent.
@@ -22,7 +25,17 @@ public class PiecePane extends GridPane {
      */
     public PiecePane(Piece piece) {
         this.piece = piece;
+        this.isSelected = false;
         setPiece();
+        setEventHandler();
+    }
+
+    boolean isSelected() {
+        return isSelected;
+    }
+
+    Piece getPiece() {
+        return piece;
     }
 
     /**
@@ -73,6 +86,15 @@ public class PiecePane extends GridPane {
                 }
             }
         }
+    }
+
+    final void setEventHandler() {
+        setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                isSelected = true;
+            }
+        });
     }
 
 }

@@ -1,5 +1,6 @@
 package blokus.view.fx;
 
+import blokus.model.Piece;
 import blokus.model.Player;
 import javafx.scene.layout.VBox;
 
@@ -11,20 +12,29 @@ import javafx.scene.layout.VBox;
  */
 public class PlayerDataPane extends VBox {
 
+    private final Player owner;
     private final HeaderBox header;
     private final StockPane stock;
 
     /**+
      * Initializes this pane with the given player.
      *
-     * @param blokus is the game.
-     * @param playerId is the player id  of the player this pane display data for.
+     * @param owner is the player to represent data for.
      */
     public PlayerDataPane(Player owner) {
+        this.owner = owner;
         this.header = new HeaderBox(owner);
         this.stock = new StockPane(owner);
         setContent();
         setStyle();
+    }
+
+    Piece getSelectedPiece() {
+        return stock.getSelectedPiece();
+    }
+
+    Player getPlayer() {
+        return owner;
     }
 
     /**

@@ -1,5 +1,7 @@
 package blokus.view.fx;
 
+import blokus.model.Game;
+import blokus.model.Piece;
 import blokus.model.Player;
 import java.util.List;
 import javafx.scene.Node;
@@ -13,18 +15,30 @@ import javafx.scene.layout.VBox;
  */
 public class PlayersDataPane extends VBox {
 
+    private final Game blokus;
     private final List<Player> players;
 
     /**
      * Initializes this pane with the given game. The players data of this
      * display the given players data information of the given game.
      *
-     * @param players are the players to represent.
+     * @param blokus is game to represent the players for.
      */
-    public PlayersDataPane(List<Player> players) {
-        this.players = players;
+    public PlayersDataPane(Game blokus) {
+        this.blokus = blokus;
+        this.players = blokus.getPlayers();
         setContent();
         setStyle();
+    }
+
+    Piece getCurrentPlayerPiece() {
+        for (Node child : getChildren()) {
+            Player player = ((PlayerDataPane) child).getPlayer();
+            if (player.equals(blokus.getCurrentPlayer())) {
+                return ((PlayerDataPane) child).getSelectedPiece();
+            }
+        }
+        return null;
     }
 
     /**

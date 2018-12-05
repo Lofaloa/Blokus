@@ -1,6 +1,7 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
+import blokus.model.Piece;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.scene.control.Menu;
@@ -32,6 +33,10 @@ public class MainBox extends VBox implements Observer {
         setStyle();
     }
 
+    public Piece getCurrentPlayerPiece() {
+        return game.getCurrentPlayerPiece();
+    }
+
     /**
      * Sets this box content.
      */
@@ -48,7 +53,7 @@ public class MainBox extends VBox implements Observer {
 
     /**
      * Updates the content of game box.
-     * 
+     *
      * @param o the game.
      * @param o1 nothing.
      */

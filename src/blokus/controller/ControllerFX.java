@@ -2,6 +2,7 @@ package blokus.controller;
 
 import blokus.model.Blokus;
 import blokus.model.Shape;
+import blokus.view.fx.MainBox;
 
 /**
  * Manages the logic of the first turn of a game.
@@ -11,14 +12,16 @@ import blokus.model.Shape;
 public class ControllerFX {
 
     private final Blokus game;
+    private final MainBox view;
 
     /**
      * Initializes this controller with the game to control.
      *
      * @param game is the game to control.
      */
-    public ControllerFX(Blokus game) {
+    public ControllerFX(Blokus game, MainBox view) {
         this.game = game;
+        this.view = view;
     }
 
     /**

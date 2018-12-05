@@ -2,6 +2,7 @@ package blokus.view.fx;
 
 import blokus.model.Piece;
 import blokus.model.Player;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -18,13 +19,21 @@ public class StockPane extends GridPane {
      * Initializes this pane with the game to represent and the id of the stock
      * owner.
      *
-     * @param blokus is the game of the stock to represent.
      * @param owner is the owner of the stock to represent.
      */
     public StockPane(Player owner) {
         this.owner = owner;
         setPieces();
         setStyle();
+    }
+
+    Piece getSelectedPiece() {
+        for (Node child : getChildren()) {
+            if (((PiecePane) child).isSelected()) {
+                return ((PiecePane) child).getPiece();
+            }
+        }
+        return null;
     }
 
     final void setPieces() {

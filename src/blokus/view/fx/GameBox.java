@@ -1,6 +1,7 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
+import blokus.model.Piece;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 
@@ -15,10 +16,14 @@ public class GameBox extends HBox {
     private final BoardPane board;
 
     GameBox(Game blokus) {
-        this.playersData = new PlayersDataPane(blokus.getPlayers());
+        this.playersData = new PlayersDataPane(blokus);
         this.board = new BoardPane(blokus.getBoard());
         setContent();
         setStyle();
+    }
+
+    Piece getCurrentPlayerPiece() {
+        return playersData.getCurrentPlayerPiece();
     }
 
     /**
