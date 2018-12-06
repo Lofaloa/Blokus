@@ -33,6 +33,11 @@ public class MainBox extends VBox implements Observer {
         setStyle();
     }
 
+    /**
+     * Gets the piece selected by the current player.
+     *
+     * @return the piece selected by the current player.
+     */
     public Piece getCurrentPlayerPiece() {
         return game.getCurrentPlayerPiece();
     }

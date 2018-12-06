@@ -2,8 +2,7 @@ package blokus.view.fx;
 
 import blokus.model.BlokusColor;
 import blokus.model.Piece;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -25,17 +24,22 @@ public class PiecePane extends GridPane {
      */
     public PiecePane(Piece piece) {
         this.piece = piece;
-        this.isSelected = false;
+        isSelected = false;
         setPiece();
-        setEventHandler();
+        addSelectionHandler();
+        addHoverStyleHandler();
     }
 
     boolean isSelected() {
         return isSelected;
     }
 
-    Piece getPiece() {
+    public Piece getPiece() {
         return piece;
+    }
+
+    void deselect() {
+        isSelected = false;
     }
 
     /**
@@ -88,12 +92,25 @@ public class PiecePane extends GridPane {
         }
     }
 
-    final void setEventHandler() {
-        setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                isSelected = true;
-            }
+    void setGreyBackground() {
+        setStyle("-fx-background-color: #D3D3D3;");
+    }
+
+    void setEmptyBackground() {
+        setBackground(Background.EMPTY);
+    }
+
+    final void addHoverStyleHandler() {
+        setOnMouseEntered(event -> setGreyBackground());
+        setOnMouseExited(event -> setEmptyBackground());
+    }
+
+    /**
+     * Adds an handler that select this piece when clicked.
+     */
+    final void addSelectionHandler() {
+        setOnMousePressed((event) -> {
+            isSelected = true;
         });
     }
 

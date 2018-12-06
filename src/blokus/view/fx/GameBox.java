@@ -22,6 +22,11 @@ public class GameBox extends HBox {
         setStyle();
     }
 
+    /**
+     * Gets current player piece.
+     *
+     * @return current player piece.
+     */
     Piece getCurrentPlayerPiece() {
         return playersData.getCurrentPlayerPiece();
     }

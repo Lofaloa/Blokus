@@ -5,7 +5,9 @@ import blokus.model.Blokus;
 import blokus.view.fx.MainBox;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -27,8 +29,8 @@ public class BlokusFX extends Application {
             Blokus blokus = new Blokus();
             MainBox main = new MainBox(blokus);
             blokus.addObserver(main);
-            ControllerFX controller = new ControllerFX(blokus, main);
-            controller.start();
+            EventHandler pieceSelection = new ControllerFX(blokus, main);
+            main.addEventHandler(MouseEvent.MOUSE_PRESSED, pieceSelection);
             Scene scene = new Scene(main, 1000, 750);
             primaryStage.setScene(scene);
             primaryStage.show();

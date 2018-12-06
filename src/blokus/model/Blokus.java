@@ -38,6 +38,7 @@ public class Blokus extends Observable implements Game {
         this.currentMove = null;
         this.board = new Board();
         this.state = BlokusState.FIRST_ROUND;
+        currentPlayer.beginRound();
     }
 
     @Override
@@ -171,11 +172,14 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public void nextPlayer() {
+        currentPlayer.finishRound();
         if (currentPlayer.is(BlokusColor.GREEN)) {
             playerIterator = players.listIterator(0);
             currentPlayer = playerIterator.next();
+            currentPlayer.beginRound();
         } else {
             currentPlayer = playerIterator.next();
+            currentPlayer.beginRound();
         }
     }
 

@@ -31,11 +31,16 @@ public class PlayersDataPane extends VBox {
         setStyle();
     }
 
+    /**
+     * Gets the piece selected by the current player.
+     *
+     * @return the piece selected by the current player.
+     */
     Piece getCurrentPlayerPiece() {
         for (Node child : getChildren()) {
-            Player player = ((PlayerDataPane) child).getPlayer();
-            if (player.equals(blokus.getCurrentPlayer())) {
-                return ((PlayerDataPane) child).getSelectedPiece();
+            PlayerDataPane playerData = (PlayerDataPane) child;
+            if (playerData.getPlayer().isCurrentPlayer()) {
+                return playerData.getSelectedPiece();
             }
         }
         return null;

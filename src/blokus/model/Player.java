@@ -13,6 +13,7 @@ public class Player implements Comparable {
 
     private final BlokusColor color;
     private final Stock stock;
+    private boolean isCurrentPlayer;
     private Piece currentPiece;
 
     /**
@@ -24,6 +25,7 @@ public class Player implements Comparable {
     Player(BlokusColor color) {
         this.color = color;
         this.stock = new Stock(color);
+        this.isCurrentPlayer = false;
         this.currentPiece = null;
     }
 
@@ -63,6 +65,10 @@ public class Player implements Comparable {
         return currentPiece;
     }
 
+    public boolean isCurrentPlayer() {
+        return isCurrentPlayer;
+    }
+
     /**
      * Tells if this player is of the given color.
      *
@@ -81,6 +87,15 @@ public class Player implements Comparable {
     boolean hasPlacedFirstPiece() {
         return stock.getPieces().size() == 20;
     }
+
+    void beginRound() {
+        isCurrentPlayer = true;
+    }
+
+    void finishRound() {
+        isCurrentPlayer = false;
+    }
+
     /**
      * Requires a non empty stock.
      */
