@@ -7,7 +7,7 @@ import blokus.exception.ModelException;
  *
  * @author Logan Farci (47923)
  */
-class Square {
+public class Square {
 
     private final int row;
     private final int column;
@@ -20,7 +20,7 @@ class Square {
      * @throws blokus.exception.ModelException if the given row and column are
      * not valid.
      */
-    Square(int row, int column) {
+    public Square(int row, int column) {
         requireValidCoordinates(row, column);
         this.row = row;
         this.column = column;
@@ -45,7 +45,7 @@ class Square {
      *
      * @return the row of this square.
      */
-    int getRow() {
+    public int getRow() {
         return row;
     }
 
@@ -54,7 +54,7 @@ class Square {
      *
      * @return the column of this square.
      */
-    int getColumn() {
+    public int getColumn() {
         return column;
     }
 

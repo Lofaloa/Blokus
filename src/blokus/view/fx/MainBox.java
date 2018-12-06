@@ -2,6 +2,7 @@ package blokus.view.fx;
 
 import blokus.model.Game;
 import blokus.model.Piece;
+import blokus.model.Square;
 import java.util.Observable;
 import java.util.Observer;
 import javafx.scene.control.Menu;
@@ -40,6 +41,15 @@ public class MainBox extends VBox implements Observer {
      */
     public Piece getCurrentPlayerPiece() {
         return game.getCurrentPlayerPiece();
+    }
+
+    /**
+     * Gets the board square selected by the current player
+     *
+     * @return the board square selected by the current player
+     */
+    public Square getSelectedSquare() {
+        return game.getSelectedSquare();
     }
 
     /**

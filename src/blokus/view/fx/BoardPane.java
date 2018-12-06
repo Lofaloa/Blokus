@@ -2,7 +2,9 @@ package blokus.view.fx;
 
 import blokus.model.BlokusColor;
 import blokus.model.Board;
+import blokus.model.Square;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -15,6 +17,7 @@ import javafx.scene.paint.Color;
 public class BoardPane extends GridPane {
 
     private final Board board;
+    private Square selectedSquare;
 
     /**
      * Initializes this board pane with the given game.
@@ -23,8 +26,14 @@ public class BoardPane extends GridPane {
      */
     public BoardPane(Board board) {
         this.board = board;
+        this.selectedSquare = null;
         setBoard();
         setStyle();
+        addSelectionHandler();
+    }
+
+    Square getSelectedSquare() {
+        return selectedSquare;
     }
 
     /**
@@ -135,6 +144,14 @@ public class BoardPane extends GridPane {
      */
     final void setStyle() {
         this.setGridLinesVisible(true);
+    }
+
+    final void addSelectionHandler() {
+        addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
+            Rectangle selectedSquare = (Rectangle) event.getTarget();
+            this.selectedSquare = new Square(getRowIndex(selectedSquare),
+                    getColumnIndex(selectedSquare));
+        });
     }
 
 }

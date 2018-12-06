@@ -2,6 +2,7 @@ package blokus.view.fx;
 
 import blokus.model.Game;
 import blokus.model.Piece;
+import blokus.model.Square;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 
@@ -29,6 +30,10 @@ public class GameBox extends HBox {
      */
     Piece getCurrentPlayerPiece() {
         return playersData.getCurrentPlayerPiece();
+    }
+
+    Square getSelectedSquare() {
+        return board.getSelectedSquare();
     }
 
     /**

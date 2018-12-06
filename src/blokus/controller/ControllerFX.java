@@ -1,8 +1,10 @@
 package blokus.controller;
 
+import blokus.exception.ModelException;
 import blokus.model.Game;
 import blokus.model.Piece;
 import blokus.model.Shape;
+import blokus.model.Square;
 import blokus.view.fx.MainBox;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -27,16 +29,36 @@ public class ControllerFX implements EventHandler<MouseEvent> {
         this.view = view;
     }
 
+    void print(Piece p) {
+        System.out.println("Current player piece is of shape "
+                + p.getShape() + " of color "
+                + p.getColor());
+    }
+
+    void print(Square s) {
+        System.out.println("Selected square: " + s.getRow() + " " + s.getColumn());
+    }
+
     @Override
     public void handle(MouseEvent event) {
         Piece selectedPiece = view.getCurrentPlayerPiece();
-        if (selectedPiece != null) {
-            System.out.println("Current player piece is of shape "
-                    + selectedPiece.getShape() + " of color "
-                    + selectedPiece.getColor());
-            game.nextPlayer();
-        } else {
-            System.out.println("Pas de pièce selectionnee");
+        Square selectedSquare = view.getSelectedSquare();
+        try {
+            if (selectedPiece != null) {
+                print(selectedPiece);
+                game.selectCurrentPlayerPiece(selectedPiece.getShape());
+                if (selectedSquare != null) {
+                    print(selectedSquare);
+                    game.placePiece(selectedSquare.getRow(), selectedSquare.getColumn());
+                    selectedSquare = null;
+                    game.nextPlayer();
+                    System.out.println("Current player: " + game.getCurrentPlayer().getColor());
+                }
+            }
+        } catch (IllegalArgumentException
+                | IllegalStateException
+                | ModelException e) {
+            System.err.println(e.getMessage());
         }
     }
 
