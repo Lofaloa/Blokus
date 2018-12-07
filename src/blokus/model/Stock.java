@@ -29,6 +29,11 @@ public class Stock {
         this.pieces = buildPiecesOf(color);
         this.color = color;
     }
+    
+    Stock(List<Piece> pieces, BlokusColor color) {
+        this.pieces = pieces;
+        this.color = color;
+    }
 
     /**
      * Indicates that this stock is empty.
@@ -46,6 +51,10 @@ public class Stock {
      */
     List<Piece> getPieces() {
         return pieces;
+    }
+    
+    BlokusColor getColor() {
+        return color;
     }
 
     /**

@@ -25,6 +25,15 @@ public class Board {
     }
 
     /**
+     * Makes a copy of the given board.
+     *
+     * @param board is the board to copy.
+     */
+    Board(Board board) {
+        this.squares = board.getSquares();
+    }
+
+    /**
      * Gets the squares of this board.
      *
      * @return the squares of this board.

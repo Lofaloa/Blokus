@@ -43,7 +43,7 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public Board getBoard() {
-        return board;
+        return new Board(board);
     }
 
     @Override
@@ -68,9 +68,10 @@ public class Blokus extends Observable implements Game {
     @Override
     public List<Player> getWinner() {
         int highestScore = getHighestScore();
-        return players.stream()
+        List<Player> winners = players.stream()
                 .filter(p -> p.getScore() == highestScore)
                 .collect(Collectors.toList());
+        return Collections.unmodifiableList(winners);
     }
 
     /**

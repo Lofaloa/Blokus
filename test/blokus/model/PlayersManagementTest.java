@@ -34,8 +34,8 @@ public class PlayersManagementTest {
         Blokus g = new Blokus();
         //Players are free to place a piece wherever they like on the board
         g.endFirstRound();
+        g.getCurrentPlayer().clearStock();
         Player winner = g.getCurrentPlayer();
-        winner.clearStock();
         assertTrue(g.getWinner().contains(winner));
     }
 

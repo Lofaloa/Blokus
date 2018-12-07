@@ -28,6 +28,11 @@ public class Player implements Comparable {
         this.isCurrentPlayer = false;
         this.currentPiece = null;
     }
+    
+    Player(Player player) {
+        this.color = player.getColor();
+        this.stock = new Stock(player.getStock(), player.getColor());
+    }
 
     /**
      * Gets the score of this player.
