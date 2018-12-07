@@ -37,7 +37,7 @@ public class BoardPane extends GridPane {
     }
 
     /**
-     * Converts the given Blokus color to a color.
+     * Converts the given <i>Blokus</i> color to a color.
      *
      * @param color is the name of the color.
      * @return a color corresponding to the given color name.
@@ -147,10 +147,10 @@ public class BoardPane extends GridPane {
     }
 
     final void addSelectionHandler() {
-        addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            Rectangle selectedSquare = (Rectangle) event.getTarget();
-            this.selectedSquare = new Square(getRowIndex(selectedSquare),
-                    getColumnIndex(selectedSquare));
+        addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
+            Rectangle targetSquare = (Rectangle) event.getTarget();
+            BoardPane.this.selectedSquare = new Square(getRowIndex(targetSquare),
+                    getColumnIndex(targetSquare));
         });
     }
 

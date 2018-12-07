@@ -171,7 +171,7 @@ public class Board {
     }
 
     int getInBounds(int coordinate) {
-        return coordinate < 0 ? 0 : coordinate;
+        return coordinate < 0 ? 0 : coordinate > 19 ? 19 : coordinate;
     }
 
     /**

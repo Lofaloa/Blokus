@@ -13,10 +13,12 @@ import javafx.scene.layout.HBox;
  */
 public class GameBox extends HBox {
 
+    private final Game game;
     private final PlayersDataPane playersData;
     private final BoardPane board;
 
     GameBox(Game blokus) {
+        this.game = blokus;
         this.playersData = new PlayersDataPane(blokus);
         this.board = new BoardPane(blokus.getBoard());
         setContent();
