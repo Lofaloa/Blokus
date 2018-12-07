@@ -149,7 +149,7 @@ public class BoardPane extends GridPane {
     final void addSelectionHandler() {
         addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
             Rectangle targetSquare = (Rectangle) event.getTarget();
-            BoardPane.this.selectedSquare = new Square(getRowIndex(targetSquare),
+            this.selectedSquare = new Square(getRowIndex(targetSquare),
                     getColumnIndex(targetSquare));
         });
     }

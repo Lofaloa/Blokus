@@ -19,7 +19,8 @@ public class ControllerFX implements EventHandler<MouseEvent> {
 
     private final Game game;
     private final MainBox view;
-    private boolean currentPlayerSelectedAPiece = false;
+    private boolean hasCurrentPlayerSelectedPiece = false;
+    private boolean hasCurrentPlayerSelectedDestination = false;
 
     /**
      * Initializes this controller with the game to control.
@@ -74,14 +75,16 @@ public class ControllerFX implements EventHandler<MouseEvent> {
     public void handle(MouseEvent event) {
         System.out.println(game.getCurrentPlayer().getColor() + " has clicked...");
         try {
-            if (!currentPlayerSelectedAPiece && hasCurrentPlayerClickedAPiece()) {
-                selectCurrentPlayerPiece();
-                currentPlayerSelectedAPiece = true;
-            }
-            if (currentPlayerSelectedAPiece && hasCurrentPlayerClickedDestination()) {
+            if (hasCurrentPlayerSelectedPiece && hasCurrentPlayerSelectedDestination) {
                 placeCurrentPlayerPiece();
                 game.nextPlayer();
-                currentPlayerSelectedAPiece = false;
+                hasCurrentPlayerSelectedPiece = false;
+                hasCurrentPlayerSelectedDestination = false;
+            } else if (!hasCurrentPlayerSelectedPiece && hasCurrentPlayerClickedAPiece()) {
+                selectCurrentPlayerPiece();
+                hasCurrentPlayerSelectedPiece = true;
+            } else if (!hasCurrentPlayerSelectedDestination && hasCurrentPlayerClickedDestination()) {
+                hasCurrentPlayerSelectedDestination = true;
             }
         } catch (IllegalArgumentException | IllegalStateException | ModelException e) {
             displayAlert(e);
