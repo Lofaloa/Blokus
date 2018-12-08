@@ -9,7 +9,7 @@ import java.util.Objects;
  *
  * @author Logan Farci (47923)
  */
-public class Player implements Comparable {
+public class Player {
 
     private final BlokusColor color;
     private final Stock stock;
@@ -70,6 +70,11 @@ public class Player implements Comparable {
         return selectedPiece;
     }
 
+    /**
+     * Tells if this player is the current player of the game.
+     *
+     * @return true if this player is the current player of the game.
+     */
     public boolean isCurrentPlayer() {
         return isCurrentPlayer;
     }
@@ -180,20 +185,6 @@ public class Player implements Comparable {
             remove(stock.getPieces().get(1));
         }
         remove(getStock().get(0));
-    }
-
-    /**
-     * Compares this player to an other one bases on his/ her score.
-     *
-     * @param o is the object to compare this player to.
-     * @return a negative integer, zero, or a positive integer as this player
-     * has a smaller score, same score, or greater score than the specified
-     * object.
-     */
-    @Override
-    public int compareTo(Object o) {
-        Player other = (Player) Objects.requireNonNull(o);
-        return this.getScore() - other.getScore();
     }
 
 }

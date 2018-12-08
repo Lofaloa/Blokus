@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
- *
+ * Main class of <i>Blokus</i> graphical interface version.
  *
  * @author Logan Farci (47923)
  */
@@ -36,13 +36,14 @@ public class BlokusFX extends Application {
             primaryStage.show();
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
-            ex.printStackTrace();
             Platform.exit();
         }
     }
 
     /**
-     * @param args the command line arguments
+     * Entry point for <i>Blokus</i> graphical interface version.
+     *
+     * @param args nothing.
      */
     public static void main(String[] args) {
         Application.launch(args);

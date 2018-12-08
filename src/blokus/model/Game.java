@@ -69,7 +69,7 @@ public interface Game {
     public void placePiece(int row, int column);
 
     /**
-     * Rotates the current player piece n times.
+     * Rotates the current player piece 90 degrees clockwise.
      */
     public void rotateCurrentPlayerPiece();
 

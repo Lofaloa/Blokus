@@ -15,7 +15,6 @@ import javafx.scene.layout.VBox;
  */
 public class PlayersDataPane extends VBox {
 
-    private final Game blokus;
     private final List<Player> players;
 
     /**
@@ -25,7 +24,6 @@ public class PlayersDataPane extends VBox {
      * @param blokus is game to represent the players for.
      */
     public PlayersDataPane(Game blokus) {
-        this.blokus = blokus;
         this.players = blokus.getPlayers();
         setContent();
         setStyle();

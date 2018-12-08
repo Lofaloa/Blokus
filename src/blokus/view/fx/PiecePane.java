@@ -34,6 +34,11 @@ public class PiecePane extends GridPane {
         return isSelected;
     }
 
+    /**
+     * Gets this pane piece.
+     *
+     * @return this pane piece.
+     */
     public Piece getPiece() {
         return piece;
     }

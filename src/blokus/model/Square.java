@@ -1,6 +1,7 @@
 package blokus.model;
 
 import blokus.exception.ModelException;
+import java.util.Objects;
 
 /**
  * Represents a unit square.
@@ -70,12 +71,23 @@ public class Square {
         return new Square(row + rowOffset, column + columnOffset);
     }
 
+    /**
+     * Generates an hash code based on this square row and column.
+     *
+     * @return an hash code based on this square row and column.
+     */
     @Override
     public int hashCode() {
-        int hash = 5;
-        return hash;
+        return Objects.hash(row, column);
     }
 
+    /**
+     * Indicates if this square is equal to the given object. A square is equal
+     * to another square it has the same row and column.
+     *
+     * @param obj is the object to test the equality for.
+     * @return true if the given object is equal to this square.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {

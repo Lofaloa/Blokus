@@ -20,7 +20,7 @@ public class BlokusConsole {
         Blokus game = new Blokus();
         View view = new View(game);
         ControllerConsole controller = new ControllerConsole(game, view);
-        controller.launch();
+        controller.start();
     }
 
 }

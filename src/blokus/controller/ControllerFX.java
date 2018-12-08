@@ -26,6 +26,7 @@ public class ControllerFX implements EventHandler<MouseEvent> {
      * Initializes this controller with the game to control.
      *
      * @param game is the game to control.
+     * @param view is the view representing the game.
      */
     public ControllerFX(Game game, MainBox view) {
         this.game = game;

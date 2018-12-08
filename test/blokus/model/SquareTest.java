@@ -25,7 +25,7 @@ public class SquareTest {
      */
     @Test(expected = ModelException.class)
     public void initialization_case_2() {
-        Square s = new Square(-1, 3);
+        new Square(-1, 3);
     }
 
     /**
@@ -33,7 +33,7 @@ public class SquareTest {
      */
     @Test(expected = ModelException.class)
     public void initialization_case_3() {
-        Square s = new Square(20, 3);
+        new Square(20, 3);
     }
 
     /**
@@ -41,7 +41,7 @@ public class SquareTest {
      */
     @Test(expected = ModelException.class)
     public void initilization_case_4() {
-        Square s = new Square(2, 20);
+        new Square(2, 20);
     }
 
     /**
@@ -49,7 +49,7 @@ public class SquareTest {
      */
     @Test(expected = ModelException.class)
     public void initilization_case_5() {
-        Square s = new Square(2, -2);
+        new Square(2, -2);
     }
 
     /**
@@ -58,7 +58,7 @@ public class SquareTest {
     @Test(expected = ModelException.class)
     public void move_case_1() {
         Square pos = new Square(2, 3);
-        pos.move(-10, 23);
+        pos = pos.move(-10, 23);
     }
 
     /**
@@ -71,6 +71,9 @@ public class SquareTest {
         assertTrue(movedPos.getRow() == 4 && movedPos.getColumn() == 6);
     }
 
+    /**
+     * Equals method should be reflexive.
+     */
     @Test
     public void equals_is_reflexive() {
         Square s = new Square(0, 0);
@@ -78,6 +81,9 @@ public class SquareTest {
         assertEquals(s.hashCode(), s.hashCode());
     }
 
+    /**
+     * Equals method should be symmetric.
+     */
     @Test
     public void equals_is_symmetric() {
         Square s1 = new Square(0, 0);
@@ -87,6 +93,9 @@ public class SquareTest {
 
     }
 
+    /**
+     * Equals method should be transitive.
+     */
     @Test
     public void equals_is_transitive() {
         Square s1 = new Square(0, 0);
@@ -97,6 +106,9 @@ public class SquareTest {
         assertEquals(s2.hashCode(), s3.hashCode());
     }
 
+    /**
+     * Equals method should always return false with a null argument.
+     */
     @Test
     public void equals_is_false_with_null() {
         Square s = new Square(0, 0);
