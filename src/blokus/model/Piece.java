@@ -33,7 +33,7 @@ public class Piece {
      * @return the size of this piece.
      */
     public int getSize() {
-        return shape.getSize();
+        return shape.getNbOfSquares();
     }
 
     /**
@@ -88,6 +88,13 @@ public class Piece {
                     + " is not a valid position.");
         }
         return shape.contains(row, column);
+    }
+
+    /**
+     * Rotates this piece by 90 degrees clockwise.
+     */
+    public void rotate() {
+        shape.rotate();
     }
 
     /**

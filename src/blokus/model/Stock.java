@@ -68,7 +68,7 @@ public class Stock {
         } else {
             int nbOfSquare = 0;
             nbOfSquare = pieces.stream()
-                    .map(piece -> piece.getShape().getSize())
+                    .map(piece -> piece.getShape().getNbOfSquares())
                     .reduce(nbOfSquare, Integer::sum);
             return nbOfSquare;
         }

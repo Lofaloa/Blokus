@@ -137,12 +137,29 @@ public enum Shape {
     }
 
     /**
-     * Gets the size of this shape.
+     * Gets the number of squares of this shape.
+     *
+     * @return the number of square of this shape.
+     */
+    int getNbOfSquares() {
+        return squares.size();
+    }
+
+    /**
+     * Gets the size of this shape. The size of this shape represents the size
+     * of the array necessary to store this shape. For instance, shape n7 has a
+     * size of 3 because it would fit in a 3 by 3 array.
      *
      * @return the size of this shape.
      */
     int getSize() {
-        return squares.size();
+        int maxRow = squares.stream()
+                .mapToInt(s -> s.getRow())
+                .max().getAsInt();
+        int maxColumn = squares.stream()
+                .mapToInt(s -> s.getColumn())
+                .max().getAsInt();
+        return Integer.max(maxRow + 1, maxColumn + 1);
     }
 
     /**
@@ -161,6 +178,17 @@ public enum Shape {
         }
         return squares.stream().anyMatch(s -> s.getRow() == row
                 && s.getColumn() == column);
+    }
+
+    /**
+     * Rotates this shape 90 degrees clockwise.
+     */
+    void rotate() {
+        for (int i = 0; i < getNbOfSquares(); i++) {
+            Square current = squares.get(i);
+            squares.set(i, new Square(current.getColumn(),
+                    getSize() - current.getRow() - 1));
+        }
     }
 
 }

@@ -21,7 +21,6 @@ public class ControllerConsole {
     private final BlokusView view;
     private final String[] commandsNames;
 
-
     /**
      * Initializes this controller with the given view and game.
      *
@@ -31,7 +30,23 @@ public class ControllerConsole {
     public ControllerConsole(Blokus game, View view) {
         this.game = game;
         this.view = view;
-        this.commandsNames  = new String[]{"show", "stock", "play", "score"};
+        this.commandsNames = new String[]{"show", "stock", "play", "score", "exit"};
+    }
+
+    /**
+     * Rotates the current player piece n times.
+     *
+     * @param n the number of time to rotate the piece.
+     */
+    void rotateBy(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException(n + " is not valid, "
+                    + "rotation should be positive");
+        }
+        for (int i = 0; i < n; i++) {
+            game.rotateCurrentPlayerPiece();
+        }
+        view.printRotation(n);
     }
 
     /**
@@ -41,12 +56,13 @@ public class ControllerConsole {
      * @param row is the row of the board.
      * @param column is the column of the board.
      */
-    void play(int pieceId, int row, int column) {
+    void play(int pieceId, int row, int column, int rotation) {
         if (pieceId < 1 || 21 < pieceId) {
             throw new IllegalArgumentException(pieceId + " is not a valid piece "
                     + "number, it should be between 1 and 21.");
         }
         game.selectCurrentPlayerPiece(Shape.values()[--pieceId]);
+        rotateBy(rotation);
         game.placePiece(row, column);
         game.nextPlayer();
     }
@@ -88,12 +104,13 @@ public class ControllerConsole {
         }
         switch (requireCommandName(tokens[0])) {
             case "play":
-                if (tokens.length < 4) {
+                if (tokens.length < 5) {
                     throw new IllegalArgumentException("for playing a piece, "
                             + "please enter its id and the position where to "
                             + "place it.");
                 }
-                play(parseInt(tokens[1]), parseInt(tokens[2]), parseInt(tokens[3]));
+                play(parseInt(tokens[1]), parseInt(tokens[2]), parseInt(tokens[3]),
+                        parseInt(tokens[4]));
                 break;
             case "show":
                 view.printBoard();
@@ -105,7 +122,7 @@ public class ControllerConsole {
                 view.printCurrentPlayerScore();
                 break;
             default:
-                throw new IllegalArgumentException("The command is not defined.");
+                System.exit(0);
         }
     }
 

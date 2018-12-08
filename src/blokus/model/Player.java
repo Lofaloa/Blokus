@@ -14,7 +14,7 @@ public class Player implements Comparable {
     private final BlokusColor color;
     private final Stock stock;
     private boolean isCurrentPlayer;
-    private Piece currentPiece;
+    private Piece selectedPiece;
 
     /**
      * Initializes this player with the given color and a stock of 21 distinct
@@ -26,9 +26,9 @@ public class Player implements Comparable {
         this.color = color;
         this.stock = new Stock(color);
         this.isCurrentPlayer = false;
-        this.currentPiece = null;
+        this.selectedPiece = null;
     }
-    
+
     Player(Player player) {
         this.color = player.getColor();
         this.stock = new Stock(player.getStock(), player.getColor());
@@ -67,7 +67,7 @@ public class Player implements Comparable {
      * @return the current piece of this player.
      */
     Piece getCurrentPiece() {
-        return currentPiece;
+        return selectedPiece;
     }
 
     public boolean isCurrentPlayer() {
@@ -127,9 +127,9 @@ public class Player implements Comparable {
      */
     Piece takeCurrentPiece() {
         requireNonEmptyStock();
-        Objects.requireNonNull(currentPiece, "This player has not selected a piece.");
-        stock.remove(currentPiece);
-        return currentPiece;
+        Objects.requireNonNull(selectedPiece, "This player has not selected a piece.");
+        stock.remove(selectedPiece);
+        return selectedPiece;
     }
 
     /**
@@ -153,7 +153,14 @@ public class Player implements Comparable {
         requireNonEmptyStock();
         Piece piece = Objects.requireNonNull(stock.getPiece(shape), "Selected "
                 + "piece has not been found.");
-        currentPiece = piece;
+        selectedPiece = piece;
+    }
+
+    /**
+     * Rotates this player selected piece 90 degrees clockwise.
+     */
+    void rotateSelectedPiece() {
+        selectedPiece.rotate();
     }
 
     /**

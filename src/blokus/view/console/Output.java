@@ -66,6 +66,17 @@ class Output {
     }
 
     /**
+     * Prints a rotation message.
+     *
+     * @param rotation is the number of rotation.
+     */
+    void printRotation(int rotation) {
+        if (rotation > 0) {
+            System.out.println("You just rotate your piece " + rotation + " times.");
+        }
+    }
+
+    /**
      * Prints a prompt for the user.
      */
     void printPrompt() {

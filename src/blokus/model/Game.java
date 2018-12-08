@@ -69,6 +69,11 @@ public interface Game {
     public void placePiece(int row, int column);
 
     /**
+     * Rotates the current player piece n times.
+     */
+    public void rotateCurrentPlayerPiece();
+
+    /**
      * Passes to the next player.
      */
     public void nextPlayer();

@@ -14,7 +14,7 @@ public class View implements BlokusView {
 
     /**
      * Initializes this view with the game to represent.
-     * 
+     *
      * @param game is the game to represent.
      */
     public View(Blokus game) {
@@ -31,7 +31,7 @@ public class View implements BlokusView {
     @Override
     public void printBoard() {
         out.printBoard();
-    }   
+    }
 
     @Override
     public void printCurrentPlayer() {
@@ -51,6 +51,11 @@ public class View implements BlokusView {
     @Override
     public void printExceptionMessage(Exception exception) {
         out.printExceptionMessage(exception);
+    }
+
+    @Override
+    public void printRotation(int rotation) {
+        out.printRotation(rotation);
     }
 
     @Override

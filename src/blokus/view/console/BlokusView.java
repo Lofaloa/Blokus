@@ -11,7 +11,7 @@ public interface BlokusView {
      * Prints the title of the game and a help for the players.
      */
     public void printStart();
-    
+
     /**
      * Prints the current state of the board.
      */
@@ -21,7 +21,7 @@ public interface BlokusView {
      * Prints the current player of the game.
      */
     public void printCurrentPlayer();
-    
+
     /**
      * Prints the current player stock.
      */
@@ -31,17 +31,24 @@ public interface BlokusView {
      * Prints the current player score.
      */
     public void printCurrentPlayerScore();
-    
+
     /**
      * Prints the message of the given exception.
-     * 
+     *
      * @param exception is the exception to print a message for.
      */
     public void printExceptionMessage(Exception exception);
 
     /**
+     * Prints a rotation message.
+     *
+     * @param rotation is the number of rotation.
+     */
+    public void printRotation(int rotation);
+
+    /**
      * Reads a command entered by an user.
-     * 
+     *
      * @return an array of tokens forming the read command.
      */
     public String[] readCommand();

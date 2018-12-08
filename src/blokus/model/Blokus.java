@@ -172,6 +172,11 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
+    public void rotateCurrentPlayerPiece() {
+        currentPlayer.rotateSelectedPiece();
+    }
+
+    @Override
     public void nextPlayer() {
         currentPlayer.finishRound();
         if (currentPlayer.is(BlokusColor.GREEN)) {
