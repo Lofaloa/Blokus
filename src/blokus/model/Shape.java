@@ -191,4 +191,15 @@ public enum Shape {
         }
     }
 
+    /**
+     * Turns this shape over.
+     */
+    void turnOver() {
+        for (int i = 0; i < getNbOfSquares(); i++) {
+            Square current = squares.get(i);
+            squares.set(i, new Square(current.getRow(),
+                    getSize() - current.getColumn() - 1));
+        }
+    }
+
 }

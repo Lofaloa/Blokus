@@ -98,6 +98,13 @@ public class Piece {
     }
 
     /**
+     * Turns this shape over.
+     */
+    public void turnOver() {
+        shape.turnOver();
+    }
+
+    /**
      * Gets a hash code based on this piece color and shape.
      *
      * @return a hash code based on this piece color and shape.

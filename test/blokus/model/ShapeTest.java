@@ -104,4 +104,16 @@ public class ShapeTest {
         assertTrue(s.getSquares().contains(new Square(1, 1)));
     }
 
+    /**
+     * Turn shape 4 (over should get.
+     */
+    @Test
+    public void turnOver_case_1() {
+        Shape s = Shape.SHAPE_04;
+        s.turnOver();
+        assertTrue(s.getSquares().contains(new Square(0, 1)));
+        assertTrue(s.getSquares().contains(new Square(1, 0)));
+        assertTrue(s.getSquares().contains(new Square(1, 1)));
+    }
+
 }
