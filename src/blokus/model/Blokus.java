@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Observable;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 public class Blokus extends Observable implements Game {
 
     private final List<Player> players;
-    private ListIterator<Player> playerIterator;
+    private PlayerIterator playerIterator;
     private final Board board;
     private Player currentPlayer;
     private Move currentMove;
@@ -33,8 +32,8 @@ public class Blokus extends Observable implements Game {
                 new Player(BlokusColor.YELLOW),
                 new Player(BlokusColor.RED),
                 new Player(BlokusColor.GREEN)));
-        this.playerIterator = players.listIterator();
-        this.currentPlayer = playerIterator.next();
+        this.playerIterator = new PlayerIterator(players);
+        this.currentPlayer = players.get(0);
         this.currentMove = null;
         this.board = new Board();
         this.state = BlokusState.FIRST_ROUND;
@@ -178,15 +177,17 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public void nextPlayer() {
-        currentPlayer.finishRound();
-        if (currentPlayer.is(BlokusColor.GREEN)) {
-            playerIterator = players.listIterator(0);
-            currentPlayer = playerIterator.next();
-            currentPlayer.beginRound();
-        } else {
-            currentPlayer = playerIterator.next();
-            currentPlayer.beginRound();
-        }
+//        currentPlayer.finishRound();
+//        if (currentPlayer.is(BlokusColor.GREEN)) {
+//            playerIterator = players.listIterator(0);
+//            currentPlayer = playerIterator.next();
+//            currentPlayer.beginRound();
+//        } else {
+//            currentPlayer = playerIterator.next();
+//            currentPlayer.beginRound();
+//        }
+        currentPlayer = playerIterator.next();
+//        currentPlayer.beginRound();
     }
 
     void notifyView() {

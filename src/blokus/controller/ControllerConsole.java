@@ -30,7 +30,8 @@ public class ControllerConsole {
     public ControllerConsole(Blokus game, View view) {
         this.game = game;
         this.view = view;
-        this.commandsNames = new String[]{"show", "stock", "play", "score", "exit"};
+        this.commandsNames = new String[]{"show", "stock", "play", "score",
+            "exit", "miss", "withdraw"};
     }
 
     /**
@@ -121,6 +122,15 @@ public class ControllerConsole {
             case "score":
                 view.printCurrentPlayerScore();
                 break;
+            case "miss":
+                System.out.println(game.getCurrentPlayer().getColor() + " player decided to miss this round!");
+                game.getCurrentPlayer().missTurn();
+                game.nextPlayer();
+                break;
+            case "withdraw":
+                System.out.println(game.getCurrentPlayer().getColor() + " player decided to withdraw from the game! Bye!");
+                game.getCurrentPlayer().withdraw();
+                game.nextPlayer();
             default:
                 System.exit(0);
         }

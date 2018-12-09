@@ -13,6 +13,7 @@ public class Player {
 
     private final BlokusColor color;
     private final Stock stock;
+    private PlayerState state;
     private boolean isCurrentPlayer;
     private Piece selectedPiece;
 
@@ -25,6 +26,7 @@ public class Player {
     Player(BlokusColor color) {
         this.color = color;
         this.stock = new Stock(color);
+        this.state = PlayerState.WAITING;
         this.isCurrentPlayer = false;
         this.selectedPiece = null;
     }
@@ -89,6 +91,10 @@ public class Player {
         return this.color == color;
     }
 
+    boolean isWithdrawn() {
+        return state == PlayerState.WITHDRAWN;
+    }
+
     /**
      * Tells if this player has placed his/ her first piece.
      *
@@ -99,11 +105,21 @@ public class Player {
     }
 
     void beginRound() {
+        state = PlayerState.PLAYING;
         isCurrentPlayer = true;
     }
 
     void finishRound() {
+        state = PlayerState.WAITING;
         isCurrentPlayer = false;
+    }
+
+    public void missTurn() {
+        state = PlayerState.MISSING_TURN;
+    }
+
+    public void withdraw() {
+        state = PlayerState.WITHDRAWN;
     }
 
     /**
@@ -122,6 +138,10 @@ public class Player {
     public boolean owns(Piece piece) {
         Objects.requireNonNull(piece, "No given piece.");
         return stock.contains(piece);
+    }
+
+    PlayerState getState() {
+        return state;
     }
 
     /**

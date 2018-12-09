@@ -74,7 +74,7 @@ public class PlayersManagementTest {
      * The first player should be blue.
      */
     @Test
-    public void getCurrentPlayer_case_1() {
+    public void nextPlayer_case_1() {
         Blokus g = new Blokus();
         assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
     }
@@ -83,7 +83,7 @@ public class PlayersManagementTest {
      * The yellow player follows the blue player.
      */
     @Test
-    public void getCurrentPlayer_case_2() {
+    public void nextPlayer_case_2() {
         Blokus g = new Blokus();
         g.nextPlayer();
         assertEquals(BlokusColor.YELLOW, g.getCurrentPlayer().getColor());
@@ -93,7 +93,7 @@ public class PlayersManagementTest {
      * The red player follows the yellow player.
      */
     @Test
-    public void getCurrentPlayer_case_3() {
+    public void nextPlayer_case_3() {
         Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
@@ -104,7 +104,7 @@ public class PlayersManagementTest {
      * The green player follows the red player.
      */
     @Test
-    public void getCurrentPlayer_case_4() {
+    public void nextPlayer_case_4() {
         Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
@@ -116,11 +116,95 @@ public class PlayersManagementTest {
      * The blue player follows the green player.
      */
     @Test
-    public void getCurrentPlayer_case_5() {
+    public void nextPlayer_case_5() {
         Blokus g = new Blokus();
         g.nextPlayer();
         g.nextPlayer();
         g.nextPlayer();
+        g.nextPlayer();
+        assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
+    }
+
+    /**
+     * When blue player withdraws at first round, she/ he should not be
+     * included in the game anymore.
+     */
+    @Test
+    public void nextPlayer_case_6() {
+        Blokus g = new Blokus();
+        g.getCurrentPlayer().withdraw();
+        g.nextPlayer();
+        g.nextPlayer();
+        g.nextPlayer();
+        g.nextPlayer();
+        assertEquals(BlokusColor.YELLOW, g.getCurrentPlayer().getColor());
+    }
+
+    /**
+     * When yellow player withdraws at first round, she/ he should not be
+     * included in the game anymore.
+     */
+    @Test
+    public void nextPlayer_case_7() {
+        Blokus g = new Blokus();
+        //Passes to yellow
+        g.nextPlayer();
+        g.getCurrentPlayer().withdraw();
+        //Passes to red
+        g.nextPlayer();
+        //Passes to green
+        g.nextPlayer();
+        //Passes to blue
+        g.nextPlayer();
+        //Passes to red, not to yellow
+        g.nextPlayer();
+        assertEquals(BlokusColor.RED, g.getCurrentPlayer().getColor());
+    }
+
+    /**
+     * When red player withdraws at first round, she/ he should not be
+     * included in the game anymore.
+     */
+    @Test
+    public void nextPlayer_case_8() {
+        Blokus g = new Blokus();
+        //Passes to yellow
+        g.nextPlayer();
+        //Passes to red
+        g.nextPlayer();
+        g.getCurrentPlayer().withdraw();
+        //Passes to green
+        g.nextPlayer();
+        //Passes to blue
+        g.nextPlayer();
+        //Passes to yellow
+        g.nextPlayer();
+        //Passes to green, not to red
+        g.nextPlayer();
+        assertEquals(BlokusColor.GREEN, g.getCurrentPlayer().getColor());
+    }
+
+    /**
+     * When green player withdraws at first round, she/ he should not be
+     * included in the game anymore.
+     */
+    @Test
+    public void nextPlayer_case_9() {
+        Blokus g = new Blokus();
+        //Passes to yellow
+        g.nextPlayer();
+        //Passes to red
+        g.nextPlayer();
+        //Passes to green
+        g.nextPlayer();
+        g.getCurrentPlayer().withdraw();
+        //Passes to blue
+        g.nextPlayer();
+        //Passes to yellow
+        g.nextPlayer();
+        //Passes to red
+        g.nextPlayer();
+        //Passes to blue, not to green
         g.nextPlayer();
         assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
     }
