@@ -105,13 +105,17 @@ public class Player {
     }
 
     void beginRound() {
-        state = PlayerState.PLAYING;
-        isCurrentPlayer = true;
+        if (!isWithdrawn()) {
+            state = PlayerState.PLAYING;
+            isCurrentPlayer = true;
+        }
     }
 
     void finishRound() {
-        state = PlayerState.WAITING;
-        isCurrentPlayer = false;
+        if (!isWithdrawn()) {
+            state = PlayerState.WAITING;
+            isCurrentPlayer = false;
+        }
     }
 
     public void missTurn() {

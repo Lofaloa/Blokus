@@ -179,7 +179,7 @@ public class Board {
         return contains(row, column) && isEmptyAt(row, column);
     }
 
-    int getInBounds(int coordinate) {
+    int wrapIndex(int coordinate) {
         return coordinate < 0 ? 0 : coordinate > 19 ? 19 : coordinate;
     }
 
@@ -195,14 +195,14 @@ public class Board {
     boolean isSquareTouchingSameColorAtCorner(Square square, BlokusColor colorSquare) {
         requireNonNull(square, "isSquareTouchingSameColorAtCorner - no square given");
         requireNonNull(colorSquare, "isSquareTouchingSameColorAtCorner - no color given");
-        return colorSquare == getColorAt(getInBounds(square.getRow() - 1),
-                getInBounds(square.getColumn() - 1))
-                || colorSquare == getColorAt(getInBounds(square.getRow() - 1),
-                        getInBounds(square.getColumn() + 1))
-                || colorSquare == getColorAt(getInBounds(square.getRow() + 1),
-                        getInBounds(square.getColumn() - 1))
-                || colorSquare == getColorAt(getInBounds(square.getRow() + 1),
-                        getInBounds(square.getColumn() + 1));
+        return colorSquare == getColorAt(wrapIndex(square.getRow() - 1),
+                wrapIndex(square.getColumn() - 1))
+                || colorSquare == getColorAt(wrapIndex(square.getRow() - 1),
+                        wrapIndex(square.getColumn() + 1))
+                || colorSquare == getColorAt(wrapIndex(square.getRow() + 1),
+                        wrapIndex(square.getColumn() - 1))
+                || colorSquare == getColorAt(wrapIndex(square.getRow() + 1),
+                        wrapIndex(square.getColumn() + 1));
     }
 
     /**
@@ -231,10 +231,10 @@ public class Board {
     boolean isSquareTouchingSameColorBySide(Square square, BlokusColor colorSquare) {
         requireNonNull(square, "isSquareTouchingSameColorBySide - no square given");
         requireNonNull(colorSquare, "isSquareTouchingSameColorBySide - no color given");
-        return colorSquare == getColorAt(getInBounds(square.getRow() - 1), square.getColumn())
-                || colorSquare == getColorAt(getInBounds(square.getRow() + 1), square.getColumn())
-                || colorSquare == getColorAt(square.getRow(), getInBounds(square.getColumn() + 1))
-                || colorSquare == getColorAt(square.getRow(), getInBounds(square.getColumn() + -1));
+        return colorSquare == getColorAt(wrapIndex(square.getRow() - 1), square.getColumn())
+                || colorSquare == getColorAt(wrapIndex(square.getRow() + 1), square.getColumn())
+                || colorSquare == getColorAt(square.getRow(), wrapIndex(square.getColumn() + 1))
+                || colorSquare == getColorAt(square.getRow(), wrapIndex(square.getColumn() + -1));
     }
 
     /**

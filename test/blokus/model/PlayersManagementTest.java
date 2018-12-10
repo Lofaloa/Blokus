@@ -126,8 +126,8 @@ public class PlayersManagementTest {
     }
 
     /**
-     * When blue player withdraws at first round, she/ he should not be
-     * included in the game anymore.
+     * When blue player withdraws at first round, she/ he should not be included
+     * in the game anymore.
      */
     @Test
     public void nextPlayer_case_6() {
@@ -162,8 +162,8 @@ public class PlayersManagementTest {
     }
 
     /**
-     * When red player withdraws at first round, she/ he should not be
-     * included in the game anymore.
+     * When red player withdraws at first round, she/ he should not be included
+     * in the game anymore.
      */
     @Test
     public void nextPlayer_case_8() {
@@ -198,6 +198,32 @@ public class PlayersManagementTest {
         //Passes to green
         g.nextPlayer();
         g.getCurrentPlayer().withdraw();
+        //Passes to blue
+        g.nextPlayer();
+        //Passes to yellow
+        g.nextPlayer();
+        //Passes to red
+        g.nextPlayer();
+        //Passes to blue, not to green
+        g.nextPlayer();
+        assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
+    }
+
+    /**
+     * When two players are withdrawn, there should be only 2 playing players
+     * left.
+     */
+    @Test
+    public void nextPlayer_case_10() {
+        Blokus g = new Blokus();
+        //Blue is withdrawn.
+        g.getCurrentPlayer().withdraw();
+        //Passes to yellow
+        g.nextPlayer();
+        //Passes to red
+        g.nextPlayer();
+        //Passes to green
+        g.nextPlayer();
         //Passes to blue
         g.nextPlayer();
         //Passes to yellow
