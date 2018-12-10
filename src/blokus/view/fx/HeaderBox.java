@@ -1,6 +1,7 @@
 package blokus.view.fx;
 
 import blokus.model.Player;
+import blokus.model.PlayerState;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -13,6 +14,7 @@ public class HeaderBox extends HBox {
 
     private final Player player;
     private final Text playerNumber;
+    private final Text state;
     private final Text score;
 
     /**
@@ -23,9 +25,23 @@ public class HeaderBox extends HBox {
     public HeaderBox(Player player) {
         this.player = player;
         playerNumber = new Text("Joueur n°" + getPlayerNumber(player));
+        state = new Text(toString(player.getState()));
         score = new Text("Score: " + player.getScore());
         setContent();
         setStyle();
+    }
+
+    final String toString(PlayerState state) {
+        switch (state) {
+            case PLAYING:
+                return "En train de jouer...";
+            case MISSING_TURN:
+                return "Passes son tour...";
+            case WAITING:
+                return "Attend son tour...";
+            default:
+                return "A abandonné.";
+        }
     }
 
     final int getPlayerNumber(Player player) {
@@ -47,12 +63,17 @@ public class HeaderBox extends HBox {
     void updateScore() {
         score.setText("Score: " + player.getScore());
     }
+    
+    void update() {
+        score.setText("Score: " + player.getScore());
+        state.setText(toString(player.getState()));
+    }
 
     /**
      * Sets the content of this header.
      */
     final void setContent() {
-        getChildren().addAll(playerNumber, score);
+        getChildren().addAll(playerNumber, score, state);
     }
 
     /**

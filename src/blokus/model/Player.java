@@ -144,7 +144,12 @@ public class Player {
         return stock.contains(piece);
     }
 
-    PlayerState getState() {
+    /**
+     * Gets this player state
+     * 
+     * @return this player.
+     */
+    public PlayerState getState() {
         return state;
     }
 

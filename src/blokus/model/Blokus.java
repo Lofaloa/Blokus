@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class Blokus extends Observable implements Game {
 
     private final List<Player> players;
-    private PlayerIterator playerIterator;
+    private final PlayerIterator playerIterator;
     private final Board board;
     private Player currentPlayer;
     private Move currentMove;

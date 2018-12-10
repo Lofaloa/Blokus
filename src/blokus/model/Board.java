@@ -180,7 +180,7 @@ public class Board {
     }
 
     int wrapIndex(int coordinate) {
-        return coordinate < 0 ? 0 : coordinate > 19 ? 19 : coordinate;
+        return coordinate < 0 ? 0 : coordinate > SIZE - 1 ? SIZE - 1 : coordinate;
     }
 
     /**
