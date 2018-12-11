@@ -31,7 +31,7 @@ public class ControllerConsole {
         this.game = game;
         this.view = view;
         this.commandsNames = new String[]{"show", "stock", "play", "score",
-            "exit", "miss", "withdraw"};
+            "exit", "miss", "withdraw", "players", "help"};
     }
 
     /**
@@ -131,6 +131,13 @@ public class ControllerConsole {
                 System.out.println(game.getCurrentPlayer().getColor() + " player decided to withdraw from the game! Bye!");
                 game.getCurrentPlayer().withdraw();
                 game.nextPlayer();
+                break;
+            case "players":
+                view.printPlayers();
+                break;
+            case "help":
+                view.printHelp();
+                break;
             default:
                 System.exit(0);
         }

@@ -25,6 +25,9 @@ public class View implements BlokusView {
     @Override
     public void printStart() {
         out.printTitle();
+    }
+
+    public void printHelp() {
         out.printHelp();
     }
 
@@ -46,6 +49,11 @@ public class View implements BlokusView {
     @Override
     public void printCurrentPlayerScore() {
         out.printCurrentPlayerScore();
+    }
+
+    @Override
+    public void printPlayers() {
+        out.printPlayers();
     }
 
     @Override

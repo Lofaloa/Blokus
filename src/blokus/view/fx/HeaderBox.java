@@ -24,7 +24,7 @@ public class HeaderBox extends HBox {
      */
     public HeaderBox(Player player) {
         this.player = player;
-        playerNumber = new Text("Joueur n°" + getPlayerNumber(player));
+        playerNumber = new Text("Joueur n°" + toNumber(player));
         state = new Text(toString(player.getState()));
         score = new Text("Score: " + player.getScore());
         setContent();
@@ -44,7 +44,7 @@ public class HeaderBox extends HBox {
         }
     }
 
-    final int getPlayerNumber(Player player) {
+    final int toNumber(Player player) {
         switch (player.getColor()) {
             case BLUE:
                 return 1;
@@ -57,13 +57,6 @@ public class HeaderBox extends HBox {
         }
     }
 
-    /**
-     * Updates the displaid score to the current score of the player.
-     */
-    void updateScore() {
-        score.setText("Score: " + player.getScore());
-    }
-    
     void update() {
         score.setText("Score: " + player.getScore());
         state.setText(toString(player.getState()));

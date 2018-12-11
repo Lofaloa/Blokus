@@ -49,7 +49,7 @@ public class PlayerDataPane extends VBox {
      * Updates this player data pane.
      */
     void update() {
-        header.updateScore();
+        header.update();
         stock.update();
     }
 

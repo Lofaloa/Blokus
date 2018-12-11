@@ -4,8 +4,9 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Represents an iterator over a list of players.
- * 
+ * Represents an iterator over a list of players. This iterator passes the
+ * players who are withdrawn from the game.
+ *
  * @author Logan Farci (47923)
  */
 class PlayerIterator implements Iterator<Player> {
@@ -26,13 +27,19 @@ class PlayerIterator implements Iterator<Player> {
         return players.get(0);
     }
 
+    Player getNext() {
+        if (current().is(BlokusColor.GREEN)) {
+            return getFirst();
+        } else {
+            return players.get(++currentPlayerIndex);
+        }
+    }
+
     @Override
     public Player next() {
-        Player nextPlayer;
-        if (current().is(BlokusColor.GREEN)) {
-            nextPlayer = getFirst();
-        } else {
-            nextPlayer = players.get(++currentPlayerIndex);
+        Player nextPlayer = getNext();
+        while (nextPlayer.isWithdrawn()) {
+            nextPlayer = getNext();
         }
         return nextPlayer;
     }

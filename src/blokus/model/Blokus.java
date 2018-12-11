@@ -37,7 +37,7 @@ public class Blokus extends Observable implements Game {
         this.currentMove = null;
         this.board = new Board();
         this.state = BlokusState.FIRST_ROUND;
-        currentPlayer.beginRound();
+        currentPlayer.startPlaying();
     }
 
     @Override
@@ -101,10 +101,6 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public boolean isOver() {
-        if (isFirstRound()) {
-            throw new IllegalStateException("The game is at first round. Thus,"
-                    + "6 it can't be over yet");
-        }
         return areAllPlayersStockEmpty() || areAllPlayersWithDrawn();
     }
 
@@ -189,12 +185,10 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public void nextPlayer() {
-        currentPlayer.finishRound();
+        currentPlayer.startWaiting();
         currentPlayer = playerIterator.next();
-        while (currentPlayer.isWithdrawn()) {
-            currentPlayer = playerIterator.next();
-        }
-        currentPlayer.beginRound();
+        currentPlayer.startPlaying();
+        notifyView();
     }
 
     void notifyView() {

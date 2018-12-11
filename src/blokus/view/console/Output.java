@@ -3,6 +3,7 @@ package blokus.view.console;
 import blokus.model.Blokus;
 import blokus.model.BlokusColor;
 import blokus.model.Piece;
+import blokus.model.Player;
 import blokus.model.Stock;
 
 /**
@@ -28,17 +29,27 @@ class Output {
      */
     void printTitle() {
         System.out.println("BLOKUS - Logan Farci (47923), cours d'ateliers logiciel");
+        System.out.println("Hi! Type \"help\" to print the commands of the game and their actions");
+    }
+
+    void printCommand(String name, String description) {
+        System.out.printf("%-25s%-5s\n", name, description);
     }
 
     /**
      * Prints a help for the players.
      */
     void printHelp() {
-        System.out.println("COMMANDS:");
-        System.out.println("show - shows the board of the game");
-        System.out.println("stock - shows the stock of the current player");
-        System.out.println("play n i j - place the piece n of the current player"
-                + " stock in the board a (i; j).");
+        System.out.println("**Commands list**");
+        printCommand("play n i j r", "places the piece n of the current player"
+                + " stock in the board at row i, column j rotated r times.");
+        printCommand("show", "shows the board of the game at its current state.");
+        printCommand("stock", "shows the stock of the current player");
+        printCommand("miss", "makes the current play miss the current turn");
+        printCommand("withdraw", "makes the current player withdraw from the game");
+        printCommand("players", "prints all the players with their state and score");
+        printCommand("help", "prints this command list");
+        printCommand("exit", "exit the game.");
     }
 
     /**
@@ -77,10 +88,12 @@ class Output {
     }
 
     /**
-     * Prints a prompt for the user.
+     * Prints all the players of the game with their score and state.
      */
-    void printPrompt() {
-        System.out.print("> ");
+    void printPlayers() {
+        for (Player player : game.getPlayers()) {
+            System.out.println(player.getColor() + " is " + player.getState() + "(score: " + player.getScore() + ").");
+        }
     }
 
     /**

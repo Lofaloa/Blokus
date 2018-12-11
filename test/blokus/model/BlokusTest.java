@@ -25,19 +25,10 @@ public class BlokusTest {
     }
 
     /**
-     * Asking Blokus if the game is over during first round causes an exception.
-     */
-    @Test(expected = IllegalStateException.class)
-    public void isOver_case_1() {
-        Blokus g = new Blokus();
-        g.isOver();
-    }
-
-    /**
      * Blokus is over when all the players have an empty stock.
      */
     @Test
-    public void isOver_case_2() {
+    public void isOver_case_1() {
         Blokus g = new Blokus();
         g.endFirstRound();
         for (Player player : g.getPlayers()) {
@@ -51,7 +42,7 @@ public class BlokusTest {
      * his pieces.
      */
     @Test
-    public void isOver_case_3() {
+    public void isOver_case_2() {
         Blokus g = new Blokus();
         g.endFirstRound();
         for (int i = 0; i < 3; i++) {
@@ -64,7 +55,7 @@ public class BlokusTest {
      * Blokus is over when all the players are withdrawn.
      */
     @Test
-    public void isOver_case_4() {
+    public void isOver_case_3() {
         Blokus g = new Blokus();
         g.endFirstRound();
         for (Player player : g.getPlayers()) {
@@ -77,7 +68,7 @@ public class BlokusTest {
      * Blokus should not be over when one of the players is not withdrawn.
      */
     @Test
-    public void isOver_case_5() {
+    public void isOver_case_4() {
         Blokus g = new Blokus();
         g.endFirstRound();
         for (int i = 0; i < 3; i++) {

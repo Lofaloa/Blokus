@@ -18,6 +18,11 @@ public interface BlokusView {
     public void printBoard();
 
     /**
+     * Prints an help to the user.
+     */
+    public void printHelp();
+
+    /**
      * Prints the current player of the game.
      */
     public void printCurrentPlayer();
@@ -31,6 +36,11 @@ public interface BlokusView {
      * Prints the current player score.
      */
     public void printCurrentPlayerScore();
+
+    /**
+     * Prints all the players of the game with their score and state.
+     */
+    public void printPlayers();
 
     /**
      * Prints the message of the given exception.

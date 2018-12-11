@@ -91,8 +91,22 @@ public class Player {
         return this.color == color;
     }
 
+    /**
+     * Tells if this player is withdrawn.
+     *
+     * @return true if this player is withdrawn.
+     */
     boolean isWithdrawn() {
         return state == PlayerState.WITHDRAWN;
+    }
+
+    /**
+     * Tells if this player is missing the current turn.
+     *
+     * @return true if this player is missing the current turn.
+     */
+    boolean isMissingTurn() {
+        return state == PlayerState.MISSING_TURN;
     }
 
     /**
@@ -104,18 +118,18 @@ public class Player {
         return stock.getPieces().size() == 20;
     }
 
-    void beginRound() {
+    void startPlaying() {
         if (!isWithdrawn()) {
             state = PlayerState.PLAYING;
             isCurrentPlayer = true;
         }
     }
 
-    void finishRound() {
-        if (!isWithdrawn()) {
+    void startWaiting() {
+        if (!isMissingTurn() && !isWithdrawn()) {
             state = PlayerState.WAITING;
-            isCurrentPlayer = false;
         }
+        isCurrentPlayer = false;
     }
 
     public void missTurn() {
@@ -146,7 +160,7 @@ public class Player {
 
     /**
      * Gets this player state
-     * 
+     *
      * @return this player.
      */
     public PlayerState getState() {
@@ -163,6 +177,9 @@ public class Player {
         requireNonEmptyStock();
         Objects.requireNonNull(selectedPiece, "This player has not selected a piece.");
         stock.remove(selectedPiece);
+        if (stock.isEmpty()) {
+            state = PlayerState.DONE;
+        }
         return selectedPiece;
     }
 
