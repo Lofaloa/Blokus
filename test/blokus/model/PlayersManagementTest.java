@@ -220,19 +220,16 @@ public class PlayersManagementTest {
         g.getCurrentPlayer().withdraw();
         //Passes to yellow
         g.nextPlayer();
+        g.getCurrentPlayer().withdraw();
         //Passes to red
         g.nextPlayer();
         //Passes to green
         g.nextPlayer();
-        //Passes to blue
+        //Passes to red, not to blue
         g.nextPlayer();
-        //Passes to yellow
+        //Passes to green
         g.nextPlayer();
-        //Passes to red
-        g.nextPlayer();
-        //Passes to blue, not to green
-        g.nextPlayer();
-        assertEquals(BlokusColor.BLUE, g.getCurrentPlayer().getColor());
+        assertEquals(BlokusColor.GREEN, g.getCurrentPlayer().getColor());
     }
 
 }

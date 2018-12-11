@@ -41,8 +41,13 @@ public interface Game {
     public List<Player> getWinner();
 
     /**
-     * Indicates the end of the game. The game is over when all players
-     * have placed all of their pieces.
+     * Indicates the end of the game. The game is over if one of the two assert
+     * is respected...
+     * <ul>
+     * <li>... all the playing players have placed all their pieces;</li>
+     * <li>... all the players are stuck. A player is stuck when she/ he
+     * withdraws from the game;</li>
+     * </ul>
      *
      * @return true if the game is over.
      */

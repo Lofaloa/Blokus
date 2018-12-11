@@ -91,9 +91,21 @@ public class Blokus extends Observable implements Game {
         return state == BlokusState.FIRST_ROUND;
     }
 
+    boolean areAllPlayersStockEmpty() {
+        return players.stream().allMatch(p -> p.getStock().isEmpty());
+    }
+
+    boolean areAllPlayersWithDrawn() {
+        return players.stream().allMatch(p -> p.isWithdrawn());
+    }
+
     @Override
     public boolean isOver() {
-        return players.stream().allMatch(p -> p.getStock().isEmpty());
+        if (isFirstRound()) {
+            throw new IllegalStateException("The game is at first round. Thus,"
+                    + "6 it can't be over yet");
+        }
+        return areAllPlayersStockEmpty() || areAllPlayersWithDrawn();
     }
 
     /**

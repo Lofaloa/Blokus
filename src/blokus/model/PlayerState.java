@@ -17,12 +17,17 @@ public enum PlayerState {
      */
     PLAYING,
     /**
-     * The player is missing a turn. She/ he decided not play.
+     * The player is missing a turn. She/ he decided not to play.
      */
     MISSING_TURN,
     /**
-     * The player has withdrawn from the game.
+     * The player has withdrawn from the game. Most likely because she/ he was
+     * stuck.
      */
-    WITHDRAWN;
+    WITHDRAWN,
+    /**
+     * The player is done playing. She/ he has placed all her/ his pieces.
+     */
+    DONE;
 
 }
