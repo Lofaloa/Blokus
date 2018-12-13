@@ -22,6 +22,11 @@ public class FXController {
     public FXController(Game game, FxView view) {
         this.game = game;
         this.view = view;
+        view.setSelectCurrentPieceAction();
+        view.setSelectBoardSquareAction();
+        view.setRotateAction();
+        view.setMissTurnAction();
+        view.setWithdrawAction();
     }
 
     /**

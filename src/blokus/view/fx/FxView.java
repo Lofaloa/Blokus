@@ -8,13 +8,16 @@ import blokus.controller.Withdraw;
 import blokus.model.Game;
 import blokus.model.Piece;
 import blokus.model.Square;
+import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * Represents main box of <i>Blokus</i>.
@@ -23,18 +26,35 @@ import javafx.scene.layout.VBox;
  */
 public class FxView extends VBox implements Observer {
 
+    /**
+     * Maximal width of the view.
+     */
+    public static final int MAX_WIDTH = 1_000;
+
+    /**
+     * Maximal height of the view.
+     */
+    public static final int MAX_HEIGHT = 750;
+
+    /**
+     * Title of the view.
+     */
+    public static final String TITLE = "Blokus";
+
+    private final Stage stage;
     private final MenuBar menu;
     private final Game game;
     private final GameBox gameBox;
     private final ControlPane control;
 
     /**
-     * Initializes this main box with the given game. The main box contains a
-     * menu bar, a display for the game and controls.
+     * Constructs the main view of the <i>Blokus</i> application.
      *
-     * @param game is the game to represent.
+     * @param stage javaFX stage build by the Application class.
+     * @param game is the game to display.
      */
-    public FxView(Game game) {
+    public FxView(Stage stage, Game game) {
+        this.stage = Objects.requireNonNull(stage, "No given stage in arguments");
         this.game = game;
         this.gameBox = new GameBox(game);
         this.menu = new MenuBar(new Menu("File"), new Menu("Options"), new Menu("Help"));
@@ -43,16 +63,27 @@ public class FxView extends VBox implements Observer {
         setStyle();
     }
 
+    /**
+     * Initialize the stage and show it to the screen.
+     */
     public void initialize() {
-        setSelectBoardSquareAction();
-        setSelectCurrentPieceAction();
-        setRotateAction();
-        //setPiecePreviewAction();
-        setMissTurnAction();
-        setWithdrawAction();
+        initializeStage();
+        stage.show();
     }
 
-    void setSelectCurrentPieceAction() {
+    private void initializeStage() {
+        Scene scene = new Scene(this);
+        stage.setMaxWidth(MAX_WIDTH);
+        stage.setMaxHeight(MAX_HEIGHT);
+        stage.setTitle(TITLE);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        prefWidthProperty().bind(scene.widthProperty());
+        prefHeightProperty().bind(scene.heightProperty());
+
+    }
+
+    public void setSelectCurrentPieceAction() {
         gameBox.getStockPanes().forEach((stockPane) -> {
             stockPane.getPiecePanes().forEach((piecePane) -> {
                 piecePane.setOnMousePressed(new SelectCurrentPiece(game, piecePane));
@@ -60,7 +91,7 @@ public class FxView extends VBox implements Observer {
         });
     }
 
-    void setSelectBoardSquareAction() {
+    public void setSelectBoardSquareAction() {
         gameBox.getBoardSquares().forEach((node) -> {
             Square current = new Square(GridPane.getRowIndex(node),
                     GridPane.getColumnIndex(node));
@@ -68,19 +99,19 @@ public class FxView extends VBox implements Observer {
         });
     }
 
-    void setRotateAction() {
+    public void setRotateAction() {
         control.getRotateButton().setOnMousePressed(new Rotate(this, game));
     }
 
-    void setMissTurnAction() {
+    public void setMissTurnAction() {
         control.getMissTurnButton().setOnMousePressed(new MissTurn(game, this));
     }
 
-    void setWithdrawAction() {
+    public void setWithdrawAction() {
         control.getWithdrawButton().setOnMousePressed(new Withdraw(this, game));
     }
 
-    void setPiecePreviewAction() {
+    public void setPiecePreviewAction() {
         gameBox.getBoardSquares().forEach((node) -> {
             Square current = new Square(GridPane.getRowIndex(node),
                     GridPane.getColumnIndex(node));

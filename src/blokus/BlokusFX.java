@@ -5,7 +5,6 @@ import blokus.model.Blokus;
 import blokus.model.Game;
 import blokus.view.fx.FxView;
 import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -18,19 +17,15 @@ public class BlokusFX extends Application {
     /**
      * Starts <i>Blokus</i>.
      *
-     * @param primaryStage nothing.
+     * @param stage nothing.
      */
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Blokus");
+    public void start(Stage stage) {
         Game game = new Blokus();
-        FxView view = new FxView(game);
+        FxView view = new FxView(stage, game);
         FXController controller = new FXController(game, view);
         controller.addObserver();
         controller.initialize();
-        Scene scene = new Scene(view, 1000, 750);
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     /**
