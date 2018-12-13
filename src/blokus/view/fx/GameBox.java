@@ -1,10 +1,10 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
-import blokus.model.Piece;
-import blokus.model.Square;
+import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Rectangle;
 
 /**
  * Represents the box containing the game display.
@@ -23,17 +23,12 @@ public class GameBox extends HBox {
         setStyle();
     }
 
-    /**
-     * Gets current player piece.
-     *
-     * @return current player piece.
-     */
-    Piece getCurrentPlayerPiece() {
-        return playersData.getCurrentPlayerPiece();
+    List<StockPane> getStockPanes() {
+        return playersData.getStockPanes();
     }
 
-    Square getSelectedSquare() {
-        return board.getSelectedSquare();
+    List<Rectangle> getBoardSquares() {
+        return board.getSquares();
     }
 
     /**

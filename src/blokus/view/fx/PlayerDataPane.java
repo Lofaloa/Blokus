@@ -1,6 +1,5 @@
 package blokus.view.fx;
 
-import blokus.model.Piece;
 import blokus.model.Player;
 import javafx.scene.layout.VBox;
 
@@ -29,8 +28,8 @@ public class PlayerDataPane extends VBox {
         setStyle();
     }
 
-    Piece getSelectedPiece() {
-        return stock.getSelectedPiece();
+    public StockPane getStockPane() {
+        return stock;
     }
 
     Player getPlayer() {

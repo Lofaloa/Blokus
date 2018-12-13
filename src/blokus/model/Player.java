@@ -68,7 +68,7 @@ public class Player {
      *
      * @return the current piece of this player.
      */
-    Piece getCurrentPiece() {
+    public Piece getCurrentPiece() {
         return selectedPiece;
     }
 

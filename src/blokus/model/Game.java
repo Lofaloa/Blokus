@@ -2,6 +2,7 @@ package blokus.model;
 
 import blokus.exception.ModelException;
 import java.util.List;
+import java.util.Observer;
 
 /**
  * Represents the game.
@@ -82,5 +83,12 @@ public interface Game {
      * Passes to the next player.
      */
     public void nextPlayer();
+
+    /**
+     * Adds the view as an observer of this game.
+     *
+     * @param view is the observer.
+     */
+    public void addObserver(Observer o);
 
 }

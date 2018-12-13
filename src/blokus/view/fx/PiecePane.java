@@ -2,7 +2,7 @@ package blokus.view.fx;
 
 import blokus.model.BlokusColor;
 import blokus.model.Piece;
-import javafx.scene.layout.Background;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -15,7 +15,6 @@ import javafx.scene.shape.Rectangle;
 public class PiecePane extends GridPane {
 
     private final Piece piece;
-    private boolean isSelected;
 
     /**
      * Initializes this piece pane with the piece to represent.
@@ -24,14 +23,8 @@ public class PiecePane extends GridPane {
      */
     public PiecePane(Piece piece) {
         this.piece = piece;
-        isSelected = false;
         setPiece();
-        addSelectionHandler();
-        addHoverStyleHandler();
-    }
-
-    boolean isSelected() {
-        return isSelected;
+        setShadowAction();
     }
 
     /**
@@ -41,10 +34,6 @@ public class PiecePane extends GridPane {
      */
     public Piece getPiece() {
         return piece;
-    }
-
-    void deselect() {
-        isSelected = false;
     }
 
     /**
@@ -97,25 +86,13 @@ public class PiecePane extends GridPane {
         }
     }
 
-    void setGreyBackground() {
-        setStyle("-fx-background-color: #D3D3D3;");
-    }
-
-    void setEmptyBackground() {
-        setBackground(Background.EMPTY);
-    }
-
-    final void addHoverStyleHandler() {
-        setOnMouseEntered(event -> setGreyBackground());
-        setOnMouseExited(event -> setEmptyBackground());
-    }
-
-    /**
-     * Adds an handler that select this piece when clicked.
-     */
-    final void addSelectionHandler() {
-        setOnMousePressed((event) -> {
-            isSelected = true;
+    void setShadowAction() {
+        setOnMousePressed(event -> {
+            DropShadow ds = new DropShadow();
+            ds.setOffsetY(3.0);
+            ds.setOffsetX(3.0);
+            ds.setColor(Color.GRAY);
+            this.setEffect(ds);
         });
     }
 

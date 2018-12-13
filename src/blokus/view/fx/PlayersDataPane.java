@@ -1,10 +1,9 @@
 package blokus.view.fx;
 
 import blokus.model.Game;
-import blokus.model.Piece;
 import blokus.model.Player;
 import java.util.List;
-import javafx.scene.Node;
+import java.util.stream.Collectors;
 import javafx.scene.layout.VBox;
 
 /**
@@ -29,19 +28,10 @@ public class PlayersDataPane extends VBox {
         setStyle();
     }
 
-    /**
-     * Gets the piece selected by the current player.
-     *
-     * @return the piece selected by the current player.
-     */
-    Piece getCurrentPlayerPiece() {
-        for (Node child : getChildren()) {
-            PlayerDataPane playerData = (PlayerDataPane) child;
-            if (playerData.getPlayer().isCurrentPlayer()) {
-                return playerData.getSelectedPiece();
-            }
-        }
-        return null;
+    List<StockPane> getStockPanes() {
+        return getChildren().stream()
+                .map(child -> ((PlayerDataPane) child).getStockPane())
+                .collect(Collectors.toList());
     }
 
     /**

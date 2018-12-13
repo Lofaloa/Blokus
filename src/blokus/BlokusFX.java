@@ -1,13 +1,11 @@
 package blokus;
 
-import blokus.controller.ControllerFX;
+import blokus.controller.FXController;
 import blokus.model.Blokus;
-import blokus.view.fx.MainBox;
+import blokus.model.Game;
+import blokus.view.fx.FxView;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -24,20 +22,15 @@ public class BlokusFX extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        try {
-            primaryStage.setTitle("Blokus");
-            Blokus blokus = new Blokus();
-            MainBox main = new MainBox(blokus);
-            blokus.addObserver(main);
-            EventHandler pieceSelection = new ControllerFX(blokus, main);
-            main.addEventHandler(MouseEvent.MOUSE_PRESSED, pieceSelection);
-            Scene scene = new Scene(main, 1000, 750);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (Exception ex) {
-            System.err.println(ex.getMessage());
-            Platform.exit();
-        }
+        primaryStage.setTitle("Blokus");
+        Game game = new Blokus();
+        FxView view = new FxView(game);
+        FXController controller = new FXController(game, view);
+        controller.addObserver();
+        controller.initialize();
+        Scene scene = new Scene(view, 1000, 750);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     /**

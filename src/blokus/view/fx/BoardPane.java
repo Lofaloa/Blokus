@@ -2,9 +2,9 @@ package blokus.view.fx;
 
 import blokus.model.BlokusColor;
 import blokus.model.Board;
-import blokus.model.Square;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 public class BoardPane extends GridPane {
 
     private final Board board;
-    private Square selectedSquare;
+    private final List<Rectangle> squares;
 
     /**
      * Initializes this board pane with the given game.
@@ -26,14 +26,13 @@ public class BoardPane extends GridPane {
      */
     public BoardPane(Board board) {
         this.board = board;
-        this.selectedSquare = null;
+        this.squares = new ArrayList<>();
         setBoard();
         setStyle();
-        addSelectionHandler();
     }
 
-    Square getSelectedSquare() {
-        return selectedSquare;
+    List<Rectangle> getSquares() {
+        return squares;
     }
 
     /**
@@ -68,6 +67,7 @@ public class BoardPane extends GridPane {
     void setEmptySquare(int row, int column) {
         Rectangle r = new Rectangle(30, 30);
         r.setFill(Color.GREY);
+        squares.add(r);
         this.add(r, column, row);
     }
 
@@ -81,6 +81,7 @@ public class BoardPane extends GridPane {
     void setFilledSquare(Color squareColor, int row, int column) {
         Rectangle r = new Rectangle(30, 30);
         r.setFill(squareColor);
+        squares.add(r);
         this.add(r, column, row);
     }
 
@@ -144,14 +145,6 @@ public class BoardPane extends GridPane {
      */
     final void setStyle() {
         this.setGridLinesVisible(true);
-    }
-
-    final void addSelectionHandler() {
-        addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent event) -> {
-            Rectangle targetSquare = (Rectangle) event.getTarget();
-            this.selectedSquare = new Square(getRowIndex(targetSquare),
-                    getColumnIndex(targetSquare));
-        });
     }
 
 }

@@ -1,10 +1,10 @@
 package blokus.view.fx;
 
-import blokus.model.Piece;
 import blokus.model.Player;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -16,7 +16,7 @@ public class StockPane extends GridPane {
 
     static final int NB_OF_PIECE_PER_ROW = 8;
     private final Player owner;
-    private Piece selectedPiece;
+    private final List<PiecePane> piecePanes;
 
     /**
      * Initializes this pane with the owner of the stock to represent.
@@ -26,29 +26,32 @@ public class StockPane extends GridPane {
     public StockPane(Player owner) {
         this.owner = Objects.requireNonNull(owner, "No player when initializing "
                 + "a stock pane.");
-        this.selectedPiece = null;
+        this.piecePanes = new ArrayList<>();
         setPieces();
+        setContent();
         setStyle();
-        addSelectionHandler();
     }
 
-    /**
-     * Gets the selected piece.
-     *
-     * @return the selected piece.
-     */
-    Piece getSelectedPiece() {
-        return selectedPiece;
+    Player getOwner() {
+        return owner;
+    }
+
+    public List<PiecePane> getPiecePanes() {
+        return Collections.unmodifiableList(piecePanes);
     }
 
     final void setPieces() {
+        owner.getStock().forEach((piece) -> {
+            piecePanes.add(new PiecePane(piece));
+        });
+    }
+
+    final void setContent() {
         int row = 0;
         int col = 0;
         int added = 0;
-        for (Piece piece : owner.getStock()) {
-            if (owner.owns(piece)) {
-                add(new PiecePane(piece), col, row);
-            }
+        for (PiecePane pane : piecePanes) {
+            add(pane, col, row);
             col++;
             added++;
             if (added % NB_OF_PIECE_PER_ROW == 0) {
@@ -63,7 +66,7 @@ public class StockPane extends GridPane {
      */
     void update() {
         getChildren().clear();
-        setPieces();
+        setContent();
     }
 
     /**
@@ -72,33 +75,6 @@ public class StockPane extends GridPane {
     final void setStyle() {
         setHgap(5);
         setVgap(5);
-    }
-
-    /**
-     * Selects the piece selected by the current player.
-     */
-    void selectPiece() {
-        for (Node child : getChildren()) {
-            PiecePane current = (PiecePane) child;
-            if (current.isSelected()) {
-                selectedPiece = current.getPiece();
-                current.deselect();
-            }
-        }
-    }
-
-    /**
-     * Adds a selection handler to this stock pane. The selection handler
-     * selects a piece in the stock based on the choice of the owner.
-     */
-    final void addSelectionHandler() {
-        addEventHandler(MouseEvent.MOUSE_PRESSED, event -> {
-            if (owner.isCurrentPlayer()) {
-                selectPiece();
-            } else {
-                event.consume();
-            }
-        });
     }
 
 }
