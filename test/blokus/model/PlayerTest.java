@@ -11,11 +11,25 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
     /**
+     * Tests the state of a player after construction.
+     */
+    @Test
+    public void construction() {
+        Player p = new Player(BlokusColor.BLUE);
+        assertTrue(p.getColor() == BlokusColor.BLUE
+                && !p.getStock().isEmpty()
+                && p.getScore() == -89);
+    }
+
+    /**
      * Tests the state of a player after initialization.
      */
     @Test
     public void initialization() {
         Player p = new Player(BlokusColor.BLUE);
+        p.clearStock();
+        p.withdraw();
+        p.initialize();
         assertTrue(p.getColor() == BlokusColor.BLUE
                 && !p.getStock().isEmpty()
                 && p.getScore() == -89);

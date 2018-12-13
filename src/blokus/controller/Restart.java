@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package blokus.controller;
 
 import blokus.model.Game;
@@ -10,12 +15,12 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Logan Farci (47923)
  */
-public class Rotate implements EventHandler<MouseEvent> {
+public class Restart implements EventHandler<MouseEvent> {
 
     private final FxView view;
     private final Game game;
 
-    public Rotate(FxView view, Game game) {
+    public Restart(FxView view, Game game) {
         this.view = view;
         this.game = game;
     }
@@ -27,7 +32,8 @@ public class Rotate implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event) {
         if (isMousePrimaryButton(event.getButton())) {
-            game.rotateCurrentPlayerPiece();
+            System.out.println("test");
+            game.initialize();
         } else {
             event.consume();
         }

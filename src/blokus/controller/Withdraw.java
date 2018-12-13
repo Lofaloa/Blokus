@@ -3,6 +3,7 @@ package blokus.controller;
 import blokus.model.Game;
 import blokus.view.fx.FxView;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -19,10 +20,16 @@ public class Withdraw implements EventHandler<MouseEvent> {
         this.game = game;
     }
 
+    boolean isMousePrimaryButton(MouseButton b) {
+        return b == MouseButton.PRIMARY;
+    }
+
     @Override
     public void handle(MouseEvent event) {
-        game.getCurrentPlayer().withdraw();
-        game.nextPlayer();
+        if (isMousePrimaryButton(event.getButton())) {
+            game.getCurrentPlayer().withdraw();
+            game.nextPlayer();
+        }
     }
 
 }

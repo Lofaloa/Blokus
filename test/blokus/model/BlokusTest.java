@@ -12,17 +12,36 @@ import static org.junit.Assert.*;
 public class BlokusTest {
 
     /**
-     * Game after initialization should have an empty board and four players of
+     * Game after construction should have an empty board and four players of
      * different colors.
      */
     @Test
-    public void initialization() {
+    public void construction() {
         Blokus g = new Blokus();
         g.getPlayers().forEach((player) -> {
             assertEquals(1, Collections.frequency(g.getPlayers(), player));
         });
         assertTrue(g.getBoard().isEmpty() && g.getState() == BlokusState.FIRST_ROUND);
     }
+
+    /**
+     * Game after initialization should have an empty board and four players of
+     * different colors.
+     */
+    @Test
+    public void initialization() {
+        Blokus g = new Blokus();
+        g.selectCurrentPlayerPiece(Shape.SHAPE_01);
+        g.placePiece(0, 0);
+        g.getCurrentPlayer().withdraw();
+        g.initialize();
+        g.getPlayers().forEach((player) -> {
+            assertEquals(1, Collections.frequency(g.getPlayers(), player));
+        });
+        assertTrue(g.getBoard().isEmpty() && g.getState() == BlokusState.FIRST_ROUND);
+    }
+
+
 
     /**
      * Blokus is over when all the players have an empty stock.

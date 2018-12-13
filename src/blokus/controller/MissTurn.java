@@ -3,6 +3,7 @@ package blokus.controller;
 import blokus.model.Game;
 import blokus.view.fx.FxView;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -19,12 +20,18 @@ public class MissTurn implements EventHandler<MouseEvent> {
         this.view = view;
     }
 
+    boolean isMousePrimaryButton(MouseButton b) {
+        return b == MouseButton.PRIMARY;
+    }
+
     @Override
     public void handle(MouseEvent event) {
-        System.out.println("test");
-        game.getCurrentPlayer().missTurn();
-        game.nextPlayer();
-
+        if (isMousePrimaryButton(event.getButton())) {
+            game.getCurrentPlayer().missTurn();
+            game.nextPlayer();
+        } else {
+            event.consume();
+        }
     }
 
 }

@@ -36,6 +36,10 @@ public class ControlPane extends HBox {
         return stop;
     }
 
+    Button getRestartButton() {
+        return restart;
+    }
+
     /**
      * Sets the content of this pane.
      */

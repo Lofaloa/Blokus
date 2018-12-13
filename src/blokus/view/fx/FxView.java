@@ -1,6 +1,7 @@
 package blokus.view.fx;
 
 import blokus.controller.MissTurn;
+import blokus.controller.Restart;
 import blokus.controller.Rotate;
 import blokus.controller.SelectBoardSquare;
 import blokus.controller.SelectCurrentPiece;
@@ -109,6 +110,10 @@ public class FxView extends VBox implements Observer {
 
     public void setWithdrawAction() {
         control.getWithdrawButton().setOnMousePressed(new Withdraw(this, game));
+    }
+
+    public void setRestartAction() {
+        control.getRestartButton().setOnMousePressed(new Restart(this, game));
     }
 
     public void setPiecePreviewAction() {

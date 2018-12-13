@@ -41,6 +41,18 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
+    public void initialize() {
+        for (Player player : players) {
+            player.initialize();
+        }
+        currentPlayer = players.get(0);
+        board.initialize();
+        state = BlokusState.FIRST_ROUND;
+        currentPlayer.startPlaying();
+        notifyView();
+    }
+
+    @Override
     public Board getBoard() {
         return new Board(board);
     }
@@ -182,6 +194,7 @@ public class Blokus extends Observable implements Game {
     @Override
     public void rotateCurrentPlayerPiece() {
         currentPlayer.rotateSelectedPiece();
+        notifyView();
     }
 
     @Override

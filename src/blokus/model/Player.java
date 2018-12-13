@@ -81,41 +81,27 @@ public class Player {
         return isCurrentPlayer;
     }
 
-    /**
-     * Tells if this player is of the given color.
-     *
-     * @param color the color of the player.
-     * @return true if the player is of the given color.
-     */
     boolean is(BlokusColor color) {
         return this.color == color;
     }
 
-    /**
-     * Tells if this player is withdrawn.
-     *
-     * @return true if this player is withdrawn.
-     */
     boolean isWithdrawn() {
         return state == PlayerState.WITHDRAWN;
     }
 
-    /**
-     * Tells if this player is missing the current turn.
-     *
-     * @return true if this player is missing the current turn.
-     */
     boolean isMissingTurn() {
         return state == PlayerState.MISSING_TURN;
     }
 
-    /**
-     * Tells if this player has placed his/ her first piece.
-     *
-     * @return true if this player has placed his/ her first piece.
-     */
     boolean hasPlacedFirstPiece() {
         return stock.getPieces().size() == 20;
+    }
+
+    void initialize() {
+        this.state = PlayerState.WAITING;
+        this.stock.initialize();
+        this.isCurrentPlayer = false;
+        this.selectedPiece = null;
     }
 
     void startPlaying() {
@@ -132,17 +118,20 @@ public class Player {
         isCurrentPlayer = false;
     }
 
+    /**
+     * Makes this player miss the current turn of the game she/ he is playing.
+     */
     public void missTurn() {
         state = PlayerState.MISSING_TURN;
     }
 
+    /**
+     * Makes this player withdraw form the game she/ he is playing.
+     */
     public void withdraw() {
         state = PlayerState.WITHDRAWN;
     }
 
-    /**
-     * Requires a non empty stock.
-     */
     void requireNonEmptyStock() {
         stock.requireNonEmpty();
     }
@@ -167,12 +156,6 @@ public class Player {
         return state;
     }
 
-    /**
-     * Makes this player take the current piece.
-     *
-     * @param piece is the piece to lose.
-     * @return the current piece.
-     */
     Piece takeCurrentPiece() {
         requireNonEmptyStock();
         Objects.requireNonNull(selectedPiece, "This player has not selected a piece.");
@@ -183,23 +166,12 @@ public class Player {
         return selectedPiece;
     }
 
-    /**
-     * Makes this player lose the given piece.
-     *
-     * @param piece is the piece to lose.
-     */
     void remove(Piece piece) {
         requireNonEmptyStock();
         Objects.requireNonNull(piece);
         stock.remove(piece);
     }
 
-    /**
-     * Selects one of the piece of this player stock.
-     *
-     * @param shape is the shape of the piece to select.
-     * @return the selected piece.
-     */
     void selectPiece(Shape shape) {
         requireNonEmptyStock();
         Piece piece = Objects.requireNonNull(stock.getPiece(shape), "Selected "
@@ -214,17 +186,11 @@ public class Player {
         selectedPiece.rotate();
     }
 
-    /**
-     * Clears this player stock.
-     */
     void clearStock() {
         requireNonEmptyStock();
         stock.clear();
     }
 
-    /**
-     * Clears this player stock.
-     */
     void clearStockSmallestPieceAtEnd() {
         requireNonEmptyStock();
         for (int i = 1; i < Stock.CAPACITY; i++) {

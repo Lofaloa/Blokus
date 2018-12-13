@@ -26,10 +26,11 @@ public class Stock {
      * @param color is the color of this stock.
      */
     Stock(BlokusColor color) {
-        this.pieces = buildPiecesOf(color);
+        this.pieces = new ArrayList<>();
         this.color = color;
+        initialize();
     }
-    
+
     Stock(List<Piece> pieces, BlokusColor color) {
         this.pieces = pieces;
         this.color = color;
@@ -52,7 +53,7 @@ public class Stock {
     List<Piece> getPieces() {
         return pieces;
     }
-    
+
     BlokusColor getColor() {
         return color;
     }
@@ -166,17 +167,13 @@ public class Stock {
     }
 
     /**
-     * Builds this stock pieces.
-     *
-     * @param color is the color of this stock.
-     * @return the newly built pieces.
+     * Initializes this stock pieces.
      */
-    final List<Piece> buildPiecesOf(BlokusColor color) {
-        List<Piece> builtPieces = new ArrayList<>();
+    final void initialize() {
+        pieces.clear();
         for (Shape shape : Shape.values()) {
-            builtPieces.add(new Piece(shape, color));
+            pieces.add(new Piece(shape, color));
         }
-        return builtPieces;
     }
 
 }

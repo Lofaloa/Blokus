@@ -27,6 +27,7 @@ public class FXController {
         view.setRotateAction();
         view.setMissTurnAction();
         view.setWithdrawAction();
+        view.setRestartAction();
     }
 
     /**
@@ -37,6 +38,7 @@ public class FXController {
     }
 
     public void initialize() {
+        game.initialize();
         view.initialize();
     }
 

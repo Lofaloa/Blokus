@@ -12,6 +12,11 @@ import java.util.Observer;
 public interface Game {
 
     /**
+     * Initializes the <i>Blokus</i> model.
+     */
+    public void initialize();
+
+    /**
      * Gets the board.
      *
      * @return the board.

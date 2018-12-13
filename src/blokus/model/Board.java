@@ -1,6 +1,7 @@
 package blokus.model;
 
 import blokus.exception.ModelException;
+import java.util.Arrays;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -15,7 +16,7 @@ public class Board {
      */
     public static final int SIZE = 20;
 
-    private final Piece[][] squares;
+    private Piece[][] squares;
 
     /**
      * Initializes this board with a 20 by 20 empty grid of squares.
@@ -177,6 +178,12 @@ public class Board {
      */
     boolean isValid(int row, int column) {
         return contains(row, column) && isEmptyAt(row, column);
+    }
+
+    void initialize() {
+        for (Piece[] square : squares) {
+            Arrays.fill(square, 0, SIZE, null);
+        }
     }
 
     int wrapIndex(int coordinate) {

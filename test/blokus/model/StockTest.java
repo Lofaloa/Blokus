@@ -12,12 +12,28 @@ import org.junit.Test;
 public class StockTest {
 
     /**
+     * Stock after construction should have 21 distinct pieces of the same
+     * color.
+     */
+    @Test
+    public void construction() {
+        Stock s = new Stock(BlokusColor.RED);
+        assertEquals(21, s.getPieces().size());
+        for (Piece piece : s.getPieces()) {
+            assertEquals(1, Collections.frequency(s.getPieces(), piece));
+            assertEquals(BlokusColor.RED, piece.getColor());
+        }
+    }
+
+    /**
      * Stock after initialization should have 21 distinct pieces of the same
      * color.
      */
     @Test
     public void initialization() {
         Stock s = new Stock(BlokusColor.RED);
+        s.clear();
+        s.initialize();
         assertEquals(21, s.getPieces().size());
         for (Piece piece : s.getPieces()) {
             assertEquals(1, Collections.frequency(s.getPieces(), piece));
