@@ -31,6 +31,10 @@ public class GameBox extends HBox {
         return board.getSquares();
     }
 
+    BoardPane getBoard() {
+        return board;
+    }
+
     /**
      * Sets this game pane content.
      */

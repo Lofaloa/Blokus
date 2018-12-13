@@ -20,11 +20,15 @@ public class Piece {
      * @param shape is the shape of this piece.
      * @param color is the color of this piece.
      */
-    Piece(Shape shape, BlokusColor color) {
+    public Piece(Shape shape, BlokusColor color) {
         Objects.requireNonNull(shape, "No initializing shape given for this piece");
         Objects.requireNonNull(color, "No initializing color given for this piece");
         this.shape = shape;
         this.color = color;
+    }
+
+    Piece(Piece other) {
+        this(other.getShape(), other.getColor());
     }
 
     /**

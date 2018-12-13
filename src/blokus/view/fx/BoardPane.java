@@ -2,6 +2,8 @@ package blokus.view.fx;
 
 import blokus.model.BlokusColor;
 import blokus.model.Board;
+import blokus.model.Piece;
+import blokus.model.Square;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Node;
@@ -33,6 +35,14 @@ public class BoardPane extends GridPane {
 
     List<Rectangle> getSquares() {
         return squares;
+    }
+
+    void previewPiece(Piece piece, Square dest) {
+        for (Square square : piece.getShape().getSquares()) {
+            Square current = new Square(square.getRow() + dest.getRow(),
+                    square.getColumn() + dest.getColumn());
+            getSquare(current.getRow(), current.getColumn()).setFill(Color.WHITE);
+        }
     }
 
     /**

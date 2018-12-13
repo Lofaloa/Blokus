@@ -51,7 +51,9 @@ public class StockPane extends GridPane {
         int col = 0;
         int added = 0;
         for (PiecePane pane : piecePanes) {
-            add(pane, col, row);
+            if (owner.owns(pane.getPiece())) {
+                add(pane, col, row);
+            }
             col++;
             added++;
             if (added % NB_OF_PIECE_PER_ROW == 0) {

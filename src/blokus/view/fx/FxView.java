@@ -1,12 +1,15 @@
 package blokus.view.fx;
 
+import blokus.controller.MissTurn;
+import blokus.controller.Rotate;
 import blokus.controller.SelectBoardSquare;
 import blokus.controller.SelectCurrentPiece;
+import blokus.controller.Withdraw;
 import blokus.model.Game;
+import blokus.model.Piece;
 import blokus.model.Square;
 import java.util.Observable;
 import java.util.Observer;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -40,20 +43,52 @@ public class FxView extends VBox implements Observer {
         setStyle();
     }
 
-    public void setSelectCurrentPieceAction() {
-        for (StockPane stockPane : gameBox.getStockPanes()) {
-            for (PiecePane piecePane : stockPane.getPiecePanes()) {
-                piecePane.setOnMousePressed(new SelectCurrentPiece(game, piecePane));
-            }
-        }
+    public void initialize() {
+        setSelectBoardSquareAction();
+        setSelectCurrentPieceAction();
+        setRotateAction();
+        //setPiecePreviewAction();
+        setMissTurnAction();
+        setWithdrawAction();
     }
 
-    public void setSelectBoardSquareAction() {
-        for (Node node : gameBox.getBoardSquares()) {
+    void setSelectCurrentPieceAction() {
+        gameBox.getStockPanes().forEach((stockPane) -> {
+            stockPane.getPiecePanes().forEach((piecePane) -> {
+                piecePane.setOnMousePressed(new SelectCurrentPiece(game, piecePane));
+            });
+        });
+    }
+
+    void setSelectBoardSquareAction() {
+        gameBox.getBoardSquares().forEach((node) -> {
             Square current = new Square(GridPane.getRowIndex(node),
-            GridPane.getColumnIndex(node));
+                    GridPane.getColumnIndex(node));
             node.setOnMousePressed(new SelectBoardSquare(current, game));
-        }
+        });
+    }
+
+    void setRotateAction() {
+        control.getRotateButton().setOnMousePressed(new Rotate(this, game));
+    }
+
+    void setMissTurnAction() {
+        control.getMissTurnButton().setOnMousePressed(new MissTurn(game, this));
+    }
+
+    void setWithdrawAction() {
+        control.getWithdrawButton().setOnMousePressed(new Withdraw(this, game));
+    }
+
+    void setPiecePreviewAction() {
+        gameBox.getBoardSquares().forEach((node) -> {
+            Square current = new Square(GridPane.getRowIndex(node),
+                    GridPane.getColumnIndex(node));
+            setOnMouseEntered(event -> {
+                Piece currentPiece = game.getCurrentPlayer().getCurrentPiece();
+                gameBox.getBoard().previewPiece(currentPiece, current);
+            });
+        });
     }
 
     /**

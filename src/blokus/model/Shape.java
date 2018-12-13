@@ -2,6 +2,7 @@ package blokus.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -132,8 +133,8 @@ public enum Shape {
      *
      * @return the Squares of this shape.
      */
-    List<Square> getSquares() {
-        return squares;
+    public List<Square> getSquares() {
+        return Collections.unmodifiableList(squares);
     }
 
     /**

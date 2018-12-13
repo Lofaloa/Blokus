@@ -86,8 +86,9 @@ public class PiecePane extends GridPane {
         }
     }
 
-    void setShadowAction() {
+    final void setShadowAction() {
         setOnMousePressed(event -> {
+            System.out.println("piece pane");
             DropShadow ds = new DropShadow();
             ds.setOffsetY(3.0);
             ds.setOffsetX(3.0);

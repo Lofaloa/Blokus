@@ -24,6 +24,18 @@ public class ControlPane extends HBox {
         setStyle();
     }
 
+    Button getRotateButton() {
+        return rotate;
+    }
+
+    Button getMissTurnButton() {
+        return pass;
+    }
+
+    Button getWithdrawButton() {
+        return stop;
+    }
+
     /**
      * Sets the content of this pane.
      */

@@ -32,8 +32,7 @@ public class FXController {
     }
 
     public void initialize() {
-        view.setSelectCurrentPieceAction();
-        view.setSelectBoardSquareAction();
+        view.initialize();
     }
 
 }

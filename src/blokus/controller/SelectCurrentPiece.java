@@ -4,6 +4,7 @@ import blokus.model.Game;
 import blokus.view.fx.FxView;
 import blokus.view.fx.PiecePane;
 import javafx.event.EventHandler;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -20,10 +21,18 @@ public class SelectCurrentPiece implements EventHandler<MouseEvent> {
         this.piecePane = piece;
     }
 
+    boolean isMousePrimaryButton(MouseButton b) {
+        return b == MouseButton.PRIMARY;
+    }
+
+    boolean isCurrentPlayerPiece() {
+        return game.getCurrentPlayer().getColor() == piecePane.getPiece().getColor();
+    }
+
     @Override
     public void handle(MouseEvent event) {
         try {
-            if (game.getCurrentPlayer().getColor() == piecePane.getPiece().getColor()) {
+            if (isMousePrimaryButton(event.getButton()) && isCurrentPlayerPiece()) {
                 game.selectCurrentPlayerPiece(piecePane.getPiece().getShape());
             } else {
                 event.consume();

@@ -36,7 +36,7 @@ public class HeaderBox extends HBox {
             case PLAYING:
                 return "En train de jouer...";
             case MISSING_TURN:
-                return "Passes son tour...";
+                return "Passe son tour...";
             case WAITING:
                 return "Attend son tour...";
             default:

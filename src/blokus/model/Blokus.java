@@ -157,6 +157,7 @@ public class Blokus extends Observable implements Game {
     public void selectCurrentPlayerPiece(Shape shape) {
         currentPlayer.requireNonEmptyStock();
         currentPlayer.selectPiece(shape);
+        notifyView();
     }
 
     @Override
