@@ -93,6 +93,10 @@ public class Player {
         return state == PlayerState.MISSING_TURN;
     }
 
+    boolean hasSelectedAPiece() {
+        return selectedPiece != null;
+    }
+
     boolean hasPlacedFirstPiece() {
         return stock.getPieces().size() == 20;
     }
@@ -183,7 +187,10 @@ public class Player {
      * Rotates this player selected piece 90 degrees clockwise.
      */
     void rotateSelectedPiece() {
-        Objects.requireNonNull(selectedPiece, "No piece selected to rotate");
+        if (!hasSelectedAPiece()) {
+            throw new IllegalStateException("Player " + getColor() + " is trying"
+                    + " to rotate a piece but has not selected one.");
+        }
         selectedPiece.rotate();
     }
 
@@ -191,6 +198,10 @@ public class Player {
      * Rotates this player selected piece 90 degrees clockwise.
      */
     void turnSelectedPieceOver() {
+        if (!hasSelectedAPiece()) {
+            throw new IllegalStateException("Player " + getColor() + " is trying"
+                    + " to turn a piece over but has not selected one.");
+        }
         Objects.requireNonNull(selectedPiece, "No piece selected to turn over");
         selectedPiece.turnOver();
     }

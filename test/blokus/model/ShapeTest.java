@@ -105,15 +105,14 @@ public class ShapeTest {
     }
 
     /**
-     * Turn shape 4 (over should get.
+     * Line shapes should be considered as line.
      */
     @Test
-    public void turnOver_case_1() {
-        Shape s = Shape.SHAPE_04;
-        s.turnOver();
-        assertTrue(s.getSquares().contains(new Square(0, 1)));
-        assertTrue(s.getSquares().contains(new Square(1, 0)));
-        assertTrue(s.getSquares().contains(new Square(1, 1)));
+    public void isLine() {
+        assertTrue(Shape.SHAPE_02.isLine());
+        assertTrue(Shape.SHAPE_03.isLine());
+        assertTrue(Shape.SHAPE_05.isLine());
+        assertTrue(Shape.SHAPE_10.isLine());
     }
 
 }
