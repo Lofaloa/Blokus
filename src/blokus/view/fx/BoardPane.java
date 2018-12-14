@@ -1,5 +1,6 @@
 package blokus.view.fx;
 
+import blokus.exception.ModelException;
 import blokus.model.BlokusColor;
 import blokus.model.Board;
 import blokus.model.Piece;
@@ -38,10 +39,14 @@ public class BoardPane extends GridPane {
     }
 
     void previewPiece(Piece piece, Square dest) {
+        Color color = toColor(piece.getColor());
         for (Square square : piece.getShape().getSquares()) {
-            Square current = new Square(square.getRow() + dest.getRow(),
-                    square.getColumn() + dest.getColumn());
-            getSquare(current.getRow(), current.getColumn()).setFill(Color.WHITE);
+            int currentRow = square.getRow() + dest.getRow();
+            int currentColumn = square.getColumn() + dest.getColumn();
+            if (board.contains(currentRow, currentColumn)) {
+                Square current = new Square(currentRow, currentColumn);
+                getSquare(current.getRow(), current.getColumn()).setFill(color);
+            }
         }
     }
 

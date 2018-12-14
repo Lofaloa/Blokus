@@ -6,12 +6,14 @@ import blokus.controller.Rotate;
 import blokus.controller.SelectBoardSquare;
 import blokus.controller.SelectCurrentPiece;
 import blokus.controller.Withdraw;
+import blokus.exception.ModelException;
 import blokus.model.Game;
 import blokus.model.Piece;
 import blokus.model.Square;
 import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Menu;
@@ -84,6 +86,9 @@ public class FxView extends VBox implements Observer {
 
     }
 
+    /**
+     * Adds an handler to each squares of the board. It allows piece selection.
+     */
     public void setSelectCurrentPieceAction() {
         gameBox.getStockPanes().forEach((stockPane) -> {
             stockPane.getPiecePanes().forEach((piecePane) -> {
@@ -92,6 +97,9 @@ public class FxView extends VBox implements Observer {
         });
     }
 
+    /**
+     * Adds an
+     */
     public void setSelectBoardSquareAction() {
         gameBox.getBoardSquares().forEach((node) -> {
             Square current = new Square(GridPane.getRowIndex(node),
@@ -100,30 +108,65 @@ public class FxView extends VBox implements Observer {
         });
     }
 
+    /**
+     * Adds an handler to the rotate button.
+     */
     public void setRotateAction() {
         control.getRotateButton().setOnMousePressed(new Rotate(this, game));
     }
 
+    /**
+     * Adds an handler to the turn button.
+     */
     public void setMissTurnAction() {
         control.getMissTurnButton().setOnMousePressed(new MissTurn(game, this));
     }
 
+    /**
+     * Adds an handler to the withdraw button.
+     */
     public void setWithdrawAction() {
         control.getWithdrawButton().setOnMousePressed(new Withdraw(this, game));
     }
 
+    /**
+     * Adds an handler to the restart button.
+     */
     public void setRestartAction() {
         control.getRestartButton().setOnMousePressed(new Restart(this, game));
     }
 
+    private void setPiecePreviewAction(Node node, Square dest) {
+        node.setOnMouseEntered(event -> {
+            if (game.getCurrentPlayer().getCurrentPiece() == null) {
+                event.consume();
+            } else {
+                try {
+                    Piece currentPiece = game.getCurrentPlayer().getCurrentPiece();
+                    gameBox.getBoard().previewPiece(currentPiece, dest);
+                } catch (ModelException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+        });
+    }
+
+    private void setBoardUpdateAction(Node node) {
+        node.setOnMouseExited(event -> {
+            gameBox.getBoard().update();
+        });
+    }
+
+    /**
+     * Adds an handler to each squares of the board. The current piece is
+     * displaid on the board at the mouse position.
+     */
     public void setPiecePreviewAction() {
         gameBox.getBoardSquares().forEach((node) -> {
             Square current = new Square(GridPane.getRowIndex(node),
                     GridPane.getColumnIndex(node));
-            setOnMouseEntered(event -> {
-                Piece currentPiece = game.getCurrentPlayer().getCurrentPiece();
-                gameBox.getBoard().previewPiece(currentPiece, current);
-            });
+            setPiecePreviewAction(node, current);
+            setBoardUpdateAction(node);
         });
     }
 

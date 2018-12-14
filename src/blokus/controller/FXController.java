@@ -28,6 +28,7 @@ public class FXController {
         view.setMissTurnAction();
         view.setWithdrawAction();
         view.setRestartAction();
+        view.setPiecePreviewAction();
     }
 
     /**

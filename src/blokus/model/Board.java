@@ -85,7 +85,7 @@ public class Board {
      * @param column is the column of the square to test.
      * @return true if the given square is in the board bounds.
      */
-    boolean contains(int row, int column) {
+    public boolean contains(int row, int column) {
         return 0 <= row && row < SIZE && 0 <= column && column < SIZE;
     }
 

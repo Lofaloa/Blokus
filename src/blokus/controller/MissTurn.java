@@ -7,6 +7,8 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
+ * TODO: fusionner classes buttons -> switch sur la source de l'event (check
+ * factory design pattern)
  *
  * @author Logan Farci (47923)
  */
