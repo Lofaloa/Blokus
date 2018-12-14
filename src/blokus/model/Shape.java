@@ -191,15 +191,21 @@ public enum Shape {
                     getSize() - current.getRow() - 1));
         }
     }
+    
+    /*
+    00 -> 01
+    */
 
     /**
      * Turns this shape over.
      */
     void turnOver() {
+        int maxColumn = squares.stream()
+                .mapToInt(s -> s.getColumn())
+                .max().getAsInt();
         for (int i = 0; i < getNbOfSquares(); i++) {
             Square current = squares.get(i);
-            squares.set(i, new Square(current.getRow(),
-                    getSize() - current.getColumn() - 1));
+            squares.set(i, new Square(current.getRow(), (-current.getColumn()) + maxColumn));
         }
     }
 

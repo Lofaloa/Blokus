@@ -83,6 +83,11 @@ public interface Game {
      * Rotates the current player piece 90 degrees clockwise.
      */
     public void rotateCurrentPlayerPiece();
+    
+    /**
+     * Turns the current piece player over.
+     */
+    public void turnCurrentPlayerPieceOver();
 
     /**
      * Passes to the next player.

@@ -14,12 +14,14 @@ public class ControlPane extends HBox {
     private final Button pass;
     private final Button stop;
     private final Button rotate;
+    private final Button turnOver;
 
     ControlPane() {
         this.restart = new Button("Nouvelle partie");
         this.pass = new Button("Passer");
         this.stop = new Button("Arrêter");
         this.rotate = new Button("Tourner");
+        this.turnOver = new Button("Retourner");
         setContent();
         setStyle();
     }
@@ -39,12 +41,16 @@ public class ControlPane extends HBox {
     Button getRestartButton() {
         return restart;
     }
+    
+    Button getTurnOverButton() {
+        return turnOver;
+    }
 
     /**
      * Sets the content of this pane.
      */
     final void setContent() {
-        this.getChildren().addAll(restart, pass, stop, rotate);
+        this.getChildren().addAll(restart, pass, stop, rotate, turnOver);
     }
 
     /**

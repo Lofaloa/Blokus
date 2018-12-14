@@ -186,6 +186,13 @@ public class Player {
         selectedPiece.rotate();
     }
 
+    /**
+     * Rotates this player selected piece 90 degrees clockwise.
+     */
+    void turnSelectedPieceOver() {
+        selectedPiece.turnOver();
+    }
+
     void clearStock() {
         requireNonEmptyStock();
         stock.clear();

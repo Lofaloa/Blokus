@@ -5,6 +5,7 @@ import blokus.controller.Restart;
 import blokus.controller.Rotate;
 import blokus.controller.SelectBoardSquare;
 import blokus.controller.SelectCurrentPiece;
+import blokus.controller.TurnOver;
 import blokus.controller.Withdraw;
 import blokus.exception.ModelException;
 import blokus.model.Game;
@@ -127,6 +128,10 @@ public class FxView extends VBox implements Observer {
      */
     public void setWithdrawAction() {
         control.getWithdrawButton().setOnMousePressed(new Withdraw(this, game));
+    }
+    
+    public void setTurnOverAction() {
+        control.getTurnOverButton().setOnMousePressed(new TurnOver(game, this));
     }
 
     /**

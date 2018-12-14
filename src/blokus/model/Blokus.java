@@ -198,6 +198,12 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
+    public void turnCurrentPlayerPieceOver() {
+        currentPlayer.turnSelectedPieceOver();
+        notifyView();
+    }
+
+    @Override
     public void nextPlayer() {
         currentPlayer.startWaiting();
         currentPlayer = playerIterator.next();
