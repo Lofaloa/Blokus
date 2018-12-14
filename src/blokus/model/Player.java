@@ -160,12 +160,10 @@ public class Player {
         requireNonEmptyStock();
         Objects.requireNonNull(selectedPiece, "This player has not selected a piece.");
         stock.remove(selectedPiece);
-        Piece taken = selectedPiece;
-        selectedPiece = null;
         if (stock.isEmpty()) {
             state = PlayerState.DONE;
         }
-        return taken;
+        return selectedPiece;
     }
 
     void remove(Piece piece) {
@@ -185,6 +183,7 @@ public class Player {
      * Rotates this player selected piece 90 degrees clockwise.
      */
     void rotateSelectedPiece() {
+        Objects.requireNonNull(selectedPiece, "No piece selected to rotate");
         selectedPiece.rotate();
     }
 
@@ -192,6 +191,7 @@ public class Player {
      * Rotates this player selected piece 90 degrees clockwise.
      */
     void turnSelectedPieceOver() {
+        Objects.requireNonNull(selectedPiece, "No piece selected to turn over");
         selectedPiece.turnOver();
     }
 

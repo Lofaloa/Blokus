@@ -26,6 +26,7 @@ public class FXController {
         view.setSelectBoardSquareAction();
         view.setRotateAction();
         view.setTurnOverAction();
+        view.setTurnOverClickedAction();
         view.setMissTurnAction();
         view.setWithdrawAction();
         view.setRestartAction();

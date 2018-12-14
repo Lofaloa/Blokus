@@ -187,25 +187,29 @@ public enum Shape {
     void rotate() {
         for (int i = 0; i < getNbOfSquares(); i++) {
             Square current = squares.get(i);
-            squares.set(i, new Square(current.getColumn(),
-                    getSize() - current.getRow() - 1));
+            int tmpRow = current.getRow();
+            current.setRow(current.getColumn());
+            current.setColumn(getSize() - tmpRow - 1);
         }
     }
-    
-    /*
-    00 -> 01
-    */
 
     /**
      * Turns this shape over.
      */
     void turnOver() {
-        int maxColumn = squares.stream()
-                .mapToInt(s -> s.getColumn())
-                .max().getAsInt();
+//        int maxColumn = squares.stream()
+//                .mapToInt(s -> s.getColumn())
+//                .max().getAsInt();
+//        for (int i = 0; i < getNbOfSquares(); i++) {
+//            Square current = squares.get(i);
+//            squares.set(i, new Square(current.getRow(),
+//                    (-current.getColumn()) + maxColumn));
+//        }
         for (int i = 0; i < getNbOfSquares(); i++) {
             Square current = squares.get(i);
-            squares.set(i, new Square(current.getRow(), (-current.getColumn()) + maxColumn));
+            int tmpRow = current.getRow();
+            current.setRow(current.getColumn());
+            current.setColumn(getSize() - tmpRow - 1);
         }
     }
 

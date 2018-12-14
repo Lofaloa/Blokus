@@ -10,8 +10,8 @@ import java.util.Objects;
  */
 public class Square {
 
-    private final int row;
-    private final int column;
+    private int row;
+    private int column;
 
     /**
      * Initializes this square to the given coordinates.
@@ -39,6 +39,14 @@ public class Square {
             throw new ModelException("Square at position (" + row + "; "
                     + column + ") is not valid, the board has 20 row and columns.");
         }
+    }
+
+    void setRow(int value) {
+        row = value;
+    }
+
+    void setColumn(int value) {
+        column = value;
     }
 
     /**
