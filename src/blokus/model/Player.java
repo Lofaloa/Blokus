@@ -160,10 +160,12 @@ public class Player {
         requireNonEmptyStock();
         Objects.requireNonNull(selectedPiece, "This player has not selected a piece.");
         stock.remove(selectedPiece);
+        Piece taken = selectedPiece;
+        selectedPiece = null;
         if (stock.isEmpty()) {
             state = PlayerState.DONE;
         }
-        return selectedPiece;
+        return taken;
     }
 
     void remove(Piece piece) {

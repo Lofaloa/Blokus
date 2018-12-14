@@ -31,7 +31,6 @@ public class TurnOver implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent event) {
-        System.out.println("ipmjbdhfipjubhfpfd");
         if (isMousePrimaryButton(event.getButton())) {
             game.turnCurrentPlayerPieceOver();
         } else {
