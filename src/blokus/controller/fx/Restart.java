@@ -19,11 +19,20 @@ public class Restart extends ButtonAction {
         super(game, view);
     }
 
+    boolean askConfirmation() {
+        return FXView.askConfirmation("Confirmation", "Voulez-vous vraiment "
+                + "recommencer une partie?", "En recommençant la partie courante, "
+                + "votre avancé sera perdue.");
+    }
+
     @Override
     public void handle(MouseEvent event) {
         if (isMousePrimaryButton(event.getButton())) {
-            //TODO: confirmation dialog
-            game.initialize();
+            if (askConfirmation()) {
+                game.initialize();
+            } else {
+                event.consume();
+            }
         } else {
             event.consume();
         }
