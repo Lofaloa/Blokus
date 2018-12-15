@@ -1,4 +1,4 @@
-package blokus.controller;
+package blokus.controller.console;
 
 import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;

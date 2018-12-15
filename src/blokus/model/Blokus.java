@@ -197,7 +197,6 @@ public class Blokus extends Observable implements Game {
             throw new IllegalStateException("Player " + currentPlayer.getColor()
                     + " is trying to rotate a piece but has not selected one.");
         }
-        System.out.println("rotate");
         currentPlayer.rotateSelectedPiece();
         notifyView();
     }

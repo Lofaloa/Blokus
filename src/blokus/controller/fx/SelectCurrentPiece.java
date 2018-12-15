@@ -1,7 +1,7 @@
-package blokus.controller;
+package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FxView;
+import blokus.view.fx.FXView;
 import blokus.view.fx.PiecePane;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
@@ -38,7 +38,7 @@ public class SelectCurrentPiece implements EventHandler<MouseEvent> {
                 event.consume();
             }
         } catch (IllegalStateException e) {
-            FxView.displayAlert(e.getMessage());
+            FXView.displayAlert("Erreur de sélection", "Attention!", e.getMessage());
         }
     }
 

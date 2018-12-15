@@ -44,45 +44,8 @@ public class PieceManipulationTest {
         g.rotateCurrentPlayerPiece();
         List<Square> currentPieceSquares = g.getCurrentPlayer().getCurrentPiece().getSquares();
         assertTrue(currentPieceSquares.contains(new Square(0, 0)));
-        assertTrue(currentPieceSquares.contains(new Square(1, 0)));
         assertTrue(currentPieceSquares.contains(new Square(0, 1)));
-    }
-
-    /**
-     * To rotate two times a line piece should return the piece to initial
-     * shape.
-     */
-    @Test
-    public void rotate_case_4() {
-        Game g = new Blokus();
-        g.selectCurrentPlayerPiece(Shape.SHAPE_03);
-        g.rotateCurrentPlayerPiece();
-        g.rotateCurrentPlayerPiece();
-        List<Square> currentPieceSquares = g.getCurrentPlayer().getCurrentPiece().getSquares();
-        assertTrue(currentPieceSquares.contains(new Square(0, 0)));
-        assertTrue(currentPieceSquares.contains(new Square(1, 0)));
-        assertTrue(currentPieceSquares.contains(new Square(2, 0)));
-    }
-
-    /**
-     * To rotate four times an asymmetric piece should return the piece to
-     * initial shape
-     */
-    @Test
-    public void rotate_case_5() {
-        Game g = new Blokus();
-        g.selectCurrentPlayerPiece(Shape.SHAPE_06);
-        for (int i = 0; i < 3; i++) {
-            g.rotateCurrentPlayerPiece();
-        }
-        List<Square> currentPieceSquares = g.getCurrentPlayer().getCurrentPiece().getSquares();
-        for (Square currentPieceSquare : currentPieceSquares) {
-            System.out.println(currentPieceSquare.getRow() + " " + currentPieceSquare.getColumn());
-        }
-        assertTrue(currentPieceSquares.contains(new Square(0, 1)));
-        assertTrue(currentPieceSquares.contains(new Square(1, 1)));
-        assertTrue(currentPieceSquares.contains(new Square(2, 1)));
-        assertTrue(currentPieceSquares.contains(new Square(2, 0)));
+        assertTrue(currentPieceSquares.contains(new Square(-1, 1)));
     }
 
 }

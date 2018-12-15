@@ -1,23 +1,25 @@
-package blokus.controller;
+package blokus.controller.fx;
 
 import blokus.exception.ModelException;
 import blokus.model.Game;
 import blokus.model.Square;
-import blokus.view.fx.FxView;
+import blokus.view.fx.FXView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 /**
+ * The PlacePieceAction command places the piece selected by the current player
+ * of the game.
  *
  * @author Logan Farci (47923)
  */
-public class SelectBoardSquare implements EventHandler<MouseEvent> {
+public class PlacePieceAction implements EventHandler<MouseEvent> {
 
     private final Square destination;
     private final Game game;
 
-    public SelectBoardSquare(Square destination, Game game) {
+    public PlacePieceAction(Square destination, Game game) {
         this.destination = destination;
         this.game = game;
     }
@@ -33,7 +35,7 @@ public class SelectBoardSquare implements EventHandler<MouseEvent> {
         } catch (IllegalStateException
                 | ModelException
                 | NullPointerException e) {
-            FxView.displayAlert(e.getMessage());
+            FXView.displayAlert("Erreur de placement", "Attention!", e.getMessage());
         }
     }
 

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package blokus.controller;
+package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FxView;
+import blokus.view.fx.FXView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -18,9 +18,9 @@ import javafx.scene.input.MouseEvent;
 public abstract class ButtonAction implements EventHandler<MouseEvent> {
 
     protected final Game game;
-    protected final FxView view;
+    protected final FXView view;
 
-    public ButtonAction(Game game, FxView view) {
+    public ButtonAction(Game game, FXView view) {
         this.game = game;
         this.view = view;
     }

@@ -3,30 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package blokus.controller;
+package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FxView;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
+import blokus.view.fx.FXView;
 import javafx.scene.input.MouseEvent;
 
 /**
  *
  * @author g47923
  */
-public class TurnOver implements EventHandler<MouseEvent> {
+public class TurnOver extends ButtonAction {
 
-    private final Game game;
-    private final FxView view;
-
-    public TurnOver(Game game, FxView view) {
-        this.game = game;
-        this.view = view;
-    }
-
-    boolean isMousePrimaryButton(MouseButton b) {
-        return b == MouseButton.PRIMARY;
+    public TurnOver(Game game, FXView view) {
+        super(game, view);
     }
 
     @Override
@@ -37,4 +27,5 @@ public class TurnOver implements EventHandler<MouseEvent> {
             event.consume();
         }
     }
+    
 }

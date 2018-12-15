@@ -1,9 +1,7 @@
-package blokus.controller;
+package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FxView;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
+import blokus.view.fx.FXView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -12,18 +10,10 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Logan Farci (47923)
  */
-public class MissTurn implements EventHandler<MouseEvent> {
+public class MissTurn extends ButtonAction {
 
-    private final Game game;
-    private final FxView view;
-
-    public MissTurn(Game game, FxView view) {
-        this.game = game;
-        this.view = view;
-    }
-
-    boolean isMousePrimaryButton(MouseButton b) {
-        return b == MouseButton.PRIMARY;
+    public MissTurn(Game game, FXView view) {
+        super(game, view);
     }
 
     @Override

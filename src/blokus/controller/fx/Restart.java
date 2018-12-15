@@ -3,36 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package blokus.controller;
+package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FxView;
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseButton;
+import blokus.view.fx.FXView;
 import javafx.scene.input.MouseEvent;
 
 /**
  *
  * @author Logan Farci (47923)
  */
-public class Restart implements EventHandler<MouseEvent> {
+public class Restart extends ButtonAction {
 
-    private final FxView view;
-    private final Game game;
-
-    public Restart(FxView view, Game game) {
-        this.view = view;
-        this.game = game;
-    }
-
-    boolean isMousePrimaryButton(MouseButton b) {
-        return b == MouseButton.PRIMARY;
+    public Restart(Game game, FXView view) {
+        super(game, view);
     }
 
     @Override
     public void handle(MouseEvent event) {
         if (isMousePrimaryButton(event.getButton())) {
-            System.out.println("test");
+            //TODO: confirmation dialog
             game.initialize();
         } else {
             event.consume();

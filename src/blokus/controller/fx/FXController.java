@@ -1,7 +1,7 @@
-package blokus.controller;
+package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FxView;
+import blokus.view.fx.FXView;
 
 /**
  * Handles the logic of the game.
@@ -11,25 +11,20 @@ import blokus.view.fx.FxView;
 public class FXController {
 
     private final Game game;
-    private final FxView view;
+    private final FXView view;
 
     /**
-     * Initializes this controller with the game to control.
+     * Constructs this controller with the game to control and its view.
      *
      * @param game is the game to control.
      * @param view is the view representing the game.
      */
-    public FXController(Game game, FxView view) {
+    public FXController(Game game, FXView view) {
         this.game = game;
         this.view = view;
         view.setSelectCurrentPieceAction();
-        view.setSelectBoardSquareAction();
-        view.setRotateAction();
-        view.setTurnOverAction();
-        view.setTurnOverClickedAction();
-        view.setMissTurnAction();
-        view.setWithdrawAction();
-        view.setRestartAction();
+        view.setPlacePieceAction();
+        view.setButtonActions();
         view.setPiecePreviewAction();
     }
 

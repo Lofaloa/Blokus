@@ -1,6 +1,6 @@
 package blokus;
 
-import blokus.controller.ControllerConsole;
+import blokus.controller.console.ControllerConsole;
 import blokus.model.Blokus;
 import blokus.view.console.View;
 

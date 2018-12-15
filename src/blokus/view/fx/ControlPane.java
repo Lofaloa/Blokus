@@ -26,23 +26,23 @@ public class ControlPane extends HBox {
         setStyle();
     }
 
-    Button getRotateButton() {
+    public Button getRotateButton() {
         return rotate;
     }
 
-    Button getMissTurnButton() {
+    public Button getMissTurnButton() {
         return pass;
     }
 
-    Button getWithdrawButton() {
+    public Button getWithdrawButton() {
         return stop;
     }
 
-    Button getRestartButton() {
+    public Button getRestartButton() {
         return restart;
     }
-    
-    Button getTurnOverButton() {
+
+    public Button getTurnOverButton() {
         return turnOver;
     }
 
