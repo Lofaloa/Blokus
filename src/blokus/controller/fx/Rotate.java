@@ -16,15 +16,15 @@ public class Rotate extends ButtonAction {
 
     @Override
     public void handle(MouseEvent event) {
-        if (isMousePrimaryButton(event.getButton())) {
+//        if (isMousePrimaryButton(event.getButton())) {
             try {
                 game.rotateCurrentPlayerPiece();
             } catch (IllegalStateException e) {
-//                FxView.displayAlert("Erreur de rotation", "Attention!", e.getMessage());
+                FxView.displayAlert("Erreur de rotation", "Attention!", e.getMessage());
             }
-        } else {
-            event.consume();
-        }
+//        } else {
+//            event.consume();
+//        }
     }
 
 }

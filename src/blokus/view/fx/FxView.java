@@ -3,6 +3,7 @@ package blokus.view.fx;
 import blokus.controller.fx.ActionType;
 import blokus.controller.fx.ButtonActionFactory;
 import blokus.controller.fx.PlacePieceAction;
+import blokus.controller.fx.RotateClicked;
 import blokus.controller.fx.SelectCurrentPiece;
 import blokus.exception.ModelException;
 import blokus.model.Game;
@@ -107,6 +108,10 @@ public class FxView extends VBox implements Observer {
                     GridPane.getColumnIndex(node));
             node.setOnMousePressed(new PlacePieceAction(current, game));
         });
+    }
+
+    public void setRotateByRightClickAction() {
+        gameBox.getBoard().setOnMousePressed(new RotateClicked(game, this));
     }
 
     public void setButtonsActions() {
