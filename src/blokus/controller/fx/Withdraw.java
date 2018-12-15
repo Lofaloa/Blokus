@@ -19,6 +19,13 @@ public class Withdraw extends ButtonAction {
         if (isMousePrimaryButton(event.getButton())) {
             game.getCurrentPlayer().withdraw();
             game.nextPlayer();
+//            if (game.isOver()) {
+//                if (view.displayEndDialog()) {
+//                    game.initialize();
+//                } else {
+//                    Platform.exit();
+//                }
+//            }
         } else {
             event.consume();
         }

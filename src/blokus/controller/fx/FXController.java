@@ -24,8 +24,8 @@ public class FXController {
         this.view = view;
         view.setSelectCurrentPieceAction();
         view.setPlacePieceAction();
-        view.setButtonActions();
         view.setPiecePreviewAction();
+        view.setButtonActions();
     }
 
     /**

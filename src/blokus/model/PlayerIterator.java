@@ -18,6 +18,10 @@ class PlayerIterator implements Iterator<Player> {
         this.players = players;
     }
 
+    boolean areAllPlayersWithdrawn() {
+        return players.stream().allMatch(player -> player.isWithdrawn());
+    }
+
     Player current() {
         return players.get(currentPlayerIndex);
     }
@@ -38,7 +42,7 @@ class PlayerIterator implements Iterator<Player> {
     @Override
     public Player next() {
         Player nextPlayer = getNext();
-        while (nextPlayer.isWithdrawn()) {
+        while (!areAllPlayersWithdrawn() && nextPlayer.isWithdrawn()) {
             nextPlayer = getNext();
         }
         return nextPlayer;

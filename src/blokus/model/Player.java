@@ -126,7 +126,9 @@ public class Player {
      * Makes this player miss the current turn of the game she/ he is playing.
      */
     public void missTurn() {
-        state = PlayerState.MISSING_TURN;
+        if (state == PlayerState.PLAYING) {
+            state = PlayerState.MISSING_TURN;
+        }
     }
 
     /**
@@ -206,7 +208,7 @@ public class Player {
         selectedPiece.turnOver();
     }
 
-    void clearStock() {
+    public void clearStock() {
         requireNonEmptyStock();
         stock.clear();
     }
