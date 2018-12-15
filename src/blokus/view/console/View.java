@@ -62,6 +62,11 @@ public class View implements BlokusView {
     }
 
     @Override
+    public void printRestart() {
+        out.printRestart();
+    }
+
+    @Override
     public void printRotation(int rotation) {
         out.printRotation(rotation);
     }
@@ -72,8 +77,13 @@ public class View implements BlokusView {
     }
 
     @Override
+    public boolean askConfirmation() {
+        return in.askConfirmation();
+    }
+
+    @Override
     public void printEnd() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        out.printEnd();
     }
 
 }

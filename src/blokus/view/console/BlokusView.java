@@ -50,6 +50,11 @@ public interface BlokusView {
     public void printExceptionMessage(Exception exception);
 
     /**
+     * Prints a message asking the user if he/ she is sure to want to restart.
+     */
+    public void printRestart();
+
+    /**
      * Prints a rotation message.
      *
      * @param rotation is the number of rotation.
@@ -62,6 +67,13 @@ public interface BlokusView {
      * @return an array of tokens forming the read command.
      */
     public String[] readCommand();
+
+    /**
+     * Asks a confirmation to the user.
+     *
+     * @return true if the user confirmed.
+     */
+    public boolean askConfirmation();
 
     /**
      * Prints the results of the finished game. Each player and their score.

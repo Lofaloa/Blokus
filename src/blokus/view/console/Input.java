@@ -28,4 +28,12 @@ class Input {
         return line.split("\\s+");
     }
 
+    boolean askConfirmation() {
+        String answer = in.nextLine();
+        while (answer.equals("y") && answer.equals("n")) {
+            answer = in.nextLine();
+        }
+        return answer.equals("y");
+    }
+
 }

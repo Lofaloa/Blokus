@@ -31,7 +31,7 @@ public class ControllerConsole {
         this.game = game;
         this.view = view;
         this.commandsNames = new String[]{"show", "stock", "play", "score",
-            "exit", "miss", "withdraw", "players", "help"};
+            "exit", "miss", "withdraw", "players", "help", "restart"};
     }
 
     /**
@@ -135,6 +135,12 @@ public class ControllerConsole {
             case "players":
                 view.printPlayers();
                 break;
+            case "restart":
+                view.printRestart();
+                if (view.askConfirmation()) {
+                    game.initialize();
+                }
+                break;
             case "help":
                 view.printHelp();
                 break;
@@ -143,21 +149,34 @@ public class ControllerConsole {
         }
     }
 
+    void playTurn() {
+        try {
+            view.printCurrentPlayer();
+            executeCommand(view.readCommand());
+        } catch (ModelException
+                | IllegalActionException
+                | IllegalArgumentException
+                | NullPointerException
+                | IllegalStateException e) {
+            view.printExceptionMessage(e);
+        }
+    }
+
     /**
      * Starts <i>Blokus</i>.
      */
     public void start() {
+        boolean again = true;
         view.printStart();
-        while (!game.isOver()) {
-            try {
-                view.printCurrentPlayer();
-                executeCommand(view.readCommand());
-            } catch (ModelException
-                    | IllegalActionException
-                    | IllegalArgumentException
-                    | NullPointerException
-                    | IllegalStateException e) {
-                view.printExceptionMessage(e);
+        while (again) {
+            if (!game.isOver()) {
+                playTurn();
+            } else {
+                view.printEnd();
+                if (again = view.askConfirmation()) {
+                    view.printStart();
+                    game.initialize();
+                }
             }
         }
     }

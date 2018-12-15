@@ -48,6 +48,7 @@ class Output {
         printCommand("miss", "makes the current play miss the current turn");
         printCommand("withdraw", "makes the current player withdraw from the game");
         printCommand("players", "prints all the players with their state and score");
+        printCommand("restart", "restarts the game");
         printCommand("help", "prints this command list");
         printCommand("exit", "exit the game.");
     }
@@ -85,6 +86,10 @@ class Output {
         if (rotation > 0) {
             System.out.println("You just rotate your piece " + rotation + " times.");
         }
+    }
+
+    void printRestart() {
+        System.out.print("Are you sure? The progress will be lost. (y/ n) ");
     }
 
     /**
@@ -209,6 +214,7 @@ class Output {
     void printEnd() {
         System.out.println("End of the game!");
         printWinners();
+        System.out.print("Do you want to restart the game? (y/ n) ");
     }
 
 }
