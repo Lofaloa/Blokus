@@ -21,38 +21,6 @@ public class SquareTest {
     }
 
     /**
-     * Initializing a square with a negative row causes an exception.
-     */
-    @Test(expected = ModelException.class)
-    public void initialization_case_2() {
-        new Square(-1, 3);
-    }
-
-    /**
-     * Initializing a square with a out of bounds row causes an exception.
-     */
-    @Test(expected = ModelException.class)
-    public void initialization_case_3() {
-        new Square(20, 3);
-    }
-
-    /**
-     * Initializing a square with a out of bounds column causes an exception.
-     */
-    @Test(expected = ModelException.class)
-    public void initilization_case_4() {
-        new Square(2, 20);
-    }
-
-    /**
-     * Initializing a square with a negative column causes an exception.
-     */
-    @Test(expected = ModelException.class)
-    public void initilization_case_5() {
-        new Square(2, -2);
-    }
-
-    /**
      * Moving a square to an out of bounds coordinate causes an exception.
      */
     @Test(expected = ModelException.class)

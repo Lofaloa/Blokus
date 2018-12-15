@@ -22,7 +22,7 @@ public class Square {
      * not valid.
      */
     public Square(int row, int column) {
-        requireValidCoordinates(row, column);
+        //requireValidCoordinates(row, column);
         this.row = row;
         this.column = column;
     }
@@ -116,5 +116,12 @@ public class Square {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "(" + row + "; " + column + ")";
+    }
+
+
 
 }

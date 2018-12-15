@@ -6,7 +6,7 @@ import blokus.controller.Rotate;
 import blokus.controller.SelectBoardSquare;
 import blokus.controller.SelectCurrentPiece;
 import blokus.controller.TurnOver;
-import blokus.controller.TurnOverClicked;
+import blokus.controller.RotateClicked;
 import blokus.controller.Withdraw;
 import blokus.exception.ModelException;
 import blokus.model.Game;
@@ -136,7 +136,7 @@ public class FxView extends VBox implements Observer {
     }
     
     public void setTurnOverClickedAction() {
-        gameBox.getBoard().setOnMousePressed(new TurnOverClicked(game, this));
+        gameBox.getBoard().setOnMousePressed(new RotateClicked(game, this));
     }
 
     /**

@@ -181,69 +181,22 @@ public enum Shape {
                 && s.getColumn() == column);
     }
 
-    boolean areRowsAllEqual() {
-        return squares.stream()
-                .mapToInt(s -> s.getRow())
-                .allMatch(row -> row == squares.get(0).getRow());
-    }
-
-    boolean areColumnsAllEqual() {
-        return squares.stream()
-                .mapToInt(s -> s.getColumn())
-                .allMatch(col -> col == squares.get(0).getColumn());
-    }
-
-    /**
-     * Tells if this shape is a line.
-     *
-     * @return true if this shape is a line
-     */
-    boolean isLine() {
-        return areRowsAllEqual() || areColumnsAllEqual();
-    }
-
-    private void rotateLine() {
-        for (Square square : squares) {
-            int tmpRow = square.getRow();
-            square.setRow(square.getColumn());
-            square.setColumn(tmpRow);
-        }
-    }
-
     /**
      * Rotates this shape 90 degrees clockwise.
      */
     void rotate() {
-        if (isLine()) {
-            rotateLine();
-        } else {
-            for (Square square : squares) {
-                int tmpRow = square.getRow();
-                square.setRow(square.getColumn());
-                square.setColumn(getSize() - tmpRow - 1);
-            }
-        }
-
+        squares.forEach((square) -> {
+            int tmpColumn = square.getColumn();
+            square.setColumn(square.getRow());
+            square.setRow(-tmpColumn);
+        });
     }
 
     /**
      * Turns this shape over.
      */
     void turnOver() {
-//        int maxColumn = squares.stream()
-//                .mapToInt(s -> s.getColumn())
-//                .max().getAsInt();
-//        for (int i = 0; i < getNbOfSquares(); i++) {
-//            Square current = squares.get(i);
-//            squares.set(i, new Square(current.getRow(),
-//                    (-current.getColumn()) + maxColumn));
-//        }
-        for (int i = 0; i < getNbOfSquares(); i++) {
-            Square current = squares.get(i);
-            int tmpRow = current.getRow();
-            current.setRow(current.getColumn());
-            current.setColumn(getSize() - tmpRow - 1);
-        }
+        squares.forEach(square -> square.setColumn(-square.getColumn()));
     }
 
 }
