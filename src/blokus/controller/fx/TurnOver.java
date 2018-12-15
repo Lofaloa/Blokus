@@ -6,7 +6,7 @@
 package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class TurnOver extends ButtonAction {
 
-    public TurnOver(Game game, FXView view) {
+    public TurnOver(Game game, FxView view) {
         super(game, view);
     }
 
@@ -27,5 +27,5 @@ public class TurnOver extends ButtonAction {
             event.consume();
         }
     }
-    
+
 }

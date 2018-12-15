@@ -1,7 +1,7 @@
 package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class Rotate extends ButtonAction {
 
-    public Rotate(Game game, FXView view) {
+    public Rotate(Game game, FxView view) {
         super(game, view);
     }
 
@@ -20,7 +20,7 @@ public class Rotate extends ButtonAction {
             try {
                 game.rotateCurrentPlayerPiece();
             } catch (IllegalStateException e) {
-                FXView.displayAlert("Erreur de rotation", "Attention!", e.getMessage());
+//                FxView.displayAlert("Erreur de rotation", "Attention!", e.getMessage());
             }
         } else {
             event.consume();

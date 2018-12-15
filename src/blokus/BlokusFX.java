@@ -3,7 +3,7 @@ package blokus;
 import blokus.controller.fx.FXController;
 import blokus.model.Blokus;
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -22,7 +22,7 @@ public class BlokusFX extends Application {
     @Override
     public void start(Stage stage) {
         Game game = new Blokus();
-        FXView view = new FXView(stage, game);
+        FxView view = new FxView(stage, game);
         FXController controller = new FXController(game, view);
         controller.addObserver();
         controller.initialize();

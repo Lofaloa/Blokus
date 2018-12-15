@@ -1,19 +1,19 @@
 package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 
 /**
- * 
+ *
  *
  * @author Logan Farci (47923)
  */
 public class ButtonActionFactory {
 
     private final Game game;
-    private final FXView view;
+    private final FxView view;
 
-    public ButtonActionFactory(Game game, FXView view) {
+    public ButtonActionFactory(Game game, FxView view) {
         this.game = game;
         this.view = view;
     }

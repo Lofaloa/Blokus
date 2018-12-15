@@ -1,7 +1,7 @@
 package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -13,9 +13,9 @@ import javafx.scene.input.MouseEvent;
 public class RotateClicked implements EventHandler<MouseEvent> {
 
     private final Game game;
-    private final FXView view;
+    private final FxView view;
 
-    public RotateClicked(Game game, FXView view) {
+    public RotateClicked(Game game, FxView view) {
         this.game = game;
         this.view = view;
     }

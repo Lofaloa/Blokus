@@ -1,7 +1,7 @@
 package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class Withdraw extends ButtonAction {
 
-    public Withdraw(Game game, FXView view) {
+    public Withdraw(Game game, FxView view) {
         super(game, view);
     }
 
@@ -19,13 +19,6 @@ public class Withdraw extends ButtonAction {
         if (isMousePrimaryButton(event.getButton())) {
             game.getCurrentPlayer().withdraw();
             game.nextPlayer();
-//            if (game.isOver()) {
-//                if (view.displayEndDialog()) {
-//                    game.initialize();
-//                } else {
-//                    Platform.exit();
-//                }
-//            }
         } else {
             event.consume();
         }

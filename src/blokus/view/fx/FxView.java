@@ -1,23 +1,22 @@
 package blokus.view.fx;
 
-import blokus.controller.MissTurn;
-import blokus.controller.Restart;
-import blokus.controller.Rotate;
-import blokus.controller.SelectBoardSquare;
-import blokus.controller.SelectCurrentPiece;
-import blokus.controller.TurnOver;
-import blokus.controller.RotateClicked;
-import blokus.controller.Withdraw;
+import blokus.controller.fx.ActionType;
+import blokus.controller.fx.ButtonActionFactory;
+import blokus.controller.fx.PlacePieceAction;
+import blokus.controller.fx.SelectCurrentPiece;
 import blokus.exception.ModelException;
 import blokus.model.Game;
 import blokus.model.Piece;
+import blokus.model.Player;
 import blokus.model.Square;
 import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
@@ -102,48 +101,21 @@ public class FxView extends VBox implements Observer {
     /**
      * Adds an
      */
-    public void setSelectBoardSquareAction() {
+    public void setPlacePieceAction() {
         gameBox.getBoardSquares().forEach((node) -> {
             Square current = new Square(GridPane.getRowIndex(node),
                     GridPane.getColumnIndex(node));
-            node.setOnMousePressed(new SelectBoardSquare(current, game));
+            node.setOnMousePressed(new PlacePieceAction(current, game));
         });
     }
 
-    /**
-     * Adds an handler to the rotate button.
-     */
-    public void setRotateAction() {
-        control.getRotateButton().setOnMousePressed(new Rotate(this, game));
-    }
-
-    /**
-     * Adds an handler to the turn button.
-     */
-    public void setMissTurnAction() {
-        control.getMissTurnButton().setOnMousePressed(new MissTurn(game, this));
-    }
-
-    /**
-     * Adds an handler to the withdraw button.
-     */
-    public void setWithdrawAction() {
-        control.getWithdrawButton().setOnMousePressed(new Withdraw(this, game));
-    }
-    
-    public void setTurnOverAction() {
-        control.getTurnOverButton().setOnMousePressed(new TurnOver(game, this));
-    }
-    
-    public void setTurnOverClickedAction() {
-        gameBox.getBoard().setOnMousePressed(new RotateClicked(game, this));
-    }
-
-    /**
-     * Adds an handler to the restart button.
-     */
-    public void setRestartAction() {
-        control.getRestartButton().setOnMousePressed(new Restart(this, game));
+    public void setButtonsActions() {
+        ButtonActionFactory factory = new ButtonActionFactory(game, this);
+        control.getRestartButton().setOnMousePressed(factory.getButtonAction(ActionType.RESTART));
+        control.getRotateButton().setOnMousePressed(factory.getButtonAction(ActionType.ROTATE));
+        control.getTurnOverButton().setOnMousePressed(factory.getButtonAction(ActionType.TURN_OVER));
+        control.getMissTurnButton().setOnMousePressed(factory.getButtonAction(ActionType.MISS_TURN));
+        control.getWithdrawButton().setOnMousePressed(factory.getButtonAction(ActionType.WITHDRAW));
     }
 
     private void setPiecePreviewAction(Node node, Square dest) {
@@ -203,14 +175,55 @@ public class FxView extends VBox implements Observer {
     @Override
     public void update(Observable o, Object o1) {
         gameBox.updateContent();
+        if (game.isOver()) {
+                if (displayEndDialog()) {
+                    game.initialize();
+                } else {
+                    Platform.exit();
+                }
+            }
+        }
+
+    public static void displayAlert(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
-    public static void displayAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Piece placement warning");
-        alert.setHeaderText("Be aware...");
-        alert.setContentText(msg);
-        alert.showAndWait();
+    public boolean askConfirmation(String title, String header, String content) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        return alert.showAndWait().get() == ButtonType.OK;
+    }
+
+    private String getEndDialogContent() {
+        StringBuilder str = new StringBuilder();
+        for (Player winner : game.getPlayers()) {
+            str.append("Joueur ");
+            str.append(winner.getColor());
+            str.append(" avec un score de ");
+            str.append(winner.getScore());
+            str.append(".\n");
+        }
+        return str.toString();
+    }
+
+    public boolean displayEndDialog() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Fin du jeu");
+        alert.setHeaderText("Gagnants du jeu");
+        alert.setContentText(getEndDialogContent());
+
+        ButtonType restart = new ButtonType("Nouvelle partie");
+        ButtonType leave = new ButtonType("Quitter");
+
+        alert.getButtonTypes().setAll(restart, leave);
+
+        return alert.showAndWait().get() == restart;
     }
 
 }

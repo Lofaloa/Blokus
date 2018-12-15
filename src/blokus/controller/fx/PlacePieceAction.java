@@ -3,7 +3,7 @@ package blokus.controller.fx;
 import blokus.exception.ModelException;
 import blokus.model.Game;
 import blokus.model.Square;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -35,7 +35,7 @@ public class PlacePieceAction implements EventHandler<MouseEvent> {
         } catch (IllegalStateException
                 | ModelException
                 | NullPointerException e) {
-            FXView.displayAlert("Erreur de placement", "Attention!", e.getMessage());
+            FxView.displayAlert("Erreur de placement", "Attention!", e.getMessage());
         }
     }
 

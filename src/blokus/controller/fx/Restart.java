@@ -6,7 +6,7 @@
 package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -15,12 +15,12 @@ import javafx.scene.input.MouseEvent;
  */
 public class Restart extends ButtonAction {
 
-    public Restart(Game game, FXView view) {
+    public Restart(Game game, FxView view) {
         super(game, view);
     }
 
     boolean askConfirmation() {
-        return FXView.askConfirmation("Confirmation", "Voulez-vous vraiment "
+        return view.askConfirmation("Confirmation", "Voulez-vous vraiment "
                 + "recommencer une partie?", "En recommençant la partie courante, "
                 + "votre avancé sera perdue.");
     }

@@ -1,7 +1,7 @@
 package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
  */
 public class MissTurn extends ButtonAction {
 
-    public MissTurn(Game game, FXView view) {
+    public MissTurn(Game game, FxView view) {
         super(game, view);
     }
 

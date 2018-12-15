@@ -6,7 +6,7 @@
 package blokus.controller.fx;
 
 import blokus.model.Game;
-import blokus.view.fx.FXView;
+import blokus.view.fx.FxView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -18,9 +18,9 @@ import javafx.scene.input.MouseEvent;
 public abstract class ButtonAction implements EventHandler<MouseEvent> {
 
     protected final Game game;
-    protected final FXView view;
+    protected final FxView view;
 
-    public ButtonAction(Game game, FXView view) {
+    public ButtonAction(Game game, FxView view) {
         this.game = game;
         this.view = view;
     }
