@@ -16,6 +16,7 @@ public class Player {
     private PlayerState state;
     private boolean isCurrentPlayer;
     private Piece selectedPiece;
+    private Strategy strategy;
 
     /**
      * Initializes this player with the given color and a stock of 21 distinct
@@ -29,6 +30,12 @@ public class Player {
         this.state = PlayerState.WAITING;
         this.isCurrentPlayer = false;
         this.selectedPiece = null;
+        this.strategy = null;
+    }
+
+    Player(BlokusColor color, Strategy strategy) {
+        this(color);
+        this.strategy = strategy;
     }
 
     Player(Player player) {
@@ -101,6 +108,10 @@ public class Player {
         return stock.getPieces().size() == 20;
     }
 
+    boolean isBot() {
+        return strategy != null;
+    }
+
     void initialize() {
         this.state = PlayerState.WAITING;
         this.stock.initialize();
@@ -165,11 +176,13 @@ public class Player {
     Piece takeCurrentPiece() {
         requireNonEmptyStock();
         Objects.requireNonNull(selectedPiece, "This player has not selected a piece.");
+        Piece taken = selectedPiece;
         stock.remove(selectedPiece);
+        selectedPiece = null;
         if (stock.isEmpty()) {
             state = PlayerState.DONE;
         }
-        return selectedPiece;
+        return taken;
     }
 
     void remove(Piece piece) {

@@ -71,8 +71,7 @@ class MainRoundsMove implements Move {
      * @param column is the column of the piece.
      */
     void requireColorRestrictedPiece(Piece piece, int row, int column) {
-        if (board.isPieceTouchingSameColorBySide(piece, row, column)
-                || !board.isPieceTouchingSameColorAtCorner(piece, row, column)) {
+        if (!board.isColorRestrictedPiece(piece, row, column)) {
             throw new ModelException("piece " + piece.getColor() + " of shape "
                     + piece.getShape() + " should touch another same color piece"
                     + " at corner and should not touch a same piece color by side.");

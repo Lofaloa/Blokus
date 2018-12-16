@@ -259,6 +259,13 @@ public class Board {
                 .anyMatch(s -> isSquareTouchingSameColorBySide(s, piece.getColor()));
     }
 
+    boolean isColorRestrictedPiece(Piece piece, int row, int column) {
+        requireValidSquare(row, column);
+        requireNonNull(piece, "isColorRestrictedPiece - no piece given");
+        return !isPieceTouchingSameColorBySide(piece, row, column)
+                && isPieceTouchingSameColorAtCorner(piece, row, column);
+    }
+
     /**
      * Makes sure the given square is valid. A valid square is free and is
      * inside the board.
