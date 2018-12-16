@@ -1,6 +1,6 @@
 package blokus.view.console;
 
-import blokus.model.Blokus;
+import blokus.model.Game;
 
 /**
  * Represents the view.
@@ -17,7 +17,7 @@ public class View implements BlokusView {
      *
      * @param game is the game to represent.
      */
-    public View(Blokus game) {
+    public View(Game game) {
         this.in = new Input();
         this.out = new Output(game);
     }

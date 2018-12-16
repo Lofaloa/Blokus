@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
  */
 public class Blokus extends Observable implements Game {
 
+    public final static int NB_PLAYERS = 4;
+
     private final List<Player> players;
     private final PlayerIterator playerIterator;
     private final Board board;
@@ -38,6 +40,23 @@ public class Blokus extends Observable implements Game {
         this.board = new Board();
         this.state = BlokusState.FIRST_ROUND;
         currentPlayer.startPlaying();
+    }
+
+    /**
+     * Constructs this game with both AI players and real players.
+     *
+     * @param nbOfPlayers the number of real players.
+     */
+    public Blokus(int nbOfPlayers) {
+        this();
+        if (nbOfPlayers < 0 || NB_PLAYERS <  NB_PLAYERS) {
+            throw new IllegalArgumentException(nbOfPlayers + " is not a valid "
+                    + "number of players, is should be between 0 and 4.");
+        }
+        for (int i = 0; i < NB_PLAYERS - nbOfPlayers; i++) {
+            Strategy strategy = new DumbPlayerStrategy(this);
+            players.get(i).setStrategy(strategy);
+        }
     }
 
     @Override

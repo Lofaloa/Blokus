@@ -2,7 +2,7 @@ package blokus.controller.console;
 
 import blokus.exception.IllegalActionException;
 import blokus.exception.ModelException;
-import blokus.model.Blokus;
+import blokus.model.Game;
 import blokus.view.console.BlokusView;
 import blokus.view.console.View;
 import static java.lang.Integer.parseInt;
@@ -17,7 +17,7 @@ import java.util.Locale;
  */
 public class ControllerConsole {
 
-    private final Blokus game;
+    private final Game game;
     private final BlokusView view;
     private final String[] commandsNames;
 
@@ -27,7 +27,7 @@ public class ControllerConsole {
      * @param game is the game to control.
      * @param view is the view representing the game to control.
      */
-    public ControllerConsole(Blokus game, View view) {
+    public ControllerConsole(Game game, View view) {
         this.game = game;
         this.view = view;
         this.commandsNames = new String[]{"show", "stock", "play", "score",
@@ -170,7 +170,13 @@ public class ControllerConsole {
         view.printStart();
         while (again) {
             if (!game.isOver()) {
-                playTurn();
+                if (game.getCurrentPlayer().isBot()) {
+                    view.printCurrentPlayer();
+                    game.getCurrentPlayer().executeStrategy();
+                    game.nextPlayer();
+                } else {
+                    playTurn();
+                }
             } else {
                 view.printEnd();
                 if (again = view.askConfirmation()) {

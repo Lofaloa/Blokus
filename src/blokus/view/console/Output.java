@@ -1,10 +1,9 @@
 package blokus.view.console;
 
-import blokus.model.Blokus;
 import blokus.model.BlokusColor;
+import blokus.model.Game;
 import blokus.model.Piece;
 import blokus.model.Player;
-import blokus.model.Stock;
 
 /**
  * Manages the display of the game.
@@ -13,14 +12,14 @@ import blokus.model.Stock;
  */
 class Output {
 
-    private final Blokus game;
+    private final Game game;
 
     /**
      * Initializes this view for the given game.
      *
      * @param game is the game for which manage the view.
      */
-    Output(Blokus game) {
+    Output(Game game) {
         this.game = game;
     }
 
@@ -189,9 +188,11 @@ class Output {
      * Prints current player stock.
      */
     void printCurrentPlayerStock() {
-        for (int i = 0; i < Stock.CAPACITY; i++) {
+        int stock_size = game.getCurrentPlayer().getStock().size();
+        for (int i = 0; i < stock_size; i++) {
             Piece piece = game.getCurrentPlayer().getStock().get(i);
             if (game.getCurrentPlayer().owns(piece)) {
+                System.out.println("***** " + piece.getShape() + " *****");
                 print(piece);
                 System.out.println(" ");
             }

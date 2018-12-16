@@ -33,11 +33,6 @@ public class Player {
         this.strategy = null;
     }
 
-    Player(BlokusColor color, Strategy strategy) {
-        this(color);
-        this.strategy = strategy;
-    }
-
     Player(Player player) {
         this.color = player.getColor();
         this.stock = new Stock(player.getStock(), player.getColor());
@@ -112,8 +107,17 @@ public class Player {
         return stock.getPieces().size() == 20;
     }
 
-    boolean isBot() {
+    /**
+     * Tells if this player is a bot (AI) or not.
+     *
+     * @return true if this player is a bot.
+     */
+    public boolean isBot() {
         return strategy != null;
+    }
+
+    void setStrategy(Strategy strategy) {
+        this.strategy = strategy;
     }
 
     void initialize() {
@@ -175,6 +179,16 @@ public class Player {
      */
     public PlayerState getState() {
         return state;
+    }
+
+    /**
+     * Executes this player strategy.
+     */
+    public void executeStrategy() {
+        if (!isBot()) {
+            throw new IllegalStateException(color + " player is not a bot!");
+        }
+        strategy.execute();
     }
 
     Piece takeCurrentPiece() {
