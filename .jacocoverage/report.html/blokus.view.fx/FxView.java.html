@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>FxView.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.view.fx</a> &gt; <span class="el_source">FxView.java</span></div><h1>FxView.java</h1><pre class="source lang-java linenums">package blokus.view.fx;
+
+import blokus.controller.fx.ActionType;
+import blokus.controller.fx.ButtonActionFactory;
+import blokus.controller.fx.PlacePieceAction;
+import blokus.controller.fx.RotateClicked;
+import blokus.controller.fx.SelectCurrentPiece;
+import blokus.controller.fx.Start;
+import blokus.exception.ModelException;
+import blokus.model.Game;
+import blokus.model.Piece;
+import blokus.model.Player;
+import blokus.model.Square;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Optional;
+import javafx.application.Platform;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+/**
+ * Represents main box of &lt;i&gt;Blokus&lt;/i&gt;.
+ *
+ * @author Logan Farci (47923)
+ */
+public class FxView extends VBox implements Observer {
+
+    /**
+     * Maximal width of the view.
+     */
+    public static final int MAX_WIDTH = 1_000;
+
+    /**
+     * Maximal height of the view.
+     */
+    public static final int MAX_HEIGHT = 750;
+
+    /**
+     * Title of the view.
+     */
+    public static final String TITLE = &quot;Blokus&quot;;
+
+    private final Stage stage;
+    private final MenuBar menu;
+    private final Game game;
+    private final GameBox gameBox;
+    private final ControlPane control;
+
+    /**
+     * Constructs the main view of the &lt;i&gt;Blokus&lt;/i&gt; application.
+     *
+     * @param stage javaFX stage build by the Application class.
+     * @param game is the game to display.
+     */
+<span class="nc" id="L66">    public FxView(Stage stage, Game game) {</span>
+<span class="nc" id="L67">        this.stage = Objects.requireNonNull(stage, &quot;No given stage in arguments&quot;);</span>
+<span class="nc" id="L68">        this.game = game;</span>
+<span class="nc" id="L69">        this.gameBox = new GameBox(game);</span>
+<span class="nc" id="L70">        this.menu = new MenuBar(new Menu(&quot;File&quot;), new Menu(&quot;Options&quot;), new Menu(&quot;Help&quot;));</span>
+<span class="nc" id="L71">        this.control = new ControlPane();</span>
+<span class="nc" id="L72">        setContent();</span>
+<span class="nc" id="L73">        setStyle();</span>
+<span class="nc" id="L74">    }</span>
+
+    /**
+     * Initialize the stage and show it to the screen.
+     */
+    public void initialize() {
+<span class="nc" id="L80">        initializeStage();</span>
+<span class="nc" id="L81">        stage.show();</span>
+<span class="nc" id="L82">    }</span>
+
+    private void initializeStage() {
+<span class="nc" id="L85">        Scene scene = new Scene(this);</span>
+<span class="nc" id="L86">        stage.setMaxWidth(MAX_WIDTH);</span>
+<span class="nc" id="L87">        stage.setMaxHeight(MAX_HEIGHT);</span>
+<span class="nc" id="L88">        stage.setTitle(TITLE);</span>
+<span class="nc" id="L89">        stage.setResizable(false);</span>
+<span class="nc" id="L90">        stage.setScene(scene);</span>
+<span class="nc" id="L91">        prefWidthProperty().bind(scene.widthProperty());</span>
+<span class="nc" id="L92">        prefHeightProperty().bind(scene.heightProperty());</span>
+
+<span class="nc" id="L94">    }</span>
+
+    public void setOnStartAction() {
+<span class="nc" id="L97">        stage.setOnShowing(new Start(game, this));</span>
+<span class="nc" id="L98">        stage.setOnShown(event -&gt; {</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            while (game.getCurrentPlayer().isBot()) {</span>
+<span class="nc" id="L100">                game.getCurrentPlayer().executeStrategy();</span>
+<span class="nc" id="L101">                game.nextPlayer();</span>
+            }
+<span class="nc" id="L103">        });</span>
+<span class="nc" id="L104">    }</span>
+
+    /**
+     * Adds an handler to each squares of the board. It allows piece selection.
+     */
+    public void setSelectCurrentPieceAction() {
+<span class="nc" id="L110">        gameBox.getStockPanes().forEach((stockPane) -&gt; {</span>
+<span class="nc" id="L111">            stockPane.getPiecePanes().forEach((piecePane) -&gt; {</span>
+<span class="nc" id="L112">                piecePane.setOnMousePressed(new SelectCurrentPiece(game, piecePane));</span>
+<span class="nc" id="L113">            });</span>
+<span class="nc" id="L114">        });</span>
+<span class="nc" id="L115">    }</span>
+
+    /**
+     * Adds an
+     */
+    public void setPlacePieceAction() {
+<span class="nc" id="L121">        gameBox.getBoardSquares().forEach((node) -&gt; {</span>
+<span class="nc" id="L122">            Square current = new Square(GridPane.getRowIndex(node),</span>
+<span class="nc" id="L123">                    GridPane.getColumnIndex(node));</span>
+<span class="nc" id="L124">            node.setOnMousePressed(new PlacePieceAction(current, game));</span>
+<span class="nc" id="L125">        });</span>
+<span class="nc" id="L126">    }</span>
+
+    public void setRotateByRightClickAction() {
+<span class="nc" id="L129">        gameBox.getBoard().setOnMousePressed(new RotateClicked(game, this));</span>
+<span class="nc" id="L130">    }</span>
+
+    public void setButtonsActions() {
+<span class="nc" id="L133">        ButtonActionFactory factory = new ButtonActionFactory(game, this);</span>
+<span class="nc" id="L134">        control.getRestartButton().setOnMousePressed(factory.getButtonAction(ActionType.RESTART));</span>
+<span class="nc" id="L135">        control.getRotateButton().setOnMousePressed(factory.getButtonAction(ActionType.ROTATE));</span>
+<span class="nc" id="L136">        control.getTurnOverButton().setOnMousePressed(factory.getButtonAction(ActionType.TURN_OVER));</span>
+<span class="nc" id="L137">        control.getMissTurnButton().setOnMousePressed(factory.getButtonAction(ActionType.MISS_TURN));</span>
+<span class="nc" id="L138">        control.getWithdrawButton().setOnMousePressed(factory.getButtonAction(ActionType.WITHDRAW));</span>
+<span class="nc" id="L139">    }</span>
+
+    private void setPiecePreviewAction(Node node, Square dest) {
+<span class="nc" id="L142">        node.setOnMouseEntered(event -&gt; {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            if (game.getCurrentPlayer().getCurrentPiece() == null) {</span>
+<span class="nc" id="L144">                event.consume();</span>
+            } else {
+                try {
+<span class="nc" id="L147">                    Piece currentPiece = game.getCurrentPlayer().getCurrentPiece();</span>
+<span class="nc" id="L148">                    gameBox.getBoard().previewPiece(currentPiece, dest);</span>
+<span class="nc" id="L149">                } catch (ModelException e) {</span>
+<span class="nc" id="L150">                    System.err.println(e.getMessage());</span>
+<span class="nc" id="L151">                }</span>
+            }
+<span class="nc" id="L153">        });</span>
+<span class="nc" id="L154">    }</span>
+
+    private void setBoardUpdateAction(Node node) {
+<span class="nc" id="L157">        node.setOnMouseExited(event -&gt; {</span>
+<span class="nc" id="L158">            gameBox.getBoard().update();</span>
+<span class="nc" id="L159">        });</span>
+<span class="nc" id="L160">    }</span>
+
+    /**
+     * Adds an handler to each squares of the board. The current piece is
+     * displaid on the board at the mouse position.
+     */
+    public void setPiecePreviewAction() {
+<span class="nc" id="L167">        gameBox.getBoardSquares().forEach((node) -&gt; {</span>
+<span class="nc" id="L168">            Square current = new Square(GridPane.getRowIndex(node),</span>
+<span class="nc" id="L169">                    GridPane.getColumnIndex(node));</span>
+<span class="nc" id="L170">            setPiecePreviewAction(node, current);</span>
+<span class="nc" id="L171">            setBoardUpdateAction(node);</span>
+<span class="nc" id="L172">        });</span>
+<span class="nc" id="L173">    }</span>
+
+    /**
+     * Sets this box content.
+     */
+    final void setContent() {
+<span class="nc" id="L179">        this.getChildren().addAll(menu, this.gameBox, control);</span>
+<span class="nc" id="L180">    }</span>
+
+    /**
+     * Sets this box style.
+     */
+    final void setStyle() {
+<span class="nc" id="L186">        this.setSpacing(20);</span>
+<span class="nc" id="L187">    }</span>
+
+    /**
+     * Updates the content of game box.
+     *
+     * @param o the game.
+     * @param o1 nothing.
+     */
+    @Override
+    public void update(Observable o, Object o1) {
+<span class="nc" id="L197">        gameBox.updateContent();</span>
+<span class="nc bnc" id="L198" title="All 2 branches missed.">        if (game.isOver()) {</span>
+<span class="nc bnc" id="L199" title="All 2 branches missed.">            if (displayEndDialog()) {</span>
+<span class="nc" id="L200">                game.initialize();</span>
+            } else {
+<span class="nc" id="L202">                Platform.exit();</span>
+            }
+        }
+<span class="nc" id="L205">    }</span>
+
+    public static void displayAlert(String title, String header, String content) {
+<span class="nc" id="L208">        Alert alert = new Alert(Alert.AlertType.WARNING);</span>
+<span class="nc" id="L209">        alert.setTitle(title);</span>
+<span class="nc" id="L210">        alert.setHeaderText(header);</span>
+<span class="nc" id="L211">        alert.setContentText(content);</span>
+<span class="nc" id="L212">        alert.showAndWait();</span>
+<span class="nc" id="L213">    }</span>
+
+    public boolean askConfirmation(String title, String header, String content) {
+<span class="nc" id="L216">        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);</span>
+<span class="nc" id="L217">        alert.setTitle(title);</span>
+<span class="nc" id="L218">        alert.setHeaderText(header);</span>
+<span class="nc" id="L219">        alert.setContentText(content);</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">        return alert.showAndWait().get() == ButtonType.OK;</span>
+    }
+
+    private String getEndDialogContent() {
+<span class="nc" id="L224">        StringBuilder str = new StringBuilder();</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">        for (Player winner : game.getWinner()) {</span>
+<span class="nc" id="L226">            str.append(&quot;Joueur &quot;);</span>
+<span class="nc" id="L227">            str.append(winner.getColor());</span>
+<span class="nc" id="L228">            str.append(&quot; avec un score de &quot;);</span>
+<span class="nc" id="L229">            str.append(winner.getScore());</span>
+<span class="nc" id="L230">            str.append(&quot;.\n&quot;);</span>
+<span class="nc" id="L231">        }</span>
+<span class="nc" id="L232">        return str.toString();</span>
+    }
+
+    public boolean displayEndDialog() {
+<span class="nc" id="L236">        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);</span>
+<span class="nc" id="L237">        alert.setTitle(&quot;Fin du jeu&quot;);</span>
+<span class="nc" id="L238">        alert.setHeaderText(&quot;Gagnants du jeu&quot;);</span>
+<span class="nc" id="L239">        alert.setContentText(getEndDialogContent());</span>
+
+<span class="nc" id="L241">        ButtonType restart = new ButtonType(&quot;Nouvelle partie&quot;);</span>
+<span class="nc" id="L242">        ButtonType leave = new ButtonType(&quot;Quitter&quot;);</span>
+
+<span class="nc" id="L244">        alert.getButtonTypes().setAll(restart, leave);</span>
+
+<span class="nc bnc" id="L246" title="All 2 branches missed.">        return alert.showAndWait().get() == restart;</span>
+    }
+
+    public String displayNbOfPlayersChoiceDialog() {
+<span class="nc" id="L250">        List&lt;String&gt; choices = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L251">        choices.add(&quot;0&quot;);</span>
+<span class="nc" id="L252">        choices.add(&quot;1&quot;);</span>
+<span class="nc" id="L253">        choices.add(&quot;2&quot;);</span>
+<span class="nc" id="L254">        choices.add(&quot;3&quot;);</span>
+<span class="nc" id="L255">        choices.add(&quot;4&quot;);</span>
+<span class="nc" id="L256">        ChoiceDialog&lt;String&gt; dialog = new ChoiceDialog&lt;&gt;(&quot;4&quot;, choices);</span>
+<span class="nc" id="L257">        dialog.setTitle(&quot;Choix du nombre de joueurs&quot;);</span>
+<span class="nc" id="L258">        dialog.setHeaderText(&quot;Combien de personnes participeront au jeu?&quot;);</span>
+<span class="nc" id="L259">        dialog.setContentText(&quot;Choisissez le nombre de joueurs parmis les &quot;</span>
+                + &quot;propositions&quot;);
+<span class="nc" id="L261">        Optional&lt;String&gt; result = dialog.showAndWait();</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">        if (result.isPresent()) {</span>
+<span class="nc" id="L263">            return result.get();</span>
+        } else {
+<span class="nc" id="L265">            return null;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

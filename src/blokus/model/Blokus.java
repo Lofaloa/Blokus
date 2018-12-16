@@ -44,6 +44,10 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public void setBotPlayers(int nb_of_bots) {
+        if (nb_of_bots < 0 || NB_PLAYERS < nb_of_bots) {
+            throw new IllegalArgumentException(nb_of_bots + " is not a valid "
+                    + "number of bots, is should be between 0 and 4.");
+        }
         for (int i = 0; i < nb_of_bots; i++) {
             Strategy strategy = new DumbPlayerStrategy(this);
             players.get(i).setStrategy(strategy);
@@ -132,8 +136,8 @@ public class Blokus extends Observable implements Game {
      * @return true if the first round of the game is over.
      */
     boolean isFirstRoundOver() {
-        return currentPlayer.is(BlokusColor.GREEN)
-                && currentPlayer.hasPlacedFirstPiece();
+        return players.stream()
+                .allMatch(player -> player.getStock().size() == Stock.CAPACITY - 1);
     }
 
     /**

@@ -11,49 +11,58 @@ import javafx.scene.layout.VBox;
  */
 public class PlayerDataPane extends VBox {
 
+    private final Player owner;
     private final HeaderBox header;
     private final StockPane stock;
 
     /**+
      * Initializes this pane with the given player.
      *
-     * @param blokus is the game.
-     * @param playerId is the player id  of the player this pane display data for.
+     * @param owner is the player to represent data for.
      */
 <span class="nc" id="L23">    public PlayerDataPane(Player owner) {</span>
-<span class="nc" id="L24">        this.header = new HeaderBox(owner);</span>
-<span class="nc" id="L25">        this.stock = new StockPane(owner);</span>
-<span class="nc" id="L26">        setContent();</span>
-<span class="nc" id="L27">        setStyle();</span>
-<span class="nc" id="L28">    }</span>
+<span class="nc" id="L24">        this.owner = owner;</span>
+<span class="nc" id="L25">        this.header = new HeaderBox(owner);</span>
+<span class="nc" id="L26">        this.stock = new StockPane(owner);</span>
+<span class="nc" id="L27">        setContent();</span>
+<span class="nc" id="L28">        setStyle();</span>
+<span class="nc" id="L29">    }</span>
+
+    public StockPane getStockPane() {
+<span class="nc" id="L32">        return stock;</span>
+    }
+
+    Player getPlayer() {
+<span class="nc" id="L36">        return owner;</span>
+    }
 
     /**
      * Sets the content of this stock view. This stock contains a header and the
      * pieces.
      */
     final void setContent() {
-<span class="nc" id="L35">        this.getChildren().addAll(header, stock);</span>
-<span class="nc" id="L36">    }</span>
+<span class="nc" id="L44">        this.getChildren().addAll(header, stock);</span>
+<span class="nc" id="L45">    }</span>
 
     /**
      * Updates this player data pane.
      */
     void update() {
-<span class="nc" id="L42">        header.updateScore();</span>
-<span class="nc" id="L43">        stock.update();</span>
-<span class="nc" id="L44">    }</span>
+<span class="nc" id="L51">        header.update();</span>
+<span class="nc" id="L52">        stock.update();</span>
+<span class="nc" id="L53">    }</span>
 
     /**
      * Sets the style of this player data pane.
      */
     final void setStyle() {
-<span class="nc" id="L50">        String style = &quot;-fx-spacing: 5;\n&quot;</span>
+<span class="nc" id="L59">        String style = &quot;-fx-spacing: 5;\n&quot;</span>
                 + &quot;-fx-padding: 0 5 0 5;\n&quot;
                 + &quot;-fx-border-color: black;\n&quot;
                 + &quot;-fx-border-width: 1;\n&quot;
                 + &quot;-fx-border-style: solid;\n&quot;;
-<span class="nc" id="L55">        this.setStyle(style);</span>
-<span class="nc" id="L56">    }</span>
+<span class="nc" id="L64">        this.setStyle(style);</span>
+<span class="nc" id="L65">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

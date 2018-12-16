@@ -20,12 +20,16 @@ public class Piece {
      * @param shape is the shape of this piece.
      * @param color is the color of this piece.
      */
-<span class="fc" id="L23">    Piece(Shape shape, BlokusColor color) {</span>
+<span class="fc" id="L23">    public Piece(Shape shape, BlokusColor color) {</span>
 <span class="fc" id="L24">        Objects.requireNonNull(shape, &quot;No initializing shape given for this piece&quot;);</span>
 <span class="fc" id="L25">        Objects.requireNonNull(color, &quot;No initializing color given for this piece&quot;);</span>
 <span class="fc" id="L26">        this.shape = shape;</span>
 <span class="fc" id="L27">        this.color = color;</span>
 <span class="fc" id="L28">    }</span>
+
+    Piece(Piece other) {
+<span class="nc" id="L31">        this(other.getShape(), other.getColor());</span>
+<span class="nc" id="L32">    }</span>
 
     /**
      * Gets the size of this piece.
@@ -33,7 +37,7 @@ public class Piece {
      * @return the size of this piece.
      */
     public int getSize() {
-<span class="nc" id="L36">        return shape.getSize();</span>
+<span class="nc" id="L40">        return shape.getNbOfSquares();</span>
     }
 
     /**
@@ -42,7 +46,7 @@ public class Piece {
      * @return this shape color.
      */
     public BlokusColor getColor() {
-<span class="fc" id="L45">        return color;</span>
+<span class="fc" id="L49">        return color;</span>
     }
 
     /**
@@ -50,8 +54,8 @@ public class Piece {
      *
      * @return this shape size.
      */
-    Shape getShape() {
-<span class="fc" id="L54">        return shape;</span>
+    public Shape getShape() {
+<span class="fc" id="L58">        return shape;</span>
     }
 
     /**
@@ -60,7 +64,7 @@ public class Piece {
      * @return the squares of this piece.
      */
     List&lt;Square&gt; getSquares() {
-<span class="fc" id="L63">        return shape.getSquares();</span>
+<span class="fc" id="L67">        return shape.getSquares();</span>
     }
 
     /**
@@ -70,7 +74,7 @@ public class Piece {
      * @return true if this piece is smallest piece of the game.
      */
     boolean isSmallestPiece() {
-<span class="fc bfc" id="L73" title="All 2 branches covered.">        return shape == Shape.SHAPE_01;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return shape == Shape.SHAPE_01;</span>
     }
 
     /**
@@ -83,12 +87,26 @@ public class Piece {
      * greater than 5.
      */
     public boolean contains(int row, int column) {
-<span class="pc bpc" id="L86" title="3 of 8 branches missed.">        if (row &lt; 0 || MAX_SIZE &lt; row || column &lt; 0 || MAX_SIZE &lt; column) {</span>
-<span class="fc" id="L87">            throw new IllegalArgumentException(&quot;Position &quot; + row + &quot;, &quot; + column</span>
+<span class="pc bpc" id="L90" title="3 of 8 branches missed.">        if (row &lt; 0 || MAX_SIZE &lt; row || column &lt; 0 || MAX_SIZE &lt; column) {</span>
+<span class="fc" id="L91">            throw new IllegalArgumentException(&quot;Position &quot; + row + &quot;, &quot; + column</span>
                     + &quot; is not a valid position.&quot;);
         }
-<span class="fc" id="L90">        return shape.contains(row, column);</span>
+<span class="fc" id="L94">        return shape.contains(row, column);</span>
     }
+
+    /**
+     * Rotates this piece by 90 degrees clockwise.
+     */
+    public void rotate() {
+<span class="fc" id="L101">        shape.rotate();</span>
+<span class="fc" id="L102">    }</span>
+
+    /**
+     * Turns this shape over.
+     */
+    public void turnOver() {
+<span class="fc" id="L108">        shape.turnOver();</span>
+<span class="fc" id="L109">    }</span>
 
     /**
      * Gets a hash code based on this piece color and shape.
@@ -97,7 +115,7 @@ public class Piece {
      */
     @Override
     public int hashCode() {
-<span class="fc" id="L100">        return Objects.hash(shape, color);</span>
+<span class="fc" id="L118">        return Objects.hash(shape, color);</span>
     }
 
     /**
@@ -109,23 +127,23 @@ public class Piece {
      */
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L113">            return true;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (this == obj) {</span>
+<span class="fc" id="L131">            return true;</span>
         }
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (obj == null) {</span>
-<span class="fc" id="L116">            return false;</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc" id="L134">            return false;</span>
         }
-<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (getClass() != obj.getClass()) {</span>
-<span class="fc" id="L119">            return false;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (getClass() != obj.getClass()) {</span>
+<span class="fc" id="L137">            return false;</span>
         }
-<span class="fc" id="L121">        final Piece other = (Piece) obj;</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (this.shape != other.shape) {</span>
-<span class="fc" id="L123">            return false;</span>
+<span class="fc" id="L139">        final Piece other = (Piece) obj;</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        if (this.shape != other.shape) {</span>
+<span class="fc" id="L141">            return false;</span>
         }
-<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (this.color != other.color) {</span>
-<span class="fc" id="L126">            return false;</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (this.color != other.color) {</span>
+<span class="fc" id="L144">            return false;</span>
         }
-<span class="fc" id="L128">        return true;</span>
+<span class="fc" id="L146">        return true;</span>
     }
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>View.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.view.console</a> &gt; <span class="el_source">View.java</span></div><h1>View.java</h1><pre class="source lang-java linenums">package blokus.view.console;
 
-import blokus.model.Blokus;
+import blokus.model.Game;
 
 /**
  * Represents the view.
@@ -14,10 +14,10 @@ public class View implements BlokusView {
 
     /**
      * Initializes this view with the game to represent.
-     * 
+     *
      * @param game is the game to represent.
      */
-<span class="nc" id="L20">    public View(Blokus game) {</span>
+<span class="nc" id="L20">    public View(Game game) {</span>
 <span class="nc" id="L21">        this.in = new Input();</span>
 <span class="nc" id="L22">        this.out = new Output(game);</span>
 <span class="nc" id="L23">    }</span>
@@ -25,43 +25,66 @@ public class View implements BlokusView {
     @Override
     public void printStart() {
 <span class="nc" id="L27">        out.printTitle();</span>
-<span class="nc" id="L28">        out.printHelp();</span>
-<span class="nc" id="L29">    }</span>
+<span class="nc" id="L28">    }</span>
+
+    public void printHelp() {
+<span class="nc" id="L31">        out.printHelp();</span>
+<span class="nc" id="L32">    }</span>
 
     @Override
     public void printBoard() {
-<span class="nc" id="L33">        out.printBoard();</span>
-<span class="nc" id="L34">    }   </span>
+<span class="nc" id="L36">        out.printBoard();</span>
+<span class="nc" id="L37">    }</span>
 
     @Override
     public void printCurrentPlayer() {
-<span class="nc" id="L38">        out.printCurrentPlayer();</span>
-<span class="nc" id="L39">    }</span>
+<span class="nc" id="L41">        out.printCurrentPlayer();</span>
+<span class="nc" id="L42">    }</span>
 
     @Override
     public void printCurrentPlayerStock() {
-<span class="nc" id="L43">        out.printCurrentPlayerStock();</span>
-<span class="nc" id="L44">    }</span>
+<span class="nc" id="L46">        out.printCurrentPlayerStock();</span>
+<span class="nc" id="L47">    }</span>
 
     @Override
     public void printCurrentPlayerScore() {
-<span class="nc" id="L48">        out.printCurrentPlayerScore();</span>
-<span class="nc" id="L49">    }</span>
+<span class="nc" id="L51">        out.printCurrentPlayerScore();</span>
+<span class="nc" id="L52">    }</span>
+
+    @Override
+    public void printPlayers() {
+<span class="nc" id="L56">        out.printPlayers();</span>
+<span class="nc" id="L57">    }</span>
 
     @Override
     public void printExceptionMessage(Exception exception) {
-<span class="nc" id="L53">        out.printExceptionMessage(exception);</span>
-<span class="nc" id="L54">    }</span>
+<span class="nc" id="L61">        out.printExceptionMessage(exception);</span>
+<span class="nc" id="L62">    }</span>
+
+    @Override
+    public void printRestart() {
+<span class="nc" id="L66">        out.printRestart();</span>
+<span class="nc" id="L67">    }</span>
+
+    @Override
+    public void printRotation(int rotation) {
+<span class="nc" id="L71">        out.printRotation(rotation);</span>
+<span class="nc" id="L72">    }</span>
 
     @Override
     public String[] readCommand() {
-<span class="nc" id="L58">        return in.readCommand();</span>
+<span class="nc" id="L76">        return in.readCommand();</span>
+    }
+
+    @Override
+    public boolean askConfirmation() {
+<span class="nc" id="L81">        return in.askConfirmation();</span>
     }
 
     @Override
     public void printEnd() {
-<span class="nc" id="L63">        throw new UnsupportedOperationException(&quot;Not supported yet.&quot;);</span>
-    }
+<span class="nc" id="L86">        out.printEnd();</span>
+<span class="nc" id="L87">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

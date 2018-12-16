@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>ControllerConsole.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.controller.console</a> &gt; <span class="el_source">ControllerConsole.java</span></div><h1>ControllerConsole.java</h1><pre class="source lang-java linenums">package blokus.controller.console;
+
+import blokus.exception.IllegalActionException;
+import blokus.exception.ModelException;
+import blokus.model.Game;
+import blokus.view.console.BlokusView;
+import blokus.view.console.View;
+import static java.lang.Integer.parseInt;
+import java.util.Arrays;
+import blokus.model.Shape;
+import java.util.Locale;
+
+/**
+ * Manages the logic of &lt;i&gt;Blokus&lt;/i&gt; console version.
+ *
+ * @author Logan Farci (47923)
+ */
+public class ControllerConsole {
+
+    private final Game game;
+    private final BlokusView view;
+    private final String[] commandsNames;
+
+    /**
+     * Initializes this controller with the given view and game.
+     *
+     * @param game is the game to control.
+     * @param view is the view representing the game to control.
+     */
+<span class="nc" id="L30">    public ControllerConsole(Game game, View view) {</span>
+<span class="nc" id="L31">        this.game = game;</span>
+<span class="nc" id="L32">        this.view = view;</span>
+<span class="nc" id="L33">        this.commandsNames = new String[]{&quot;show&quot;, &quot;stock&quot;, &quot;play&quot;, &quot;score&quot;,</span>
+            &quot;exit&quot;, &quot;miss&quot;, &quot;withdraw&quot;, &quot;players&quot;, &quot;help&quot;, &quot;restart&quot;};
+<span class="nc" id="L35">    }</span>
+
+    /**
+     * Rotates the current player piece n times.
+     *
+     * @param n the number of time to rotate the piece.
+     */
+    void rotateBy(int n) {
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (n &lt; 0) {</span>
+<span class="nc" id="L44">            throw new IllegalArgumentException(n + &quot; is not valid, &quot;</span>
+                    + &quot;rotation should be positive&quot;);
+        }
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        for (int i = 0; i &lt; n; i++) {</span>
+<span class="nc" id="L48">            game.rotateCurrentPlayerPiece();</span>
+        }
+<span class="nc" id="L50">        view.printRotation(n);</span>
+<span class="nc" id="L51">    }</span>
+
+    /**
+     * Plays the identified piece at the given board position.
+     *
+     * @param pieceId is the id of a piece.
+     * @param row is the row of the board.
+     * @param column is the column of the board.
+     */
+    void play(int pieceId, int row, int column, int rotation) {
+<span class="nc bnc" id="L61" title="All 4 branches missed.">        if (pieceId &lt; 1 || 21 &lt; pieceId) {</span>
+<span class="nc" id="L62">            throw new IllegalArgumentException(pieceId + &quot; is not a valid piece &quot;</span>
+                    + &quot;number, it should be between 1 and 21.&quot;);
+        }
+<span class="nc" id="L65">        game.selectCurrentPlayerPiece(Shape.values()[--pieceId]);</span>
+<span class="nc" id="L66">        rotateBy(rotation);</span>
+<span class="nc" id="L67">        game.placePiece(row, column);</span>
+<span class="nc" id="L68">        game.nextPlayer();</span>
+<span class="nc" id="L69">    }</span>
+
+    /**
+     * Tells if the given string is a command name.
+     *
+     * @param str is the string to analyze.
+     * @return true if the given string is a command name.
+     */
+    boolean isCommandName(String str) {
+<span class="nc" id="L78">        return Arrays.asList(commandsNames).contains(str);</span>
+    }
+
+    /**
+     * Makes sure that the given string is a command name. Three commands are
+     * known: show, stock and place.
+     *
+     * @param str is the string to parse.
+     * @return the given command name.
+     * @throws IllegalArgumentException if the given string is not a command.
+     */
+    String requireCommandName(String str) {
+<span class="nc bnc" id="L90" title="All 2 branches missed.">        if (!isCommandName(str.toLowerCase(Locale.getDefault()))) {</span>
+<span class="nc" id="L91">            throw new IllegalArgumentException(&quot;\&quot;&quot; + str + &quot;\&quot; is not &quot;</span>
+                    + &quot;a command.&quot;);
+        }
+<span class="nc" id="L94">        return str;</span>
+    }
+
+    /**
+     * Executes the command represented by the given tokens.
+     *
+     * @param tokens are the tokens representing the command to execute.
+     */
+    void executeCommand(String[] tokens) {
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (tokens.length == 0) {</span>
+<span class="nc" id="L104">            throw new IllegalArgumentException(&quot;no command to execute.&quot;);</span>
+        }
+<span class="nc bnc" id="L106" title="All 38 branches missed.">        switch (requireCommandName(tokens[0])) {</span>
+            case &quot;play&quot;:
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                if (tokens.length &lt; 5) {</span>
+<span class="nc" id="L109">                    throw new IllegalArgumentException(&quot;for playing a piece, &quot;</span>
+                            + &quot;please enter its id and the position where to &quot;
+                            + &quot;place it.&quot;);
+                }
+<span class="nc" id="L113">                play(parseInt(tokens[1]), parseInt(tokens[2]), parseInt(tokens[3]),</span>
+<span class="nc" id="L114">                        parseInt(tokens[4]));</span>
+<span class="nc" id="L115">                break;</span>
+            case &quot;show&quot;:
+<span class="nc" id="L117">                view.printBoard();</span>
+<span class="nc" id="L118">                break;</span>
+            case &quot;stock&quot;:
+<span class="nc" id="L120">                view.printCurrentPlayerStock();</span>
+<span class="nc" id="L121">                break;</span>
+            case &quot;score&quot;:
+<span class="nc" id="L123">                view.printCurrentPlayerScore();</span>
+<span class="nc" id="L124">                break;</span>
+            case &quot;miss&quot;:
+<span class="nc" id="L126">                System.out.println(game.getCurrentPlayer().getColor() + &quot; player decided to miss this round!&quot;);</span>
+<span class="nc" id="L127">                game.getCurrentPlayer().missTurn();</span>
+<span class="nc" id="L128">                game.nextPlayer();</span>
+<span class="nc" id="L129">                break;</span>
+            case &quot;withdraw&quot;:
+<span class="nc" id="L131">                System.out.println(game.getCurrentPlayer().getColor() + &quot; player decided to withdraw from the game! Bye!&quot;);</span>
+<span class="nc" id="L132">                game.getCurrentPlayer().withdraw();</span>
+<span class="nc" id="L133">                game.nextPlayer();</span>
+<span class="nc" id="L134">                break;</span>
+            case &quot;players&quot;:
+<span class="nc" id="L136">                view.printPlayers();</span>
+<span class="nc" id="L137">                break;</span>
+            case &quot;restart&quot;:
+<span class="nc" id="L139">                view.printRestart();</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">                if (view.askConfirmation()) {</span>
+<span class="nc" id="L141">                    game.initialize();</span>
+                }
+                break;
+            case &quot;help&quot;:
+<span class="nc" id="L145">                view.printHelp();</span>
+<span class="nc" id="L146">                break;</span>
+            default:
+<span class="nc" id="L148">                System.exit(0);</span>
+        }
+<span class="nc" id="L150">    }</span>
+
+    void playTurn() {
+        try {
+<span class="nc" id="L154">            view.printCurrentPlayer();</span>
+<span class="nc" id="L155">            executeCommand(view.readCommand());</span>
+<span class="nc" id="L156">        } catch (ModelException</span>
+                | IllegalActionException
+                | IllegalArgumentException
+                | NullPointerException
+                | IllegalStateException e) {
+<span class="nc" id="L161">            view.printExceptionMessage(e);</span>
+<span class="nc" id="L162">        }</span>
+<span class="nc" id="L163">    }</span>
+
+    /**
+     * Starts &lt;i&gt;Blokus&lt;/i&gt;.
+     */
+    public void start() {
+<span class="nc" id="L169">        boolean again = true;</span>
+<span class="nc" id="L170">        view.printStart();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        while (again) {</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">            if (!game.isOver()) {</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">                if (game.getCurrentPlayer().isBot()) {</span>
+<span class="nc" id="L174">                    view.printCurrentPlayer();</span>
+<span class="nc" id="L175">                    game.getCurrentPlayer().executeStrategy();</span>
+<span class="nc" id="L176">                    game.nextPlayer();</span>
+                } else {
+<span class="nc" id="L178">                    playTurn();</span>
+                }
+            } else {
+<span class="nc" id="L181">                view.printEnd();</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                if (again = view.askConfirmation()) {</span>
+<span class="nc" id="L183">                    view.printStart();</span>
+<span class="nc" id="L184">                    game.initialize();</span>
+                }
+            }
+        }
+<span class="nc" id="L188">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

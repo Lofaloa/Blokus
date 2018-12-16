@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>HeaderBox.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;47923_Blokus&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">blokus.view.fx</a> &gt; <span class="el_source">HeaderBox.java</span></div><h1>HeaderBox.java</h1><pre class="source lang-java linenums">package blokus.view.fx;
 
 import blokus.model.Player;
+import blokus.model.PlayerState;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
@@ -13,6 +14,7 @@ public class HeaderBox extends HBox {
 
     private final Player player;
     private final Text playerNumber;
+    private final Text state;
     private final Text score;
 
     /**
@@ -20,47 +22,59 @@ public class HeaderBox extends HBox {
      *
      * @param player is the player to display data for.
      */
-<span class="nc" id="L23">    public HeaderBox(Player player) {</span>
-<span class="nc" id="L24">        this.player = player;</span>
-<span class="nc" id="L25">        playerNumber = new Text(&quot;Joueur n°&quot; + getPlayerNumber(player));</span>
-<span class="nc" id="L26">        score = new Text(&quot;Score: &quot; + player.getScore());</span>
-<span class="nc" id="L27">        setContent();</span>
-<span class="nc" id="L28">        setStyle();</span>
-<span class="nc" id="L29">    }</span>
+<span class="nc" id="L25">    public HeaderBox(Player player) {</span>
+<span class="nc" id="L26">        this.player = player;</span>
+<span class="nc" id="L27">        playerNumber = new Text(&quot;Joueur n°&quot; + toNumber(player));</span>
+<span class="nc" id="L28">        state = new Text(toString(player.getState()));</span>
+<span class="nc" id="L29">        score = new Text(&quot;Score: &quot; + player.getScore());</span>
+<span class="nc" id="L30">        setContent();</span>
+<span class="nc" id="L31">        setStyle();</span>
+<span class="nc" id="L32">    }</span>
 
-    final int getPlayerNumber(Player player) {
-<span class="nc bnc" id="L32" title="All 4 branches missed.">        switch (player.getColor()) {</span>
-            case BLUE:
-<span class="nc" id="L34">                return 1;</span>
-            case YELLOW:
-<span class="nc" id="L36">                return 2;</span>
-            case RED:
-<span class="nc" id="L38">                return 3;</span>
+    final String toString(PlayerState state) {
+<span class="nc bnc" id="L35" title="All 4 branches missed.">        switch (state) {</span>
+            case PLAYING:
+<span class="nc" id="L37">                return &quot;En train de jouer...&quot;;</span>
+            case MISSING_TURN:
+<span class="nc" id="L39">                return &quot;Passe son tour...&quot;;</span>
+            case WAITING:
+<span class="nc" id="L41">                return &quot;Attend son tour...&quot;;</span>
             default:
-<span class="nc" id="L40">                return 4;</span>
+<span class="nc" id="L43">                return &quot;A abandonné.&quot;;</span>
         }
     }
 
-    /**
-     * Updates the displaid score to the current score of the player.
-     */
-    void updateScore() {
-<span class="nc" id="L48">        score.setText(&quot;Score: &quot; + player.getScore());</span>
-<span class="nc" id="L49">    }</span>
+    final int toNumber(Player player) {
+<span class="nc bnc" id="L48" title="All 4 branches missed.">        switch (player.getColor()) {</span>
+            case BLUE:
+<span class="nc" id="L50">                return 1;</span>
+            case YELLOW:
+<span class="nc" id="L52">                return 2;</span>
+            case RED:
+<span class="nc" id="L54">                return 3;</span>
+            default:
+<span class="nc" id="L56">                return 4;</span>
+        }
+    }
+
+    void update() {
+<span class="nc" id="L61">        score.setText(&quot;Score: &quot; + player.getScore());</span>
+<span class="nc" id="L62">        state.setText(toString(player.getState()));</span>
+<span class="nc" id="L63">    }</span>
 
     /**
      * Sets the content of this header.
      */
     final void setContent() {
-<span class="nc" id="L55">        getChildren().addAll(playerNumber, score);</span>
-<span class="nc" id="L56">    }</span>
+<span class="nc" id="L69">        getChildren().addAll(playerNumber, score, state);</span>
+<span class="nc" id="L70">    }</span>
 
     /**
      * Sets the style of this header.
      */
     final void setStyle() {
-<span class="nc" id="L62">        setSpacing(10);</span>
-<span class="nc" id="L63">    }</span>
+<span class="nc" id="L76">        setSpacing(10);</span>
+<span class="nc" id="L77">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

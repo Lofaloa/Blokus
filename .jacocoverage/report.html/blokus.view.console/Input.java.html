@@ -28,5 +28,13 @@ class Input {
 <span class="nc" id="L28">        return line.split(&quot;\\s+&quot;);</span>
     }
 
+    boolean askConfirmation() {
+<span class="nc" id="L32">        String answer = in.nextLine();</span>
+<span class="nc bnc" id="L33" title="All 4 branches missed.">        while (answer.equals(&quot;y&quot;) &amp;&amp; answer.equals(&quot;n&quot;)) {</span>
+<span class="nc" id="L34">            answer = in.nextLine();</span>
+        }
+<span class="nc" id="L36">        return answer.equals(&quot;y&quot;);</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

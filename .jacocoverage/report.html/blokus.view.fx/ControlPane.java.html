@@ -9,21 +9,57 @@ import javafx.scene.layout.HBox;
  * @author Logan Farci (47923)
  */
 public class ControlPane extends HBox {
-    
+
     private final Button restart;
     private final Button pass;
     private final Button stop;
     private final Button rotate;
-    
-<span class="nc" id="L18">    ControlPane() {</span>
-<span class="nc" id="L19">        this.restart = new Button(&quot;Nouvelle partie&quot;);</span>
-<span class="nc" id="L20">        this.pass = new Button(&quot;Passer&quot;);</span>
-<span class="nc" id="L21">        this.stop = new Button(&quot;Arrêter&quot;);</span>
-<span class="nc" id="L22">        this.rotate = new Button(&quot;Tourner&quot;);</span>
-<span class="nc" id="L23">        this.getChildren().addAll(restart, pass, stop, rotate);</span>
-<span class="nc" id="L24">        this.setAlignment(Pos.CENTER);</span>
-<span class="nc" id="L25">        this.setSpacing(10);</span>
-<span class="nc" id="L26">    }</span>
-    
+    private final Button turnOver;
+
+<span class="nc" id="L19">    ControlPane() {</span>
+<span class="nc" id="L20">        this.restart = new Button(&quot;Nouvelle partie&quot;);</span>
+<span class="nc" id="L21">        this.pass = new Button(&quot;Passer&quot;);</span>
+<span class="nc" id="L22">        this.stop = new Button(&quot;Arrêter&quot;);</span>
+<span class="nc" id="L23">        this.rotate = new Button(&quot;Tourner&quot;);</span>
+<span class="nc" id="L24">        this.turnOver = new Button(&quot;Retourner&quot;);</span>
+<span class="nc" id="L25">        setContent();</span>
+<span class="nc" id="L26">        setStyle();</span>
+<span class="nc" id="L27">    }</span>
+
+    public Button getRotateButton() {
+<span class="nc" id="L30">        return rotate;</span>
+    }
+
+    public Button getMissTurnButton() {
+<span class="nc" id="L34">        return pass;</span>
+    }
+
+    public Button getWithdrawButton() {
+<span class="nc" id="L38">        return stop;</span>
+    }
+
+    public Button getRestartButton() {
+<span class="nc" id="L42">        return restart;</span>
+    }
+
+    public Button getTurnOverButton() {
+<span class="nc" id="L46">        return turnOver;</span>
+    }
+
+    /**
+     * Sets the content of this pane.
+     */
+    final void setContent() {
+<span class="nc" id="L53">        this.getChildren().addAll(restart, pass, stop, rotate, turnOver);</span>
+<span class="nc" id="L54">    }</span>
+
+    /**
+     * Sets this pane style.
+     */
+    final void setStyle() {
+<span class="nc" id="L60">        this.setAlignment(Pos.CENTER);</span>
+<span class="nc" id="L61">        this.setSpacing(10);</span>
+<span class="nc" id="L62">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -7,14 +7,37 @@
  */
 public class IllegalActionException extends RuntimeException {
 
+    private final int id;
+
     /**
-     * Constructs an instance of &lt;code&gt;ModelException&lt;/code&gt; with the specified
-     * detail message.
+     * Initializes this &lt;code&gt;IllegalActionException&lt;/code&gt; with a message.
      *
-     * @param msg the detail message.
+     * @param msg is the message of this exception.
      */
     public IllegalActionException(String msg) {
-<span class="nc" id="L17">        super(msg);</span>
-<span class="nc" id="L18">    }</span>
+<span class="nc" id="L18">        super(msg);</span>
+<span class="nc" id="L19">        this.id = 0;</span>
+<span class="nc" id="L20">    }</span>
+
+    /**
+     * Initializes this &lt;code&gt;IllegalActionException&lt;/code&gt; with a message and
+     * an id.
+     *
+     * @param msg is the message of this exception.
+     */
+    public IllegalActionException(int id, String msg) {
+<span class="nc" id="L29">        super(msg);</span>
+<span class="nc" id="L30">        this.id = id;</span>
+<span class="nc" id="L31">    }</span>
+
+    /**
+     * Gets this exception id.
+     *
+     * @return this exception id.
+     */
+    public int getId() {
+<span class="nc" id="L39">        return id;</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

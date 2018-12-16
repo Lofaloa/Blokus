@@ -1,5 +1,6 @@
 package blokus.model;
 
+import blokus.exception.ModelException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -140,7 +141,9 @@ class DumbPlayerStrategy implements Strategy {
         }
         if (nbOfTries < 21 && isPlayingBot()) {
             validSquares.remove(dest);
-            game.placePiece(dest.getRow(), dest.getColumn());
+            try {
+                game.placePiece(dest.getRow(), dest.getColumn());
+            } catch (ModelException e) {}
         }
     }
 
