@@ -16,16 +16,18 @@ class DumbPlayerStrategy implements Strategy {
     private static final int MIN_SHAPE_ID = 0;
 
     private final Blokus game;
+    private final List<Square> validSquares;
 
     DumbPlayerStrategy(Blokus game) {
         this.game = game;
-    }
-
-    List<Square> getBoardCorners() {
-        return new ArrayList<>(Arrays.asList(new Square(0, 0),
+        validSquares = new ArrayList<>(Arrays.asList(new Square(0, 0),
                 new Square(0, Board.SIZE - 1),
                 new Square(Board.SIZE - 1, 0),
                 new Square(Board.SIZE - 1, Board.SIZE - 1)));
+    }
+
+    Player getBot() {
+        return game.getCurrentPlayer();
     }
 
     int getRandomShapeId() {
@@ -41,32 +43,47 @@ class DumbPlayerStrategy implements Strategy {
         game.selectCurrentPlayerPiece(getRandomShape());
     }
 
+    boolean isPiecePlacable(Piece piece, Square square) {
+        return game.getBoard().hasSpaceFor(piece, square.getRow(),
+                square.getColumn());
+    }
+
     boolean isPieceInCorner(Piece piece, Square square) {
         return game.getBoard().isPieceInCorner(piece, square.getRow(),
                 square.getColumn());
     }
 
     boolean isPieceColorRestricted(Piece piece, Square square) {
-        return game.getBoard().isPieceTouchingSameColorBySide(piece,
-                square.getRow(), square.getColumn())
-                || !game.getBoard().isPieceTouchingSameColorAtCorner(piece,
-                        square.getRow(), square.getColumn());
+        return game.getBoard().isColorRestrictedPiece(piece, square.getRow(),
+                square.getColumn());
     }
 
     boolean isPlacableAtFirstRound(Piece piece, Square square) {
-        return true;
+        return isPiecePlacable(piece, square) && isPieceInCorner(piece, square);
     }
 
     boolean isPlacableAtMainRound(Piece piece, Square square) {
-        return false;
+        return isPiecePlacable(piece, square) && isPieceColorRestricted(piece, square);
     }
 
     void makeFirstRoundMove() {
-
+        selectRandomPiece();
+        int corner;
+        Square dest = validSquares.get(0);
+        while (!isPlacableAtFirstRound(getBot().getCurrentPiece(), dest)) {
+            corner = 0;
+            while (corner < validSquares.size()
+                    && !isPlacableAtFirstRound(getBot().getCurrentPiece(), dest)) {
+                dest = validSquares.get(corner);
+                corner++;
+            }
+            selectRandomPiece();
+        }
+        validSquares.remove(dest);
+        game.placePiece(dest.getRow(), dest.getColumn());
     }
 
     void makeMainRoundsMove() {
-
     }
 
     @Override

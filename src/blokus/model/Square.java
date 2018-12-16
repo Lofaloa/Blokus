@@ -75,7 +75,7 @@ public class Square {
      * @return a new position based on this position and the given offsets.
      */
     Square move(int rowOffset, int columnOffset) {
-        requireValidCoordinates(row + rowOffset, column + columnOffset);
+        //requireValidCoordinates(row + rowOffset, column + columnOffset);
         return new Square(row + rowOffset, column + columnOffset);
     }
 

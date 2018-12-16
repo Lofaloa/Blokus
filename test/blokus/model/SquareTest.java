@@ -1,6 +1,5 @@
 package blokus.model;
 
-import blokus.exception.ModelException;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -18,15 +17,6 @@ public class SquareTest {
     public void initialization_case_1() {
         Square pos = new Square(2, 3);
         assertTrue(pos.getRow() == 2 && pos.getColumn() == 3);
-    }
-
-    /**
-     * Moving a square to an out of bounds coordinate causes an exception.
-     */
-    @Test(expected = ModelException.class)
-    public void move_case_1() {
-        Square pos = new Square(2, 3);
-        pos = pos.move(-10, 23);
     }
 
     /**
