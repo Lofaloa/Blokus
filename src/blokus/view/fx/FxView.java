@@ -5,19 +5,24 @@ import blokus.controller.fx.ButtonActionFactory;
 import blokus.controller.fx.PlacePieceAction;
 import blokus.controller.fx.RotateClicked;
 import blokus.controller.fx.SelectCurrentPiece;
+import blokus.controller.fx.Start;
 import blokus.exception.ModelException;
 import blokus.model.Game;
 import blokus.model.Piece;
 import blokus.model.Player;
 import blokus.model.Square;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
@@ -86,6 +91,16 @@ public class FxView extends VBox implements Observer {
         prefWidthProperty().bind(scene.widthProperty());
         prefHeightProperty().bind(scene.heightProperty());
 
+    }
+
+    public void setOnStartAction() {
+        stage.setOnShowing(new Start(game, this));
+        stage.setOnShown(event -> {
+            while (game.getCurrentPlayer().isBot()) {
+                game.getCurrentPlayer().executeStrategy();
+                game.nextPlayer();
+            }
+        });
     }
 
     /**
@@ -181,13 +196,13 @@ public class FxView extends VBox implements Observer {
     public void update(Observable o, Object o1) {
         gameBox.updateContent();
         if (game.isOver()) {
-                if (displayEndDialog()) {
-                    game.initialize();
-                } else {
-                    Platform.exit();
-                }
+            if (displayEndDialog()) {
+                game.initialize();
+            } else {
+                Platform.exit();
             }
         }
+    }
 
     public static void displayAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -207,7 +222,7 @@ public class FxView extends VBox implements Observer {
 
     private String getEndDialogContent() {
         StringBuilder str = new StringBuilder();
-        for (Player winner : game.getPlayers()) {
+        for (Player winner : game.getWinner()) {
             str.append("Joueur ");
             str.append(winner.getColor());
             str.append(" avec un score de ");
@@ -229,6 +244,26 @@ public class FxView extends VBox implements Observer {
         alert.getButtonTypes().setAll(restart, leave);
 
         return alert.showAndWait().get() == restart;
+    }
+
+    public String displayNbOfPlayersChoiceDialog() {
+        List<String> choices = new ArrayList<>();
+        choices.add("0");
+        choices.add("1");
+        choices.add("2");
+        choices.add("3");
+        choices.add("4");
+        ChoiceDialog<String> dialog = new ChoiceDialog<>("4", choices);
+        dialog.setTitle("Choix du nombre de joueurs");
+        dialog.setHeaderText("Combien de personnes participeront au jeu?");
+        dialog.setContentText("Choisissez le nombre de joueurs parmis les "
+                + "propositions");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            return result.get();
+        } else {
+            return null;
+        }
     }
 
 }

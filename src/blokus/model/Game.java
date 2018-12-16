@@ -24,6 +24,13 @@ public interface Game {
     public Board getBoard();
 
     /**
+     * Sets the given number of players as bots.
+     *
+     * @param nb_of_bots is the number of bots playing the game.
+     */
+    public void setBotPlayers(int nb_of_bots);
+
+    /**
      * Gets the players of the game.
      *
      * @return the players of the game.
@@ -83,7 +90,7 @@ public interface Game {
      * Rotates the current player piece 90 degrees clockwise.
      */
     public void rotateCurrentPlayerPiece();
-    
+
     /**
      * Turns the current piece player over.
      */

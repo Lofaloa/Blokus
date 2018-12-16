@@ -32,6 +32,10 @@ public class PlacePieceAction implements EventHandler<MouseEvent> {
         try {
             game.placePiece(destination.getRow(), destination.getColumn());
             game.nextPlayer();
+            while (game.getCurrentPlayer().isBot()) {
+                game.getCurrentPlayer().executeStrategy();
+                game.nextPlayer();
+            }
         } catch (IllegalStateException
                 | ModelException
                 | NullPointerException e) {

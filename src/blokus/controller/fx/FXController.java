@@ -27,6 +27,7 @@ public class FXController {
         view.setPiecePreviewAction();
         view.setRotateByRightClickAction();
         view.setButtonsActions();
+        view.setOnStartAction();
     }
 
     /**

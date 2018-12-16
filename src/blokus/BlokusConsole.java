@@ -18,6 +18,9 @@ public class BlokusConsole {
      * @param args nothing.
      */
     public static void main(String[] args) {
+        Game game = new Blokus();
+        View view = new View(game);
+        ControllerConsole controller = new ControllerConsole(game, view);
         if (args.length > 1) {
             System.err.println("usage: the game requieres zero or one argument "
                     + "to be run.");
@@ -34,14 +37,9 @@ public class BlokusConsole {
                         + "number of players, Blokus is playable by 4 players");
                 System.exit(0);
             }
-            Game game = new Blokus(nb_of_players);
-            View view = new View(game);
-            ControllerConsole controller = new ControllerConsole(game, view);
+            game.setBotPlayers(Blokus.NB_PLAYERS - nb_of_players);
             controller.start();
         } else {
-            Game game = new Blokus();
-            View view = new View(game);
-            ControllerConsole controller = new ControllerConsole(game, view);
             controller.start();
         }
     }

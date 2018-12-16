@@ -25,40 +25,6 @@ public class BlokusTest {
     }
 
     /**
-     * Game with AI should have an empty board and four players of
-     * different colors and the correct number of AI players.
-     */
-    @Test
-    public void construction_case_2() {
-        Blokus g = new Blokus(2);
-        int cptAI = 0;
-        g.getPlayers().forEach((player) -> {
-            assertEquals(1, Collections.frequency(g.getPlayers(), player));
-        });
-        for (int i = 0; i < 2; i++) {
-            assertTrue(g.getPlayers().get(i).isBot());
-        }
-        assertTrue(g.getBoard().isEmpty() && g.getState() == BlokusState.FIRST_ROUND);
-    }
-
-    /**
-     * Game with AI should have an empty board and four players of
-     * different colors and the correct number of AI players.
-     */
-    @Test
-    public void construction_case_3() {
-        Blokus g = new Blokus(1);
-        int cptAI = 0;
-        g.getPlayers().forEach((player) -> {
-            assertEquals(1, Collections.frequency(g.getPlayers(), player));
-        });
-        for (int i = 0; i < 3; i++) {
-            assertTrue(g.getPlayers().get(i).isBot());
-        }
-        assertTrue(g.getBoard().isEmpty() && g.getState() == BlokusState.FIRST_ROUND);
-    }
-
-    /**
      * Game after initialization should have an empty board and four players of
      * different colors.
      */

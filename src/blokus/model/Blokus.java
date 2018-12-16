@@ -42,18 +42,9 @@ public class Blokus extends Observable implements Game {
         currentPlayer.startPlaying();
     }
 
-    /**
-     * Constructs this game with both AI players and real players.
-     *
-     * @param nbOfPlayers the number of real players.
-     */
-    public Blokus(int nbOfPlayers) {
-        this();
-        if (nbOfPlayers < 0 || NB_PLAYERS <  NB_PLAYERS) {
-            throw new IllegalArgumentException(nbOfPlayers + " is not a valid "
-                    + "number of players, is should be between 0 and 4.");
-        }
-        for (int i = 0; i < NB_PLAYERS - nbOfPlayers; i++) {
+    @Override
+    public void setBotPlayers(int nb_of_bots) {
+        for (int i = 0; i < nb_of_bots; i++) {
             Strategy strategy = new DumbPlayerStrategy(this);
             players.get(i).setStrategy(strategy);
         }
@@ -122,8 +113,8 @@ public class Blokus extends Observable implements Game {
         return state == BlokusState.FIRST_ROUND;
     }
 
-    boolean areAllPlayersStockEmpty() {
-        return players.stream().allMatch(p -> p.getStock().isEmpty());
+    boolean hasAnyPlayerAnStockEmpty() {
+        return players.stream().anyMatch(p -> p.getStock().isEmpty());
     }
 
     boolean areAllPlayersWithDrawn() {
@@ -132,7 +123,7 @@ public class Blokus extends Observable implements Game {
 
     @Override
     public boolean isOver() {
-        return areAllPlayersStockEmpty() || areAllPlayersWithDrawn();
+        return hasAnyPlayerAnStockEmpty() || areAllPlayersWithDrawn();
     }
 
     /**
