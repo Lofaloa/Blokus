@@ -1,16 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package blokus.controller.fx;
 
-import blokus.model.Blokus;
 import blokus.model.Game;
 import blokus.view.fx.FxView;
-import java.util.Objects;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.stage.WindowEvent;
 
 /**
- * Display a choice dialog at start. The dialog allows the user to choose a
- * number of players.
+ * Starts the bot players on start.
  *
  * @author Logan Farci (47923)
  */
@@ -26,17 +27,9 @@ public class Start implements EventHandler<WindowEvent> {
 
     @Override
     public void handle(WindowEvent event) {
-        try {
-            String result = Objects.requireNonNull(view.displayNbOfPlayersChoiceDialog());
-            int nb_of_players = Integer.parseInt(result);
-            game.setBotPlayers(Blokus.NB_PLAYERS - nb_of_players);
-        } catch (NumberFormatException e) {
-            System.err.println("Erreur lors du choix du nombre de joueurs, "
-                    + "aucun bots ne participent!");
-            game.setBotPlayers(0);
-        } catch (NullPointerException e) {
-            Platform.exit();
+        while (!game.isOver() && game.getCurrentPlayer().isBot()) {
+            game.getCurrentPlayer().executeStrategy();
+            game.nextPlayer();
         }
     }
-
 }

@@ -32,7 +32,8 @@ public class PlacePieceAction implements EventHandler<MouseEvent> {
         try {
             game.placePiece(destination.getRow(), destination.getColumn());
             game.nextPlayer();
-            while (game.getCurrentPlayer().isBot()) {
+            while (!game.isOver() && game.getCurrentPlayer().isBot()) {
+                System.out.println("");
                 game.getCurrentPlayer().executeStrategy();
                 game.nextPlayer();
             }

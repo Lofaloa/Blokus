@@ -214,6 +214,7 @@ class Output {
      */
     void printEnd() {
         System.out.println("End of the game!");
+        printBoard();
         printWinners();
         System.out.print("Do you want to restart the game? (y/ n) ");
     }

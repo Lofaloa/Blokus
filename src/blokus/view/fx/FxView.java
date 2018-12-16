@@ -5,6 +5,7 @@ import blokus.controller.fx.ButtonActionFactory;
 import blokus.controller.fx.PlacePieceAction;
 import blokus.controller.fx.RotateClicked;
 import blokus.controller.fx.SelectCurrentPiece;
+import blokus.controller.fx.ChooseNumberOfPlayers;
 import blokus.controller.fx.Start;
 import blokus.exception.ModelException;
 import blokus.model.Game;
@@ -94,13 +95,8 @@ public class FxView extends VBox implements Observer {
     }
 
     public void setOnStartAction() {
-        stage.setOnShowing(new Start(game, this));
-        stage.setOnShown(event -> {
-            while (game.getCurrentPlayer().isBot()) {
-                game.getCurrentPlayer().executeStrategy();
-                game.nextPlayer();
-            }
-        });
+        stage.setOnShowing(new ChooseNumberOfPlayers(game, this));
+        stage.setOnShown(new Start(game, this));
     }
 
     /**
@@ -248,7 +244,6 @@ public class FxView extends VBox implements Observer {
 
     public String displayNbOfPlayersChoiceDialog() {
         List<String> choices = new ArrayList<>();
-        choices.add("0");
         choices.add("1");
         choices.add("2");
         choices.add("3");
