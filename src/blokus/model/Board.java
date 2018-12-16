@@ -130,7 +130,6 @@ public class Board {
      */
     boolean hasSpaceFor(Piece piece, int row, int column) {
         requireNonNull(piece, "no given piece.");
-        requireValidSquare(row, column);
         return piece.getShape().getSquares().stream()
                 .map(s -> s.move(row, column))
                 .allMatch(s -> isValid(s.getRow(), s.getColumn()));
@@ -220,7 +219,6 @@ public class Board {
      * corner.
      */
     boolean isPieceTouchingSameColorAtCorner(Piece piece, int row, int column) {
-        requireValidSquare(row, column);
         requireNonNull(piece, "isSquareTouchingSameColorAtCorner - no piece given");
         return piece.getSquares().stream()
                 .map(s -> s.move(row, column))
@@ -252,7 +250,6 @@ public class Board {
      * side.
      */
     boolean isPieceTouchingSameColorBySide(Piece piece, int row, int column) {
-        requireValidSquare(row, column);
         requireNonNull(piece, "isSquareTouchingSameColorAtCorner - no piece given");
         return piece.getSquares().stream()
                 .map(s -> s.move(row, column))
@@ -260,7 +257,6 @@ public class Board {
     }
 
     boolean isColorRestrictedPiece(Piece piece, int row, int column) {
-        requireValidSquare(row, column);
         requireNonNull(piece, "isColorRestrictedPiece - no piece given");
         return !isPieceTouchingSameColorBySide(piece, row, column)
                 && isPieceTouchingSameColorAtCorner(piece, row, column);

@@ -100,6 +100,10 @@ public class Player {
         return state == PlayerState.MISSING_TURN;
     }
 
+    boolean isDone() {
+        return stock.isEmpty();
+    }
+
     boolean hasSelectedAPiece() {
         return selectedPiece != null;
     }

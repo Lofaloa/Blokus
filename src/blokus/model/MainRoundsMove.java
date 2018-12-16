@@ -1,6 +1,7 @@
 package blokus.model;
 
 import blokus.exception.ModelException;
+import java.util.Objects;
 
 /**
  * Represents a move taking places during the main rounds.
@@ -21,8 +22,9 @@ class MainRoundsMove implements Move {
      * @param dest is the destination square of the piece selected by a player.
      */
     MainRoundsMove(Player player, Board board, Square dest) {
-        this.player = player;
-        this.board = board;
+        Objects.requireNonNull(dest);
+        this.player = Objects.requireNonNull(player);
+        this.board = Objects.requireNonNull(board);
         requireValidSquare(dest.getRow(), dest.getColumn());
         this.dest = dest;
     }
@@ -35,6 +37,7 @@ class MainRoundsMove implements Move {
      * @return a valid square.
      */
     final void requireValidSquare(int row, int column) {
+        Objects.requireNonNull(board, "Board is null");
         if (!board.contains(row, column)) {
             throw new ModelException("Square at position row "
                     + row + ", " + column + " is out of the board bounds.");
