@@ -236,6 +236,22 @@ public class Blokus extends Observable implements Game {
     }
 
     @Override
+    public void withdrawCurrentPlayer() {
+        currentMove = new WithdrawMove(currentPlayer);
+        currentMove.execute();
+        moves.add(currentMove);
+    }
+
+    @Override
+    public void missTurnCurrentPlayer() {
+        currentMove = new MissTurnMove(currentPlayer);
+        currentMove.execute();
+        moves.add(currentMove);
+    }
+    
+    
+
+    @Override
     public void nextPlayer() {
         currentPlayer.startWaiting();
         currentPlayer = playerIterator.next();

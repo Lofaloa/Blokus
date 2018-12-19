@@ -19,7 +19,7 @@ public class MissTurn extends ButtonAction {
     @Override
     public void handle(MouseEvent event) {
         if (isMousePrimaryButton(event.getButton())) {
-            game.getCurrentPlayer().missTurn();
+            game.missTurnCurrentPlayer();
             game.nextPlayer();
         } else {
             event.consume();

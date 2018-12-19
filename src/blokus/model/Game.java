@@ -102,6 +102,10 @@ public interface Game {
      * Turns the current piece player over.
      */
     public void turnCurrentPlayerPieceOver();
+    
+    public void withdrawCurrentPlayer();
+    
+    public void missTurnCurrentPlayer();
 
     /**
      * Passes to the next player.

@@ -124,12 +124,12 @@ public class ControllerConsole {
                 break;
             case "miss":
                 System.out.println(game.getCurrentPlayer().getColor() + " player decided to miss this round!");
-                game.getCurrentPlayer().missTurn();
+                game.missTurnCurrentPlayer();
                 game.nextPlayer();
                 break;
             case "withdraw":
                 System.out.println(game.getCurrentPlayer().getColor() + " player decided to withdraw from the game! Bye!");
-                game.getCurrentPlayer().withdraw();
+                game.withdrawCurrentPlayer();
                 game.nextPlayer();
                 break;
             case "players":

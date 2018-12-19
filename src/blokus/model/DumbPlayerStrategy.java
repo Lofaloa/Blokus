@@ -135,7 +135,7 @@ class DumbPlayerStrategy implements Strategy {
                     nbOfTries++;
                 }
                 if (nbOfTries == NB_OF_PIECES) {
-                    getBot().withdraw();
+                    game.withdrawCurrentPlayer();
                 }
             }
         }

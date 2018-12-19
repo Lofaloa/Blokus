@@ -17,7 +17,7 @@ public class Withdraw extends ButtonAction {
     @Override
     public void handle(MouseEvent event) {
         if (isMousePrimaryButton(event.getButton())) {
-            game.getCurrentPlayer().withdraw();
+            game.withdrawCurrentPlayer();
             game.nextPlayer();
         } else {
             event.consume();
