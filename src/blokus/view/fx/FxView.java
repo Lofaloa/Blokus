@@ -6,6 +6,7 @@ import blokus.controller.fx.PlacePieceAction;
 import blokus.controller.fx.RotateClicked;
 import blokus.controller.fx.SelectCurrentPiece;
 import blokus.controller.fx.ChooseNumberOfPlayers;
+import blokus.controller.fx.Historic;
 import blokus.controller.fx.Start;
 import blokus.exception.ModelException;
 import blokus.model.Game;
@@ -24,8 +25,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceDialog;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -53,7 +52,7 @@ public class FxView extends VBox implements Observer {
     public static final String TITLE = "Blokus";
 
     private final Stage stage;
-    private final MenuBar menu;
+    private final MyMenuBar menu;
     private final Game game;
     private final GameBox gameBox;
     private final ControlPane control;
@@ -68,7 +67,7 @@ public class FxView extends VBox implements Observer {
         this.stage = Objects.requireNonNull(stage, "No given stage in arguments");
         this.game = game;
         this.gameBox = new GameBox(game);
-        this.menu = new MenuBar(new Menu("File"), new Menu("Options"), new Menu("Help"));
+        this.menu = new MyMenuBar();
         this.control = new ControlPane();
         setContent();
         setStyle();
@@ -91,7 +90,6 @@ public class FxView extends VBox implements Observer {
         stage.setScene(scene);
         prefWidthProperty().bind(scene.widthProperty());
         prefHeightProperty().bind(scene.heightProperty());
-
     }
 
     public void setOnStartAction() {
@@ -166,6 +164,10 @@ public class FxView extends VBox implements Observer {
             setPiecePreviewAction(node, current);
             setBoardUpdateAction(node);
         });
+    }
+    
+    public void setHistoricAction() {
+        menu.getHistoric().setOnAction(new Historic(game, this));            
     }
 
     /**
@@ -259,6 +261,11 @@ public class FxView extends VBox implements Observer {
         } else {
             return null;
         }
+    }
+    
+    public void showHistoric() {
+        HistoricWindow historic = new HistoricWindow(game);
+        historic.initialize();
     }
 
 }

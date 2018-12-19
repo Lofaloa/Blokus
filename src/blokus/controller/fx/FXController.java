@@ -28,6 +28,7 @@ public class FXController {
         view.setRotateByRightClickAction();
         view.setButtonsActions();
         view.setOnStartAction();
+        view.setHistoricAction();
     }
 
     /**
