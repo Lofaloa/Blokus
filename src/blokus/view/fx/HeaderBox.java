@@ -16,6 +16,7 @@ public class HeaderBox extends HBox {
     private final Text playerNumber;
     private final Text state;
     private final Text score;
+    private final Text nb_of_remaining_pieces;
 
     /**
      * Initializes this box with given game and player id.
@@ -27,6 +28,7 @@ public class HeaderBox extends HBox {
         playerNumber = new Text("Joueur n°" + toNumber(player));
         state = new Text(toString(player.getState()));
         score = new Text("Score: " + player.getScore());
+        nb_of_remaining_pieces = new Text("Pièces restantes: " + player.getStock().size());
         setContent();
         setStyle();
     }
@@ -60,13 +62,14 @@ public class HeaderBox extends HBox {
     void update() {
         score.setText("Score: " + player.getScore());
         state.setText(toString(player.getState()));
+        nb_of_remaining_pieces.setText("Pièces restantes: " + player.getStock().size());
     }
 
     /**
      * Sets the content of this header.
      */
     final void setContent() {
-        getChildren().addAll(playerNumber, score, state);
+        getChildren().addAll(playerNumber, score, nb_of_remaining_pieces, state);
     }
 
     /**
