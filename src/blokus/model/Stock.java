@@ -14,7 +14,7 @@ public class Stock {
     /**
      * Is the number of pieces that can fit in a stock.
      */
-    public static final int CAPACITY = 21;
+    public static final int CAPACITY = 22;
 
     private final List<Piece> pieces;
     private final BlokusColor color;
