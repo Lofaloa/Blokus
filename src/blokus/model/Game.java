@@ -38,6 +38,13 @@ public interface Game {
     public List<Player> getPlayers();
 
     /**
+     * Gets the moves of the game.
+     *
+     * @return the moves of the game.
+     */
+    public List<Move> getMoves();
+
+    /**
      * Gets the current player of the game.
      *
      * @return the current player of the game.

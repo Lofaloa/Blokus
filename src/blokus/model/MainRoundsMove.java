@@ -8,11 +8,12 @@ import java.util.Objects;
  *
  * @author Logan Farci (47923)
  */
-class MainRoundsMove implements Move {
+public class MainRoundsMove implements Move {
 
     private final Player player;
     private final Board board;
     private final Square dest;
+    private final Piece piece;
 
     /**
      * Initializes this move with the given player board and destination.
@@ -21,12 +22,23 @@ class MainRoundsMove implements Move {
      * @param board is the board where this move take place.
      * @param dest is the destination square of the piece selected by a player.
      */
-    MainRoundsMove(Player player, Board board, Square dest) {
+    MainRoundsMove(Player player, Board board, Square dest, Piece piece) {
         Objects.requireNonNull(dest);
         this.player = Objects.requireNonNull(player);
         this.board = Objects.requireNonNull(board);
         requireValidSquare(dest.getRow(), dest.getColumn());
         this.dest = dest;
+        this.piece = new Piece(piece);
+    }
+
+    @Override
+    public Piece getPiece() {
+        return new Piece(piece);
+    }
+
+    @Override
+    public Player getPlayer() {
+        return player;
     }
 
     /**

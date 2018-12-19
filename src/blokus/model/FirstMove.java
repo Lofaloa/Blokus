@@ -7,11 +7,12 @@ import blokus.exception.ModelException;
  *
  * @author Logan Farci (47923)
  */
-class FirstMove implements Move {
+public class FirstMove implements Move {
 
     private final Player player;
     private final Board board;
     private final Square dest;
+    private final Piece piece;
 
     /**
      * Initializes this move with the given player board and destination.
@@ -20,13 +21,24 @@ class FirstMove implements Move {
      * @param board is the board where this move take place.
      * @param dest is the destination square of the piece selected by a player.
      */
-    FirstMove(Player player, Board board, Square dest) {
+    FirstMove(Player player, Board board, Square dest, Piece piece) {
         this.player = player;
         this.board = board;
         requireValidSquare(dest.getRow(), dest.getColumn());
         this.dest = dest;
+        this.piece = new Piece(piece);
     }
 
+    @Override
+    public Piece getPiece() {
+        return new Piece(piece);
+    }
+
+    @Override
+    public Player getPlayer() {
+        return player;
+    }
+    
     /**
      * Makes sure the given square is valid. A valid square is free and is
      * inside the board.
@@ -77,8 +89,8 @@ class FirstMove implements Move {
 
     @Override
     public void execute() {
-        requirePlacablePiece(player.getCurrentPiece(), dest.getRow(), dest.getColumn());
-        requirePieceInCorner(player.getCurrentPiece(), dest.getRow(), dest.getColumn());
+        requirePlacablePiece(piece, dest.getRow(), dest.getColumn());
+        requirePieceInCorner(piece, dest.getRow(), dest.getColumn());
         board.addPiece(player.takeCurrentPiece(), dest.getRow(), dest.getColumn());
     }
 

@@ -2,6 +2,7 @@ package blokus.controller.fx;
 
 import blokus.exception.ModelException;
 import blokus.model.Game;
+import blokus.model.Move;
 import blokus.model.Square;
 import blokus.view.fx.FxView;
 import javafx.event.EventHandler;

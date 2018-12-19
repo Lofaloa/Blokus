@@ -5,7 +5,11 @@ package blokus.model;
  *
  * @author Logan Farci (47923)
  */
-interface Move {
+public interface Move {
+
+    Piece getPiece();
+    
+    Player getPlayer();
 
     /**
      * Executes this move.

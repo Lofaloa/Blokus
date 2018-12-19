@@ -18,6 +18,7 @@ public class Blokus extends Observable implements Game {
     public final static int NB_PLAYERS = 4;
 
     private final List<Player> players;
+    private final List<Move> moves;
     private final PlayerIterator playerIterator;
     private final Board board;
     private Player currentPlayer;
@@ -34,6 +35,7 @@ public class Blokus extends Observable implements Game {
                 new Player(BlokusColor.YELLOW),
                 new Player(BlokusColor.RED),
                 new Player(BlokusColor.GREEN)));
+        this.moves = new ArrayList<>();
         this.playerIterator = new PlayerIterator(players);
         this.currentPlayer = players.get(0);
         this.currentMove = null;
@@ -74,6 +76,11 @@ public class Blokus extends Observable implements Game {
     @Override
     public List<Player> getPlayers() {
         return Collections.unmodifiableList(players);
+    }
+
+    @Override
+    public List<Move> getMoves() {
+        return Collections.unmodifiableList(moves);
     }
 
     @Override
@@ -193,12 +200,15 @@ public class Blokus extends Observable implements Game {
                     + " a piece.");
         }
         if (isFirstRound()) {
-            currentMove = new FirstMove(currentPlayer, board, new Square(row, column));
+            currentMove = new FirstMove(currentPlayer, board, new Square(row, column),
+                    currentPlayer.getCurrentPiece());
             currentMove.execute();
         } else {
-            currentMove = new MainRoundsMove(currentPlayer, board, new Square(row, column));
+            currentMove = new MainRoundsMove(currentPlayer, board, new Square(row, column),
+                    currentPlayer.getCurrentPiece());
             currentMove.execute();
         }
+        moves.add(currentMove);
         if (isFirstRoundOver()) {
             endFirstRound();
         }
